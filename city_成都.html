@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>成都 - 24小时温度变化</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh}
+.container{max-width:900px;margin:0 auto;padding:20px}
+.header{text-align:center;padding:30px 20px 20px;background:linear-gradient(135deg,#0f0f23 0%,#1a1a3e 50%,#0f0f23 100%);border-bottom:2px solid #81c78433;margin-bottom:20px}
+.header h1{font-size:1.8em;color:#fff;margin-bottom:4px}
+.header .city-meta{color:#888;font-size:0.9em}
+.back-btn{display:inline-block;padding:8px 20px;background:#81c78422;color:#81c784;border:1px solid #81c78444;border-radius:20px;text-decoration:none;font-size:0.9em;margin:10px 0;transition:all 0.3s}
+.back-btn:hover{background:#81c78444;color:#fff}
+.card{background:#12122a;border-radius:16px;padding:20px;border:1px solid #1a1a3e;margin-bottom:20px}
+.card-title{font-size:1.1em;font-weight:600;margin-bottom:14px;color:#fff;display:flex;align-items:center;gap:10px}
+.chart-wrapper{position:relative;width:100%;min-height:400px}
+.current-weather{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.metric-card{background:#1a1a3e;border-radius:12px;padding:12px;text-align:center}
+.metric-card .label{font-size:0.75em;color:#888;margin-bottom:4px}
+.metric-card .value{font-size:1.3em;font-weight:700;color:#fff}
+.aqi-good{color:#00e676}.aqi-moderate{color:#ffeb3b}.aqi-unhealthy{color:#ff9800}.aqi-bad{color:#f44336}
+.footer{text-align:center;padding:20px;color:#444;font-size:0.8em;border-top:1px solid #1a1a3e;margin-top:10px}
+@media(max-width:600px){.current-weather{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>成都</h1>
+  <div class="city-meta">阴天 · 30.8°C · 湿度 30.0% · 风速 11.9 SE</div>
+  <a class="back-btn" href="./index.html">← 返回总览</a>
+</div>
+<div class="container">
+  <div class="current-weather">
+    <div class="metric-card"><div class="label">🌡️ 温度</div><div class="value">30.8°C</div></div>
+    <div class="metric-card"><div class="label">🤗 体感</div><div class="value">31.0°C</div></div>
+    <div class="metric-card"><div class="label">💧 湿度</div><div class="value">30.0%</div></div>
+    <div class="metric-card"><div class="label">🌬 风速</div><div class="value">11.9 SE</div></div>
+    <div class="metric-card"><div class="label">🏭 AQI</div><div class="value aqi-moderate">74</div></div>
+    <div class="metric-card"><div class="label">☀️ UV</div><div class="value" style="color:#f44336">8.7</div></div>
+    <div class="metric-card"><div class="label">🌧 降水</div><div class="value">0.0mm</div></div>
+    <div class="metric-card"><div class="label">📊 气压</div><div class="value">955.4hPa</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📈 过去24小时温度变化</div>
+    <div class="chart-wrapper">
+      <canvas id="tempChart"></canvas>
+    </div>
+    <p style="text-align:center;color:#555;font-size:0.85em;margin-top:10px">每小时自动采集 · 最近24条记录</p>
+  </div>
+</div>
+<div class="footer">🦞 Claw 作业系统 · 成都 · 数据来源: Open-Meteo API</div>
+<script>
+const histData = [{"time": "2026-06-12 14:49", "temp": 30.8, "feels": 31.0, "humid": 30.0, "desc": "阴天"}];
+
+function initChart() {
+  const ctx = document.getElementById('tempChart').getContext('2d');
+  const times = histData.map(d => d.time.slice(5, 16));
+  const temps = histData.map(d => d.temp);
+  const feels = histData.map(d => d.feels);
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: times,
+      datasets: [
+        {
+          label: '实际温度 (°C)',
+          data: temps,
+          borderColor: '#81c784',
+          backgroundColor: '#81c78422',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 4,
+          pointHoverRadius: 7,
+          pointBackgroundColor: '#81c784',
+          borderWidth: 3
+        },
+        {
+          label: '体感温度 (°C)',
+          data: feels,
+          borderColor: '#ffb74d',
+          backgroundColor: '#ffb74d22',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          pointHoverRadius: 6,
+          pointBackgroundColor: '#ffb74d',
+          borderWidth: 2,
+          borderDash: [5, 5]
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          labels: { color: '#aaa', font: { size: 13 } },
+          position: 'top'
+        },
+        tooltip: {
+          backgroundColor: '#1a1a3e',
+          titleColor: '#fff',
+          bodyColor: '#ddd',
+          borderColor: '#81c78444',
+          borderWidth: 1,
+          padding: 12
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#666', maxRotation: 45, font: { size: 11 } },
+          grid: { color: '#ffffff0d' }
+        },
+        y: {
+          ticks: { color: '#666', font: { size: 11 } },
+          grid: { color: '#ffffff0d' }
+        }
+      }
+    }
+  });
+}
+
+initChart();
+</script>
+</body>
+</html>
