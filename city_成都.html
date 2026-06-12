@@ -29,19 +29,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 <body>
 <div class="header">
   <h1>成都</h1>
-  <div class="city-meta">阴天 · 30.8°C · 湿度 30.0% · 风速 11.9 SE</div>
+  <div class="city-meta">阴天 · 31.0°C · 湿度 29.0% · 风速 11.5 SSE</div>
   <a class="back-btn" href="./index.html">← 返回总览</a>
 </div>
 <div class="container">
   <div class="current-weather">
-    <div class="metric-card"><div class="label">🌡️ 温度</div><div class="value">30.8°C</div></div>
-    <div class="metric-card"><div class="label">🤗 体感</div><div class="value">31.0°C</div></div>
-    <div class="metric-card"><div class="label">💧 湿度</div><div class="value">30.0%</div></div>
-    <div class="metric-card"><div class="label">🌬 风速</div><div class="value">11.9 SE</div></div>
-    <div class="metric-card"><div class="label">🏭 AQI</div><div class="value aqi-moderate">74</div></div>
+    <div class="metric-card"><div class="label">🌡️ 温度</div><div class="value">31.0°C</div></div>
+    <div class="metric-card"><div class="label">🤗 体感</div><div class="value">31.1°C</div></div>
+    <div class="metric-card"><div class="label">💧 湿度</div><div class="value">29.0%</div></div>
+    <div class="metric-card"><div class="label">🌬 风速</div><div class="value">11.5 SSE</div></div>
+    <div class="metric-card"><div class="label">🏭 AQI</div><div class="value aqi-moderate">76</div></div>
     <div class="metric-card"><div class="label">☀️ UV</div><div class="value" style="color:#f44336">8.7</div></div>
     <div class="metric-card"><div class="label">🌧 降水</div><div class="value">0.0mm</div></div>
-    <div class="metric-card"><div class="label">📊 气压</div><div class="value">955.4hPa</div></div>
+    <div class="metric-card"><div class="label">📊 气压</div><div class="value">955.1hPa</div></div>
   </div>
   <div class="card">
     <div class="card-title">📈 过去24小时温度变化</div>
@@ -53,7 +53,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 </div>
 <div class="footer">🦞 Claw 作业系统 · 成都 · 数据来源: Open-Meteo API</div>
 <script>
-const histData = [{"time": "2026-06-12 14:49", "temp": 30.8, "feels": 31.0, "humid": 30.0, "desc": "阴天"}];
+const histData = [{"time": "2026-06-12 14:49", "temp": 30.8, "feels": 31.0, "humid": 30.0, "desc": "阴天"}, {"time": "2026-06-12 15:05", "temp": 31.0, "feels": 31.1, "humid": 29.0, "desc": "阴天"}];
 
 function initChart() {
   const ctx = document.getElementById('tempChart').getContext('2d');
