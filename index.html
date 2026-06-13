@@ -144,7 +144,7 @@ var CLAWS = [
 
 
 
-function showCityChart(name, color){
+window.showCityChart = function(name, color){
   var data = TEMP_HIST[name] || [];
   if(data.length === 0){ alert(name + '暂无历史数据'); return; }
   document.getElementById("modalTitle").textContent = name + " - 24小时温度变化";
