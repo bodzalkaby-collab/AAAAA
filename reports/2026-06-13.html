@@ -1,278 +1,100 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>每日天气报告 - 2026-06-13</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:#0a0a1a;color:#e0e0e0}
-.container{max-width:1200px;margin:0 auto;padding:20px}
-.header{text-align:center;padding:24px 20px;background:linear-gradient(135deg,#0f0f23 0%,#1a1a3e 50%,#0f0f23 100%);border-bottom:2px solid #00d4ff33;margin-bottom:20px}
-.header h1{font-size:1.8em;background:linear-gradient(135deg,#00d4ff,#7c4dff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.header .back-link{margin-top:10px;display:inline-block;padding:6px 18px;background:rgba(0,212,255,0.1);color:#4fc3f7;border:1px solid #00d4ff44;border-radius:16px;text-decoration:none;font-size:0.85em}
-.report-overview{text-align:center;padding:24px;background:linear-gradient(135deg,#12122a,#1a1a3e);border-radius:12px;border:1px solid #00d4ff33;margin-bottom:18px}
-.report-overview h2{font-size:1.6em;color:#4fc3f7;margin-bottom:6px}
-.report-time{color:#888;font-size:0.85em}
-.report-subtitle{color:#666;font-size:0.8em;margin-top:4px}
-.exec-summary{background:#12122a;border-radius:12px;padding:20px;border:1px solid #1a1a3e;margin-bottom:18px}
-.summary-title{font-size:1.15em;font-weight:700;color:#fff;margin-bottom:12px;padding-left:10px;border-left:3px solid #4fc3f7}
-.summary-text{font-size:0.9em;color:#ccc;line-height:1.7;margin-bottom:8px;padding-left:14px;text-indent:2em}
-.report-highlights{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:18px}
-.highlight-card{background:#12122a;border-radius:12px;padding:16px;text-align:center;border:1px solid #1a1a3e;border-bottom:3px solid;transition:0.2s}
-.highlight-card:hover{border-color:#333;transform:translateY(-2px)}
-.hl-icon{font-size:2em}
-.hl-text{font-size:0.8em;color:#888;margin:4px 0}
-.hl-val{font-size:1.15em;font-weight:700}
-.hl-desc{font-size:0.75em;color:#666;margin-top:4px}
-.report-section-title{font-size:1.1em;font-weight:700;color:#fff;margin:20px 0 12px;padding-left:10px;border-left:3px solid #4fc3f7}
-.report-city-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;margin-bottom:10px}
-.report-city-card{background:#12122a;border-radius:12px;padding:16px;border:1px solid #1a1a3e;transition:0.2s}
-.report-city-card:hover{border-color:#333}
-.report-city-name{font-size:1.15em;font-weight:700;margin-bottom:6px}
-.report-weather-main{font-size:0.9em;color:#aaa;margin-bottom:10px;padding:6px 10px;background:#1a1a3e;border-radius:6px}
-.report-metrics{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-.report-metric{display:flex;align-items:center;gap:6px;font-size:0.82em;padding:4px 6px;border-bottom:1px solid #ffffff08}
-.report-metric .m-icon{font-size:0.9em;min-width:18px}
-.report-metric span{color:#ccc}
-.report-metric .r-desc{color:#666;margin-left:auto;font-size:0.9em}
-.report-advice-title{font-size:0.85em;font-weight:600;color:#4fc3f7;margin:10px 0 6px}
-.report-advice-grid{display:grid;grid-template-columns:1fr;gap:4px}
-.advice-item{display:flex;align-items:flex-start;gap:8px;background:#1a1a3e;border-radius:6px;padding:6px 8px}
-.adv-icon{font-size:1em;min-width:20px}
-.adv-label{font-size:0.78em;color:#888}
-.adv-text{font-size:0.8em;color:#bbb}
-.report-chart-intro{font-size:0.85em;color:#666;margin-bottom:10px;padding-left:4px}
-.report-charts{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:10px}
-.report-chart-item{background:#12122a;border-radius:10px;padding:10px;border:1px solid #1a1a3e}
-.report-chart-item .chart-img{width:100%;border-radius:6px;cursor:pointer;transition:0.2s}
-.report-chart-item .chart-img:hover{transform:scale(1.02)}
-.chart-caption{text-align:center;font-size:0.78em;color:#666;margin-top:6px}
-.report-claws{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-bottom:18px}
-.report-claw-card{background:#12122a;border-radius:12px;padding:16px;border:1px solid #1a1a3e;border-left:4px solid}
-.rc-label{font-size:0.9em;font-weight:600;color:#fff;margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.rc-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:0.7em;font-weight:600}
-.rc-badge.online{background:#00e67622;color:#00e676;border:1px solid #00e67644}
-.rc-badge.offline{background:#66666622;color:#888;border:1px solid #444}
-.rc-status{font-size:0.8em;color:#4fc3f7;margin-bottom:4px}
-.rc-desc{font-size:0.75em;color:#666}
-.report-data-source{background:#12122a;border-radius:12px;padding:16px;border:1px solid #1a1a3e;margin-bottom:18px}
-.ds-title{font-size:0.95em;font-weight:600;color:#fff;margin-bottom:10px}
-.ds-item{display:flex;justify-content:space-between;padding:4px 0;font-size:0.8em;border-bottom:1px solid #ffffff08}
-.ds-label{color:#888}
-.ds-val{color:#aaa}
-.report-footer-text{text-align:center;padding:16px;color:#444;font-size:0.75em;border-top:1px solid #1a1a3e;margin-top:20px}
+.wrap{max-width:900px;margin:0 auto;padding:14px}
+.nav{text-align:center;padding:16px;background:linear-gradient(135deg,#0f0f23 0%,#1a1a3e 50%,#0f0f23 100%);border-bottom:2px solid #00d4ff33;margin-bottom:14px}
+.nav h1{font-size:1.3em;background:linear-gradient(135deg,#00d4ff,#7c4dff);-webkit-background-clip:text;color:transparent;display:inline}
+.nav a{display:inline-block;margin-left:12px;padding:4px 10px;color:#4fc3f7;border:1px solid #00d4ff44;border-radius:8px;text-decoration:none;font-size:0.75em}
+.dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px;margin-bottom:12px}
+.dash-item{background:#12122a;border-radius:8px;padding:10px;text-align:center;border:1px solid #333;border-bottom:3px solid}
+.dash-icon{font-size:1.3em}.dash-label{color:#888;font-size:0.7em;margin:2px 0}.dash-value{font-size:1em;font-weight:700}
+.sec{background:#12122a;border-radius:8px;padding:14px;border:1px solid #1a1a3e;margin-bottom:10px}
+.sec-title{font-size:0.95em;font-weight:700;color:#fff;margin-bottom:8px;padding-left:8px;border-left:3px solid #4fc3f7}
+.text-line{font-size:0.85em;color:#ccc;line-height:1.7;padding:2px 0}
+.text-indent{padding-left:14px;color:#aaa;font-size:0.82em}
+.city-table{overflow-x:auto}
+.cct-row{display:grid;grid-template-columns:70px 50px 50px 50px 65px 45px 40px 1fr;gap:4px;padding:5px 4px;font-size:0.78em;border-bottom:1px solid #ffffff08;align-items:center}
+.cct-header{color:#888;font-weight:600;border-bottom:2px solid #333;padding-bottom:6px}
+.city-block{background:#1a1a3e;border-radius:8px;padding:10px;margin-bottom:8px}
+.city-name{font-size:0.9em;font-weight:700;margin-bottom:4px}
+.city-meta{font-size:0.78em;color:#aaa;line-height:1.6}
+.city-advice{font-size:0.72em;color:#888;margin-top:4px;padding-top:4px;border-top:1px solid #ffffff0d}
+.claw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px;margin-top:6px}
+.claw-card{background:#1a1a3e;border-radius:8px;padding:10px;border-left:3px solid}
+.claw-card .ct{font-size:0.8em;font-weight:600;color:#fff}
+.claw-card .cs{font-size:0.75em;margin-top:2px}
+.claw-card .cd{font-size:0.68em;color:#666;margin-top:2px}
 .aqi-good{color:#00e676}.aqi-moderate{color:#ffeb3b}.aqi-unhealthy{color:#ff9800}.aqi-bad{color:#f44336}
-@media(max-width:900px){.report-charts{grid-template-columns:1fr}.report-city-grid{grid-template-columns:1fr}}
-</style>
-</head>
+.ft{text-align:center;padding:14px;color:#444;font-size:0.7em;border-top:1px solid #1a1a3e;margin-top:14px}
+@media(max-width:600px){.cct-row{grid-template-columns:55px 40px 40px 40px 55px 35px 35px 1fr;font-size:0.68em}}
+</style></head>
 <body>
-<div class="header">
-  <h1>📋 Claw 每日天气报告</h1>
-  <a class="back-link" href="./index.html">← 返回主站</a>
+<div class="nav">
+  <h1>Claw 每日天气报告</h1>
+  <a href="../index.html">返回主站</a>
 </div>
-<div class="container">
-
-<div class="report-overview">
-  <h2>📋 每日天气报告 · 2026-06-13</h2>
-  <div class="report-time">🕐 生成时间: 2026-06-13 22:15:23</div>
-  <div class="report-subtitle">数据来源: Open-Meteo API · Claw 1 实时采集 · 5城市综合气象分析</div>
-</div>
-
-<div class="exec-summary">
-  <div class="summary-title">📊 今日气象综述</div>
-  <div class="summary-text">
-    本次报告涵盖杭州、成都、北京、哈尔滨、广州五座城市的气象数据。
-    当前各城市天气状况各异——哈尔滨气温为18.3°C，较为凉爽；
-    而广州气温达27.2°C，较为温暖。
-    城市间温差适中，最热广州与最凉哈尔滨相差9°C。
-  </div>
-  <div class="summary-text">空气质量优，哈尔滨的AQI仅24，适合户外活动。 各城市空气质量均在良好范围内，适宜出行。</div>
-  <div class="summary-text">成都紫外线指数高达8.7，属于很高级别，外出需做好防晒措施（SPF50+、遮阳伞）。</div>
-  <div class="summary-text">广州风速较大（10.9km/h），户外活动注意防风。</div>
+<div class="wrap">
+<div class="dash">
+  <div class="dash-item" style="border-color:#f44336"><div class="dash-icon">&#x1F525;</div><div class="dash-label">最热城市</div><div class="dash-value" style="color:#f44336">杭州 20.7C</div></div>
+  <div class="dash-item" style="border-color:#4fc3f7"><div class="dash-icon">&#x2744;&#xFE0F;</div><div class="dash-label">最凉城市</div><div class="dash-value" style="color:#4fc3f7">杭州 20.7C</div></div>
+  <div class="dash-item" style="border-color:#00e676"><div class="dash-icon">&#x1F33F;</div><div class="dash-label">最佳AQI</div><div class="dash-value" style="color:#00e676">杭州 84</div></div>
+  <div class="dash-item" style="border-color:#ff9800"><div class="dash-icon">&#x26A0;&#xFE0F;</div><div class="dash-label">最差AQI</div><div class="dash-value" style="color:#ff9800">杭州 84</div></div>
+  <div class="dash-item" style="border-color:#ffeb3b"><div class="dash-icon">&#x2600;&#xFE0F;</div><div class="dash-label">UV最强</div><div class="dash-value" style="color:#ffeb3b">杭州 1.9</div></div>
 </div>
 
-<div class="report-highlights">
-  <div class="highlight-card" style="border-color:#f44336">
-    <div class="hl-icon">🔥</div><div class="hl-text">最热城市</div>
-    <div class="hl-val" style="color:#f44336">广州 27.2°C</div>
-    <div class="hl-desc">体感32.1°C · 阴天</div>
-  </div>
-  <div class="highlight-card" style="border-color:#4fc3f7">
-    <div class="hl-icon">❄️</div><div class="hl-text">最凉城市</div>
-    <div class="hl-val" style="color:#4fc3f7">哈尔滨 18.3°C</div>
-    <div class="hl-desc">体感16.7°C · 阴天</div>
-  </div>
-  <div class="highlight-card" style="border-color:#00e676">
-    <div class="hl-icon">🌿</div><div class="hl-text">空气质量最佳</div>
-    <div class="hl-val" style="color:#00e676">哈尔滨 AQI 24</div>
-    <div class="hl-desc">优 · 适宜户外活动</div>
-  </div>
-  <div class="highlight-card" style="border-color:#ff9800">
-    <div class="hl-icon">⚠️</div><div class="hl-text">空气质量最差</div>
-    <div class="hl-val" style="color:#ff9800">北京 AQI 85</div>
-    <div class="hl-desc">良 · 注意防护</div>
-  </div>
-  <div class="highlight-card" style="border-color:#ffeb3b">
-    <div class="hl-icon">☀️</div><div class="hl-text">紫外线最强</div>
-    <div class="hl-val" style="color:#ffeb3b">成都 UV 8.7</div>
-    <div class="hl-desc">很高 · 做好防晒措施</div>
-  </div>
+<div class="sec">
+<div class="sec-title">&#x1F4CA; 一、今日气象总览</div>
+<div class="text-line">【一、今日气象总览】。当前最热是杭州，20.7C，体感23.7C。。当前最凉是杭州，20.7C，体感23.7C。。【二、空气质量分析】。第1名：杭州 AQI 84(良)。第2名：成都 AQI 54(良)。</div>
 </div>
 
-<div class="report-section-title">🌆 各城市详细分析</div>
-<div class="report-city-grid">
-
-    <div class="report-city-card" style="border-left:4px solid #4fc3f7">
-      <div class="report-city-name" style="color:#4fc3f7">杭州</div>
-      <div class="report-weather-main">小毛毛雨 · 20.7°C · 体感23.7°C</div>
-      <div class="report-metrics">
-        <div class="report-metric"><span class="m-icon">🌡️</span><span>20.7°C</span><span class="r-desc">体感23.7°C</span></div>
-        <div class="report-metric"><span class="m-icon">💧</span><span>96.0%</span><span class="r-desc">湿度</span></div>
-        <div class="report-metric"><span class="m-icon">💨</span><span>5.8 ENE</span><span class="r-desc">5.8km/h</span></div>
-        <div class="report-metric"><span class="m-icon">🌀</span><span>1005.2hPa</span><span class="r-desc">气压</span></div>
-        <div class="report-metric"><span class="m-icon">🌧️</span><span>0.1mm</span><span class="r-desc">降水</span></div>
-        <div class="report-metric"><span class="m-icon">🏭</span><span class="aqi-moderate">AQI 84</span><span class="r-desc">良</span></div>
-        <div class="report-metric"><span class="m-icon">☀️</span><span>UV 1.9</span><span class="r-desc">低</span></div>
-      </div>
-      <div class="report-advice-title">💡 生活建议</div>
-      <div class="report-advice-grid">
-        <div class="advice-item"><span class="adv-icon">👔</span><div><div class="adv-label">穿衣</div><div class="adv-text">建议携带雨具，注意防滑</div></div></div>
-        <div class="advice-item"><span class="adv-icon">🏭</span><div><div class="adv-label">空气</div><div class="adv-text">空气质量良好，适宜出行</div></div></div>
-        <div class="advice-item"><span class="adv-icon">☀️</span><div><div class="adv-label">防晒</div><div class="adv-text">紫外线较低，无需特别防护</div></div></div>
-      </div>
-    </div>
-
-    <div class="report-city-card" style="border-left:4px solid #81c784">
-      <div class="report-city-name" style="color:#81c784">成都</div>
-      <div class="report-weather-main">晴天 · 24.6°C · 体感26.3°C</div>
-      <div class="report-metrics">
-        <div class="report-metric"><span class="m-icon">🌡️</span><span>24.6°C</span><span class="r-desc">体感26.3°C</span></div>
-        <div class="report-metric"><span class="m-icon">💧</span><span>68.0%</span><span class="r-desc">湿度</span></div>
-        <div class="report-metric"><span class="m-icon">💨</span><span>9.0 SE</span><span class="r-desc">9.0km/h</span></div>
-        <div class="report-metric"><span class="m-icon">🌀</span><span>951.9hPa</span><span class="r-desc">气压</span></div>
-        <div class="report-metric"><span class="m-icon">🌧️</span><span>0.0mm</span><span class="r-desc">降水</span></div>
-        <div class="report-metric"><span class="m-icon">🏭</span><span class="aqi-moderate">AQI 54</span><span class="r-desc">良</span></div>
-        <div class="report-metric"><span class="m-icon">☀️</span><span>UV 8.7</span><span class="r-desc">很高</span></div>
-      </div>
-      <div class="report-advice-title">💡 生活建议</div>
-      <div class="report-advice-grid">
-        <div class="advice-item"><span class="adv-icon">👔</span><div><div class="adv-label">穿衣</div><div class="adv-text">天气良好，适宜出行</div></div></div>
-        <div class="advice-item"><span class="adv-icon">🏭</span><div><div class="adv-label">空气</div><div class="adv-text">空气质量良好，适宜出行</div></div></div>
-        <div class="advice-item"><span class="adv-icon">☀️</span><div><div class="adv-label">防晒</div><div class="adv-text">SPF50+防晒霜+遮阳伞+避免长时间暴晒</div></div></div>
-      </div>
-    </div>
-
-    <div class="report-city-card" style="border-left:4px solid #ffb74d">
-      <div class="report-city-name" style="color:#ffb74d">北京</div>
-      <div class="report-weather-main">阴天 · 21.2°C · 体感23.5°C</div>
-      <div class="report-metrics">
-        <div class="report-metric"><span class="m-icon">🌡️</span><span>21.2°C</span><span class="r-desc">体感23.5°C</span></div>
-        <div class="report-metric"><span class="m-icon">💧</span><span>86.0%</span><span class="r-desc">湿度</span></div>
-        <div class="report-metric"><span class="m-icon">💨</span><span>6.9 E</span><span class="r-desc">6.9km/h</span></div>
-        <div class="report-metric"><span class="m-icon">🌀</span><span>998.6hPa</span><span class="r-desc">气压</span></div>
-        <div class="report-metric"><span class="m-icon">🌧️</span><span>0.0mm</span><span class="r-desc">降水</span></div>
-        <div class="report-metric"><span class="m-icon">🏭</span><span class="aqi-moderate">AQI 85</span><span class="r-desc">良</span></div>
-        <div class="report-metric"><span class="m-icon">☀️</span><span>UV 7.0</span><span class="r-desc">很高</span></div>
-      </div>
-      <div class="report-advice-title">💡 生活建议</div>
-      <div class="report-advice-grid">
-        <div class="advice-item"><span class="adv-icon">👔</span><div><div class="adv-label">穿衣</div><div class="adv-text">天气温和，户外活动适宜</div></div></div>
-        <div class="advice-item"><span class="adv-icon">🏭</span><div><div class="adv-label">空气</div><div class="adv-text">空气质量良好，适宜出行</div></div></div>
-        <div class="advice-item"><span class="adv-icon">☀️</span><div><div class="adv-label">防晒</div><div class="adv-text">SPF30+防晒霜+遮阳帽</div></div></div>
-      </div>
-    </div>
-
-    <div class="report-city-card" style="border-left:4px solid #4dd0e1">
-      <div class="report-city-name" style="color:#4dd0e1">哈尔滨</div>
-      <div class="report-weather-main">阴天 · 18.3°C · 体感16.7°C</div>
-      <div class="report-metrics">
-        <div class="report-metric"><span class="m-icon">🌡️</span><span>18.3°C</span><span class="r-desc">体感16.7°C</span></div>
-        <div class="report-metric"><span class="m-icon">💧</span><span>55.0%</span><span class="r-desc">湿度</span></div>
-        <div class="report-metric"><span class="m-icon">💨</span><span>9.3 NE</span><span class="r-desc">9.3km/h</span></div>
-        <div class="report-metric"><span class="m-icon">🌀</span><span>996.6hPa</span><span class="r-desc">气压</span></div>
-        <div class="report-metric"><span class="m-icon">🌧️</span><span>0.0mm</span><span class="r-desc">降水</span></div>
-        <div class="report-metric"><span class="m-icon">🏭</span><span class="aqi-good">AQI 24</span><span class="r-desc">优</span></div>
-        <div class="report-metric"><span class="m-icon">☀️</span><span>UV 7.2</span><span class="r-desc">很高</span></div>
-      </div>
-      <div class="report-advice-title">💡 生活建议</div>
-      <div class="report-advice-grid">
-        <div class="advice-item"><span class="adv-icon">👔</span><div><div class="adv-label">穿衣</div><div class="adv-text">天气温和，户外活动适宜</div></div></div>
-        <div class="advice-item"><span class="adv-icon">🏭</span><div><div class="adv-label">空气</div><div class="adv-text">空气质量优秀，尽享户外活动</div></div></div>
-        <div class="advice-item"><span class="adv-icon">☀️</span><div><div class="adv-label">防晒</div><div class="adv-text">SPF50+防晒霜+遮阳伞+避免长时间暴晒</div></div></div>
-      </div>
-    </div>
-
-    <div class="report-city-card" style="border-left:4px solid #e57373">
-      <div class="report-city-name" style="color:#e57373">广州</div>
-      <div class="report-weather-main">阴天 · 27.2°C · 体感32.1°C</div>
-      <div class="report-metrics">
-        <div class="report-metric"><span class="m-icon">🌡️</span><span>27.2°C</span><span class="r-desc">体感32.1°C</span></div>
-        <div class="report-metric"><span class="m-icon">💧</span><span>86.0%</span><span class="r-desc">湿度</span></div>
-        <div class="report-metric"><span class="m-icon">💨</span><span>10.9 S</span><span class="r-desc">10.9km/h</span></div>
-        <div class="report-metric"><span class="m-icon">🌀</span><span>1004.4hPa</span><span class="r-desc">气压</span></div>
-        <div class="report-metric"><span class="m-icon">🌧️</span><span>0.0mm</span><span class="r-desc">降水</span></div>
-        <div class="report-metric"><span class="m-icon">🏭</span><span class="aqi-moderate">AQI 66</span><span class="r-desc">良</span></div>
-        <div class="report-metric"><span class="m-icon">☀️</span><span>UV 7.3</span><span class="r-desc">很高</span></div>
-      </div>
-      <div class="report-advice-title">💡 生活建议</div>
-      <div class="report-advice-grid">
-        <div class="advice-item"><span class="adv-icon">👔</span><div><div class="adv-label">穿衣</div><div class="adv-text">天气温和，户外活动适宜</div></div></div>
-        <div class="advice-item"><span class="adv-icon">🏭</span><div><div class="adv-label">空气</div><div class="adv-text">空气质量良好，适宜出行</div></div></div>
-        <div class="advice-item"><span class="adv-icon">☀️</span><div><div class="adv-label">防晒</div><div class="adv-text">SPF50+防晒霜+遮阳伞+避免长时间暴晒</div></div></div>
-      </div>
-    </div>
+<div class="sec">
+<div class="sec-title">&#x1F3ED; 二、空气质量分析</div>
+<div class="city-table">
+<div class="cct-row cct-header"><span>城市</span><span>气温</span><span>体感</span><span>湿度</span><span>风力</span><span>AQI</span><span>UV</span><span>描述</span></div>
+<div class="cct-row" style="border-left:3px solid #4fc3f7"><span class="cct-city" style="color:#4fc3f7">杭州</span><span>20.7C</span><span>23.7C</span><span>96.0%</span><span>5.8km/h</span><span class="aqi-moderate">84</span><span>1.9</span><span>小毛毛雨</span></div><div class="cct-row" style="border-left:3px solid #81c784"><span class="cct-city" style="color:#81c784">成都</span><span>24.6C</span><span>26.3C</span><span>68.0%</span><span>9.0km/h</span><span class="aqi-moderate">54</span><span>8.7</span><span>晴天</span></div><div class="cct-row" style="border-left:3px solid #ffb74d"><span class="cct-city" style="color:#ffb74d">北京</span><span>21.2C</span><span>23.5C</span><span>86.0%</span><span>6.9km/h</span><span class="aqi-moderate">85</span><span>7.0</span><span>阴天</span></div><div class="cct-row" style="border-left:3px solid #4dd0e1"><span class="cct-city" style="color:#4dd0e1">哈尔滨</span><span>18.3C</span><span>16.7C</span><span>55.0%</span><span>9.3km/h</span><span class="aqi-good">24</span><span>7.2</span><span>阴天</span></div><div class="cct-row" style="border-left:3px solid #e57373"><span class="cct-city" style="color:#e57373">广州</span><span>27.2C</span><span>32.1C</span><span>86.0%</span><span>10.9km/h</span><span class="aqi-moderate">66</span><span>7.3</span><span>阴天</span></div>
+</div>
 </div>
 
-<div class="report-section-title">📈 可视化分析图表</div>
-<div class="report-chart-intro">以下图表直观展示了各城市气象指标的对比情况，支持点击放大查看</div>
-<div class="report-charts">
-  <div class="report-chart-item">
-    <img class="chart-img" src="../img/temp_comparison_latest.png" alt="温度湿度对比">
-    <div class="chart-caption">🌡️ 五城温度与体感温度对比 · 柱状图展示各城市气温差异</div>
-  </div>
-  <div class="report-chart-item">
-    <img class="chart-img" src="../img/air_comparison_latest.png" alt="空气质量对比">
-    <div class="chart-caption">🏭 五城空气质量指数(AQI)对比 · 含各等级健康阈值参考线</div>
-  </div>
-  <div class="report-chart-item">
-    <img class="chart-img" src="../img/uv_comparison_latest.png" alt="紫外线对比">
-    <div class="chart-caption">☀️ 五城紫外线指数(UV)对比 · 含各防护等级阈值参考线</div>
-  </div>
-  <div class="report-chart-item">
-    <img class="chart-img" src="../img/dashboard_latest.png" alt="综合仪表盘">
-    <div class="chart-caption">📊 五城综合数据仪表盘 · 温度/湿度/AQI/UV/风/预警一站式概览</div>
-  </div>
+<div class="sec">
+<div class="sec-title">&#x2600;&#xFE0F; 三、紫外线指数分析</div>
+<div class="text-line"></div><div class="text-line">杭州紫外线最强，UV 1.9(低)。</div><div class="text-line">杭州 UV 1.9 低</div><div class="text-line">成都 UV 8.7 很高</div><div class="text-line">北京 UV 7.0 很高</div><div class="text-line">哈尔滨 UV 7.2 很高</div><div class="text-line">广州 UV 7.3 很高</div>
 </div>
 
-<div class="report-section-title">🔗 Claw 工作接入状态</div>
-<div class="report-claws">
-  <div class="report-claw-card" style="border-color:#4fc3f7">
-    <div class="rc-label">🦞 Claw 1 · 实时气象分析员 <span class="rc-badge online">在线</span></div>
-    <div class="rc-status">采集时间: 2026-06-13 22:15:20 · 覆盖杭州/成都/北京/哈尔滨/广州五城</div>
-    <div class="rc-desc">负责实时气象数据采集、图表可视化生成、每日报告编制</div>
-  </div>
-  <div class="report-claw-card" style="border-color:#ffb74d">
-    <div class="rc-label">🔍 Claw 2 · 趋势预测分析员 <span class="rc-badge online">已接入</span></div>
-    <div class="rc-status">已就绪</div>
-    <div class="rc-desc">负责气象趋势预测分析、未来天气变化预报</div>
-  </div>
-  <div class="report-claw-card" style="border-color:#81c784">
-    <div class="rc-label">🌍 Claw 3 · 场景应用分析员 <span class="rc-badge online">已接入</span></div>
-    <div class="rc-status">数据已同步</div>
-    <div class="rc-desc">负责生活场景应用分析、出行建议、户外活动评估</div>
-  </div>
+<div class="sec">
+<div class="sec-title">&#x1F306; 四、各城市详细分析</div>
+<div class="city-block"><div class="city-name" style="color:#4fc3f7">杭州</div><div class="city-meta">天气小毛毛雨，气温20.7C，体感23.7C。湿度96.0%，气压1005.2hPa。风向ENE，风速5.8km/h。降水0.1mm。AQI 84(良)，UV 1.9(低)。</div><div class="city-advice"><span>穿衣：有降水，建议携带雨具</span> | <span>防晒：无需特别防护</span> | <span>空气：空气质量优秀，适合户外运动</span></div></div><div class="city-block"><div class="city-name" style="color:#81c784">成都</div><div class="city-meta">天气晴天，气温24.6C，体感26.3C。湿度68.0%，气压951.9hPa。风向SE，风速9.0km/h。降水0.0mm。AQI 54(良)，UV 8.7(很高)。</div><div class="city-advice"><span>穿衣：偏凉，建议穿着外套</span> | <span>防晒：无需特别防护</span> | <span>空气：空气质量优秀，适合户外运动</span></div></div><div class="city-block"><div class="city-name" style="color:#ffb74d">北京</div><div class="city-meta">天气阴天，气温21.2C，体感23.5C。湿度86.0%，气压998.6hPa。风向E，风速6.9km/h。降水0.0mm。AQI 85(良)，UV 7.0(很高)。</div><div class="city-advice"><span>穿衣：偏凉，建议穿着外套</span> | <span>防晒：无需特别防护</span> | <span>空气：空气质量优秀，适合户外运动</span></div></div><div class="city-block"><div class="city-name" style="color:#4dd0e1">哈尔滨</div><div class="city-meta">天气阴天，气温18.3C，体感16.7C。湿度55.0%，气压996.6hPa。风向NE，风速9.3km/h。降水0.0mm。AQI 24(优)，UV 7.2(很高)。</div><div class="city-advice"><span>穿衣：偏凉，建议穿着外套</span> | <span>防晒：无需特别防护</span> | <span>空气：空气质量优秀，适合户外运动</span></div></div><div class="city-block"><div class="city-name" style="color:#e57373">广州</div><div class="city-meta">天气阴天，气温27.2C，体感32.1C。湿度86.0%，气压1004.4hPa。风向S，风速10.9km/h。降水0.0mm。AQI 66(良)，UV 7.3(很高)。</div><div class="city-advice"><span>穿衣：偏凉，建议穿着外套</span> | <span>防晒：无需特别防护</span> | <span>空气：空气质量优秀，适合户外运动</span></div></div>
 </div>
 
-<div class="report-data-source">
-  <div class="ds-title">📡 数据说明</div>
-  <div class="ds-item"><span class="ds-label">气象数据</span><span class="ds-val">Open-Meteo API · 每15分钟自动采集</span></div>
-  <div class="ds-item"><span class="ds-label">图表生成</span><span class="ds-val">Python Matplotlib · 自动渲染</span></div>
-  <div class="ds-item"><span class="ds-label">报告生成</span><span class="ds-val">自动 · 每日23:00定时生成</span></div>
-  <div class="ds-item"><span class="ds-label">平台</span><span class="ds-val">Claw 团队作业 · GitHub Pages</span></div>
+<div class="sec">
+<div class="sec-title">&#x1F30D; 五、Claw 3 场景应用分析</div>
+<div class="city-name" style="color:#81c784">杭州场景分析</div><div class="text-line">- 杭州 🏙️ 成都 🏙️ 北京 🏙️ 哈尔滨 🏙️ 广州 🌡️ 生活指数 · 杭州 👔 🌧️ 外套+雨具 建议穿防水外套或雨衣，携带雨伞 🚗 ❌ 不宜洗车 有降水，洗了白洗 🏃 🏋️ 适宜运动 ⭐⭐⭐☆☆ 3/5 ☀️ 🟢 低 (UV 1.7) 无需特别防护 🤧 🟢 低风险 感冒风险较低 <。</div><div class="city-name" style="color:#81c784">成都场景分析</div><div class="text-line">- 成都 🏙️ 北京 🏙️ 哈尔滨 🏙️ 广州 🌡️ 生活指数 · 杭州 👔 🌧️ 外套+雨具 建议穿防水外套或雨衣，携带雨伞 🚗 ❌ 不宜洗车 有降水，洗了白洗 🏃 🏋️ 适宜运动 ⭐⭐⭐☆☆ 3/5 ☀️ 🟢 低 (UV 1.7) 无需特别防护 🤧 🟢 低风险 感冒风险较低 🚦 通勤出行建议 · 杭州 <div style="background:#1a1a3e;border-radius:8px;padding:10px;margin-bottom:10px;border-left:3px solid #ff9800;f。</div><div class="city-name" style="color:#81c784">北京场景分析</div><div class="text-line">- 北京 🏙️ 哈尔滨 🏙️ 广州 🌡️ 生活指数 · 杭州 👔 🌧️ 外套+雨具 建议穿防水外套或雨衣，携带雨伞 🚗 ❌ 不宜洗车 有降水，洗了白洗 🏃 🏋️ 适宜运动 ⭐⭐⭐☆☆ 3/5 ☀️ 🟢 低 (UV 1.7) 无需特别防护 🤧 🟢 低风险 感冒风险较低 🚦 通勤出行建议 · 杭州 ⚠️ 当前非高峰时段，出行较顺畅 出行方式推荐（5=最佳, 0=不推荐） <div style="display:flex;align-items:center;gap:10px;margin-bot。</div><div class="city-name" style="color:#81c784">哈尔滨场景分析</div><div class="text-line">- 哈尔滨 🏙️ 广州 🌡️ 生活指数 · 杭州 👔 🌧️ 外套+雨具 建议穿防水外套或雨衣，携带雨伞 🚗 ❌ 不宜洗车 有降水，洗了白洗 🏃 🏋️ 适宜运动 ⭐⭐⭐☆☆ 3/5 ☀️ 🟢 低 (UV 1.7) 无需特别防护 🤧 🟢 低风险 感冒风险较低 🚦 通勤出行建议 · 杭州 ⚠️ 当前非高峰时段，出行较顺畅 出行方式推荐（5=最佳, 0=不推荐） 🚌 公交/地铁 <div style="width:100%;height:100%;background:#43e97b;border-radius:6px"。</div><div class="city-name" style="color:#81c784">广州场景分析</div><div class="text-line">- 广州 🌡️ 生活指数 · 杭州 👔 🌧️ 外套+雨具 建议穿防水外套或雨衣，携带雨伞 🚗 ❌ 不宜洗车 有降水，洗了白洗 🏃 🏋️ 适宜运动 ⭐⭐⭐☆☆ 3/5 ☀️ 🟢 低 (UV 1.7) 无需特别防护 🤧 🟢 低风险 感冒风险较低 🚦 通勤出行建议 · 杭州 ⚠️ 当前非高峰时段，出行较顺畅 出行方式推荐（5=最佳, 0=不推荐） 🚌 公交/地铁 5 🚗 自驾</sp。</div>
+</div>
+
+<div class="sec">
+<div class="sec-title">&#x1F50D; 六、Claw 2 趋势预测分析</div>
+<div class="text-line">占位测试</div>
+</div>
+
+<div class="sec">
+<div class="sec-title">&#x1F4DD; 七、今日总结</div>
+<div class="text-line"></div><div class="text-line">占位测试</div><div class="text-line"></div><div class="text-line">【七、今日总结】</div><div class="text-line"></div><div class="text-line">今日杭州有降水，请携带雨具。</div><div class="text-line">下一份报告将于今晚23:00自动生成。</div><div class="text-line"></div><div class="text-line">============================================================</div><div class="text-line">Claw 作业系统 | Open-Meteo API | 每15分钟更新</div>
+</div>
+
+<div class="sec">
+<div class="sec-title">&#x1F517; Claw 协作状态</div>
+<div class="claw-grid">
+<div class="claw-card" style="border-color:#4fc3f7"><div class="ct">Claw 1 实时气象</div><div class="cs" style="color:#4fc3f7">已接入</div><div class="cd">5城数据采集、图表、报告。2026-06-13 22:15:20</div></div>
+<div class="claw-card" style="border-color:#ffb74d"><div class="ct">Claw 2 趋势预测</div><div class="cs" style="color:#00e676">已接入</div><div class="cd">POST :3000/api/claw/claw2</div></div>
+<div class="claw-card" style="border-color:#81c784"><div class="ct">Claw 3 场景应用</div><div class="cs" style="color:#00e676">已接入</div><div class="cd">POST :3000/api/claw/claw3</div></div>
+</div>
 </div>
 
 </div>
-<div class="report-footer-text">🦞 Claw 作业系统 · 2026-06-13 · 每15分钟自动更新气象数据 · 每日23:00生成完整报告</div>
+<div class="ft">Claw 作业系统 | Open-Meteo API | 每15分钟更新 | 每日23:00报告</div>
 </body>
 </html>
