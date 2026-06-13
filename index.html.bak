@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claw 团队作业 - 数据平台</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh}
+.container{max-width:1400px;margin:0 auto;padding:20px}
+.header{text-align:center;padding:20px 20px;background:linear-gradient(135deg,#0f0f23 0%,#1a1a3e 50%,#0f0f23 100%);border-bottom:2px solid #00d4ff33;margin-bottom:20px}
+.header h1{font-size:2em;background:linear-gradient(135deg,#00d4ff,#7c4dff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header .subtitle{color:#888;margin-top:6px;font-size:0.9em}
+.claw-bar{display:flex;justify-content:center;gap:12px;margin-top:14px;flex-wrap:wrap}
+.claw-btn{padding:10px 24px;border-radius:20px;font-size:0.95em;font-weight:600;cursor:pointer;transition:all 0.3s;border:none;background:rgba(255,255,255,0.05);color:#666;position:relative}
+.claw-btn:hover{background:rgba(255,255,255,0.1);color:#aaa}
+.claw-btn.active{background:rgba(0,212,255,0.15);border:1px solid #00d4ff;color:#00d4ff}
+.claw-btn .badge{display:block;font-size:0.7em;font-weight:400;margin-top:2px;opacity:0.6}
+.claw-btn.active .badge{opacity:1;color:#4fc3f7}
+.claw-btn .dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.dot.online{background:#43e97b;box-shadow:0 0 6px #43e97b}
+.dot.offline{background:#666}
+.claw-panel{display:none}
+.claw-panel.active{display:block;animation:fadeIn 0.3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.update-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#12122a;border-radius:12px;margin-bottom:20px;border:1px solid #1a1a3e;flex-wrap:wrap;gap:10px}
+.update-bar .time{color:#4fc3f7;font-size:0.9em}
+.update-bar .hint{color:#666;font-size:0.85em}
+.city-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:20px}
+.city-card{background:#12122a;border-radius:16px;padding:16px;border:1px solid #1a1a3e;transition:all 0.3s;cursor:pointer;text-decoration:none;display:block;color:inherit}
+.city-card:hover{border-color:#00d4ff66;box-shadow:0 4px 20px rgba(0,212,255,0.1);transform:translateY(-2px)}
+.city-card .hint-link{font-size:0.7em;color:#4fc3f7;text-align:right;margin-top:4px;opacity:0;transition:opacity 0.3s}
+.city-card:hover .hint-link{opacity:1}
+.city-name{font-size:1.2em;font-weight:700;margin-bottom:10px;color:#fff}
+.city-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.metric{display:flex;flex-direction:column;align-items:center;padding:5px;background:#1a1a3e;border-radius:8px}
+.m-icon{font-size:0.9em}.m-val{font-size:0.95em;font-weight:700;color:#fff}.m-desc{font-size:0.7em;color:#888}
+.aqi-good{color:#00e676}.aqi-moderate{color:#ffeb3b}.aqi-unhealthy{color:#ff9800}.aqi-bad{color:#f44336}
+.card{background:#12122a;border-radius:16px;padding:18px;border:1px solid #1a1a3e;margin-bottom:20px}
+.card-title{font-size:1.1em;font-weight:600;margin-bottom:14px;color:#fff;display:flex;align-items:center;gap:10px}
+.chart-img{width:100%;height:auto;border-radius:8px;cursor:pointer;transition:transform 0.3s}
+.chart-img:hover{transform:scale(1.02);cursor:zoom-in}
+.chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(max-width:900px){.chart-grid{grid-template-columns:1fr}.city-grid{grid-template-columns:1fr}}
+.placeholder-box{text-align:center;padding:80px 20px;background:#12122a;border:2px dashed #1a1a3e;border-radius:16px;margin:40px 20px}
+.placeholder-box .p-icon{font-size:56px;margin-bottom:12px}
+.placeholder-box h3{font-size:1.3em;color:#555;margin-bottom:10px}
+.placeholder-box p{font-size:0.9em;color:#444;line-height:1.8;max-width:500px;margin:0 auto}
+.placeholder-box code{background:rgba(0,212,255,0.1);color:#4fc3f7;padding:3px 8px;border-radius:4px;font-size:0.85em;word-break:break-all}
+.claw-dynamic{padding:10px 0}
+.claw-dynamic .claw-header{text-align:center;padding:16px;margin-bottom:20px;background:#12122a;border-radius:12px;border:1px solid #1a1a3e}
+.claw-dynamic .claw-header h2{font-size:1.5em;margin-bottom:4px}
+.claw-dynamic .claw-header .claw-time{font-size:0.8em;color:#666}
+.footer{text-align:center;padding:20px;color:#444;font-size:0.8em;border-top:1px solid #1a1a3e;margin-top:30px}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>每日天气分析</h1>
+  <div class="claw-bar" id="clawBar"></div>
+</div>
+<div class="container">
+  <div class="claw-panel active" id="panel-claw1">
+    <div class="update-bar">
+      <div class="time">&#x1F550; 采集时间: 2026-06-13 16:35:21</div>
+      <div class="hint">&#x23F1; 每30分钟自动采集 · 点击城市卡片查看24h温度变化</div>
+    </div>
+    <div class="city-grid" id="cityGrid"></div>
+    <div class="card">
+      <div class="card-title">&#x1F4CA; 可视化图表 (matplotlib)</div>
+      <div class="chart-grid" id="chartGrid"></div>
+    </div>
+  </div>
+  <div class="claw-panel" id="panel-claw2"><div class="claw-dynamic" id="claw2Content"></div></div>
+  <div class="claw-panel" id="panel-claw3"><div class="claw-dynamic" id="claw3Content"></div></div>
+</div>
+<div class="footer">&#x1F99E; Claw 作业系统 · 成员1 - 气象数据采集与可视化 · 数据来源: Open-Meteo API · 每30分钟自动更新</div>
+<script>
+var C = [{"name": "杭州", "temp": 21.2, "feels": 24.0, "hum": 93.0, "pres": 1005.3, "wind_spd": 7.7, "wind_dir": "NE", "precip": 0.5, "desc": "小雨", "aqi": 86, "aqi_level": "良", "uv": 1.7, "uv_level": "低", "alert": "无预警", "color": "#4fc3f7", "city_file": "city_杭州.html"}, {"name": "成都", "temp": 32.8, "feels": 33.6, "hum": 34.0, "pres": 950.8, "wind_spd": 8.7, "wind_dir": "SSE", "precip": 0.0, "desc": "阴天", "aqi": 72, "aqi_level": "良", "uv": 8.7, "uv_level": "很高", "alert": "无预警", "color": "#81c784", "city_file": "city_成都.html"}, {"name": "北京", "temp": 29.3, "feels": 31.9, "hum": 51.0, "pres": 996.4, "wind_spd": 2.5, "wind_dir": "SSW", "precip": 0.0, "desc": "阴天", "aqi": 93, "aqi_level": "良", "uv": 7.0, "uv_level": "高", "alert": "无预警", "color": "#ffb74d", "city_file": "city_北京.html"}, {"name": "哈尔滨", "temp": 24.2, "feels": 23.1, "hum": 43.0, "pres": 994.7, "wind_spd": 8.8, "wind_dir": "NNE", "precip": 0.0, "desc": "阴天", "aqi": 37, "aqi_level": "优", "uv": 7.2, "uv_level": "很高", "alert": "无预警", "color": "#4dd0e1", "city_file": "city_哈尔滨.html"}, {"name": "广州", "temp": 28.0, "feels": 33.4, "hum": 84.0, "pres": 1003.2, "wind_spd": 8.5, "wind_dir": "SSE", "precip": 0.1, "desc": "小毛毛雨", "aqi": 69, "aqi_level": "良", "uv": 7.3, "uv_level": "很高", "alert": "无预警", "color": "#e57373", "city_file": "city_广州.html"}];
+var CLAW2 = {};
+var CLAW3 = {};
+var CHARTS = {"temp_comparison_latest": "./img/temp_comparison_latest.png", "air_comparison_latest": "./img/air_comparison_latest.png", "uv_comparison_latest": "./img/uv_comparison_latest.png", "dashboard_latest": "./img/dashboard_latest.png"};
+
+var CLAWS = [
+  {id:"claw1", label:"\ud83e\udd8e Claw 1", badge:"实时气象分析员", online:true},
+  {id:"claw2", label:"🔍 Claw 2", badge:"趋势预测分析员", online:!!CLAW2.html},
+  {id:"claw3", label:"🌍 Claw 3", badge:"场景应用分析员", online:!!CLAW3.html}
+];
+
+function initClawSwitcher(){
+  var bar=document.getElementById("clawBar");
+  bar.innerHTML=CLAWS.map(function(c,i){
+    var dot='<span class="dot '+(c.online?"online":"offline")+'"></span>';
+    return '<button class="claw-btn'+(i===0?" active":"")+'" data-claw="'+c.id+'">'+dot+c.label+'<span class="badge">'+c.badge+'</span></button>';
+  }).join("");
+  document.querySelectorAll(".claw-btn").forEach(function(btn){
+    btn.onclick=function(){
+      var id=btn.dataset.claw;
+      document.querySelectorAll(".claw-btn").forEach(function(b){b.classList.remove("active")});
+      document.querySelectorAll(".claw-panel").forEach(function(p){p.classList.remove("active")});
+      btn.classList.add("active");
+      document.getElementById("panel-"+id).classList.add("active");
+    };
+  });
+}
+
+function renderWeather(){
+  document.getElementById("cityGrid").innerHTML=C.map(function(c){
+    var aqC=c.aqi<=50?"aqi-good":c.aqi<=100?"aqi-moderate":c.aqi<=150?"aqi-unhealthy":"aqi-bad";
+    var uvC=c.uv<=2?"#00e676":c.uv<=5?"#ffeb3b":c.uv<=7?"#ff9800":"#f44336";
+    return '<a class="city-card" href="./'+c.city_file+'" style="border-left:4px solid '+c.color+'"><div class="city-name">'+c.name+'</div><div class="city-metrics">'+
+      '<div class="metric"><span class="m-icon">\ud83c\udf21\ufe0f</span><span class="m-val">'+c.temp+'\u00b0C</span><span class="m-desc">'+c.desc+'</span></div>'+
+      '<div class="metric"><span class="m-icon">\ud83e\udd17</span><span class="m-val">'+c.feels+'\u00b0C</span><span class="m-desc">体感</span></div>'+
+      '<div class="metric"><span class="m-icon">\ud83d\udca7</span><span class="m-val">'+c.hum+'%</span><span class="m-desc">湿度</span></div>'+
+      '<div class="metric"><span class="m-icon">\ud83c\udf00</span><span class="m-val">'+c.pres+'</span><span class="m-desc">hPa</span></div>'+
+      '<div class="metric"><span class="m-icon">\ud83d\udca8</span><span class="m-val">'+c.wind_spd+' '+c.wind_dir+'</span><span class="m-desc">风速/风向</span></div>'+
+      '<div class="metric"><span class="m-icon">\ud83c\udf27\ufe0f</span><span class="m-val">'+c.precip+'mm</span><span class="m-desc">降水</span></div>'+
+      '<div class="metric"><span class="m-icon">\ud83c\udfed</span><span class="m-val '+aqC+'">'+c.aqi+'</span><span class="m-desc">'+c.aqi_level+'</span></div>'+
+      '<div class="metric"><span class="m-icon">\u2600\ufe0f</span><span class="m-val" style="color:'+uvC+'">'+c.uv+'</span><span class="m-desc">'+c.uv_level+'</span></div>'+
+      '<div class="metric" style="grid-column:span 3"><span class="m-icon">\u26a0\ufe0f</span><span class="m-desc">'+c.alert+'</span></div>'+
+    '</div><div class="hint-link">📈 查看24h温度变化 →</div></a>';
+  }).join("");
+
+  var cg=document.getElementById("chartGrid");
+  var cl=[
+    {src:CHARTS.temp_comparison_latest, title:"\ud83c\udf21\ufe0f 5城温湿度对比"},
+    {src:CHARTS.air_comparison_latest, title:"\ud83c\udfed 5城AQI对比"},
+    {src:CHARTS.uv_comparison_latest, title:"\u2600\ufe0f 5城UV对比"},
+    {src:CHARTS.dashboard_latest, title:"\ud83d\udda5\ufe0f 5城综合仪表盘"}
+  ];
+  cg.innerHTML=cl.map(function(ch){
+    return ch.src?'<img class="chart-img" src="'+ch.src+'" alt="'+ch.title+'" title="'+ch.title+'">':
+      '<div style="background:#1a1a3e;border-radius:8px;padding:40px;text-align:center;color:#555">'+ch.title+' - 等待数据</div>';
+  }).join("");
+}
+
+function renderClaws(){
+  var claws=[["claw2",CLAW2],["claw3",CLAW3]];
+  claws.forEach(function(pair){
+    var id=pair[0], data=pair[1], container=document.getElementById(id+"Content");
+    if(data.html){
+      container.innerHTML='<div class="claw-header"><h2 style="color:#4fc3f7">'+data.title+'</h2><div class="claw-time">\ud83d\udd50 更新于 '+data.updated+'</div></div>'+data.html;
+    }else{
+      var n=id.replace("claw","");
+    var role = id === 'claw2' ? '趋势预测分析员' : '场景应用分析员';
+    container.innerHTML='<div class="placeholder-box"><div class="p-icon">🤖</div><h3>Claw '+n+' · '+role+'</h3><p>请将以下 API 地址提供给 Claw '+n+' 成员，<br>其 Claw 可通过 POST 请求推送数据到统一服务器。</p><p style="margin-top:14px"><code>POST http://116.62.189.222:3000/api/claw/'+id+'</code></p><p style="font-size:0.8em;color:#555;margin-top:8px">推送格式: {"html": "内容", "title": "模块名称"}</p></div>';
+    }
+  });
+}
+
+initClawSwitcher();
+renderWeather();
+renderClaws();
+</script>
+</body>
+</html>
