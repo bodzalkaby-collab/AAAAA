@@ -40,6 +40,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 .card-title{font-size:1.1em;font-weight:600;margin-bottom:14px;color:#fff;display:flex;align-items:center;gap:10px}
 .chart-img{width:100%;height:auto;border-radius:8px;cursor:pointer;transition:transform 0.3s}
 .chart-img:hover{transform:scale(1.02);cursor:zoom-in}
+.chart-item{position:relative;margin-bottom:10px}
+.chart-city-legend{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:8px}
+.chart-city-legend .city-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:12px;font-size:0.75em;font-weight:600;border:1px solid #333}
 .chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 @media(max-width:900px){.chart-grid{grid-template-columns:1fr}.city-grid{grid-template-columns:1fr}}
 .placeholder-box{text-align:center;padding:80px 20px;background:#12122a;border:2px dashed #1a1a3e;border-radius:16px;margin:40px 20px}
@@ -202,9 +205,19 @@ function renderWeather(){
     {src:CHARTS.uv_comparison_latest, title:"☀️ 5城UV对比"},
     {src:CHARTS.dashboard_latest, title:"🖥️ 5城综合仪表盘"}
   ];
+  // City colors for legend
+  var cityColors = ['#4fc3f7','#81c784','#ffb74d','#4dd0e1','#e57373'];
+  var cnames = [];
+  for(var i=0;i<C.length;i++){
+    cnames.push('<span class="city-tag" style="border-color:'+cityColors[i%5]+'88"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+cityColors[i%5]+'">{</span>'+C[i].name+' '+C[i].temp+'&deg;C</span>');
+  }
+  var cityLegend = '<div class="chart-city-legend">'+cnames.join('')+'</div>';
   cg.innerHTML=cl.map(function(ch){
-    return ch.src?'<img class="chart-img" src="'+ch.src+'" alt="'+ch.title+'" title="'+ch.title+'">':
-      '<div style="background:#1a1a3e;border-radius:8px;padding:40px;text-align:center;color:#555">'+ch.title+' - 等待数据</div>';
+    if(ch.src){
+      return '<div class="chart-item"><img class="chart-img" src="'+ch.src+'" alt="'+ch.title+'" title="'+ch.title+'">'+cityLegend+'</div>';
+    }else{
+      return '<div class="chart-item"><div style="background:#1a1a3e;border-radius:8px;padding:40px;text-align:center;color:#555">'+ch.title+' - 等待数据</div></div>';
+    }
   }).join("");
 }
 
