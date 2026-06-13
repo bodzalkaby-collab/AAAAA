@@ -135,23 +135,11 @@ function renderWeather(){
 }
 
 function renderClaws(){
-  // Pre-define Claw3 city switch function
-  window.switchClaw3City = function(idx){
-    document.querySelectorAll('[id^="c3city"]').forEach(function(el){el.style.display="none";});
-    document.getElementById("c3city"+idx).style.display="block";
-    document.querySelectorAll('button[onclick*="switchClaw3City"]').forEach(function(b){b.classList.remove("active");});
-    var btns = document.querySelectorAll('button[onclick*="switchClaw3City("]');
-    if(btns[idx]) btns[idx].classList.add("active");
-  };
   var claws=[["claw2",CLAW2],["claw3",CLAW3]];
   claws.forEach(function(pair){
     var id=pair[0], data=pair[1], container=document.getElementById(id+"Content");
     if(data.html){
-      if(id === "claw3"){
-        container.innerHTML = data.html;
-      }else{
-        container.innerHTML='<div class="claw-header"><h2 style="color:#4fc3f7">'+data.title+'</h2><div class="claw-time">\ud83d\udd50 更新于 '+data.updated+'</div></div>'+data.html;
-      }
+      container.innerHTML='<div class="claw-header"><h2 style="color:#4fc3f7">'+data.title+'</h2><div class="claw-time">\ud83d\udd50 更新于 '+data.updated+'</div></div>'+data.html;
     }else{
       var n=id.replace("claw","");
     var role = id === 'claw2' ? '趋势预测分析员' : '场景应用分析员';
@@ -159,7 +147,6 @@ function renderClaws(){
     }
   });
 }
-
 
 initClawSwitcher();
 renderWeather();
