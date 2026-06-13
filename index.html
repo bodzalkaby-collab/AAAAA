@@ -142,50 +142,6 @@ var CLAWS = [
   {id:"daily", label:"每日报告", badge:"5城天气汇总", online:true}
 ];
 
-
-
-window.showCityChart = function(name, color){
-  var data = TEMP_HIST[name] || [];
-  if(data.length === 0){ alert(name + '暂无历史数据'); return; }
-  document.getElementById("modalTitle").textContent = name + " - 24小时温度变化";
-  var modal = document.getElementById("chartModal");
-  modal.style.display = "flex";
-  setTimeout(function(){
-    var ctx = document.getElementById("modalChart").getContext("2d");
-    if(window._tempChart) window._tempChart.destroy();
-    window._tempChart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: data.map(function(d){ return d.time.slice(5,16); }),
-        datasets: [
-          { label: "温度 (°C)", data: data.map(function(d){ return d.temp; }),
-            borderColor: color, backgroundColor: color + "22", fill: true, tension: 0.3,
-            pointRadius: 4, pointHoverRadius: 7, pointBackgroundColor: color, borderWidth: 3 },
-          { label: "体感 (°C)", data: data.map(function(d){ return d.feels; }),
-            borderColor: "#ffb74d", backgroundColor: "#ffb74d22", fill: true, tension: 0.3,
-            pointRadius: 3, pointHoverRadius: 6, pointBackgroundColor: "#ffb74d", borderWidth: 2, borderDash: [5,5] }
-        ]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: {
-          legend: { labels: { color: "#aaa", font: { size: 13 } } },
-          tooltip: { backgroundColor: "#1a1a3e", titleColor: "#fff", bodyColor: "#ddd", borderColor: color + "44", borderWidth: 1, padding: 12 }
-        },
-        scales: {
-          x: { ticks: { color: "#666", maxRotation: 45 }, grid: { color: "#ffffff0d" } },
-          y: { ticks: { color: "#666" }, grid: { color: "#ffffff0d" } }
-        }
-      }
-    });
-  }, 200);
-}
-
-function closeChart(){
-  document.getElementById("chartModal").style.display = "none";
-  if(window._tempChart){ window._tempChart.destroy(); window._tempChart = null; }
-}
-
 function initClawSwitcher(){
   var bar=document.getElementById("clawBar");
   bar.innerHTML=CLAWS.map(function(c,i){
@@ -288,7 +244,7 @@ function renderDailyReport(){
   var ts=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
   container.innerHTML='<div class="report-header"><h2>每日天气报告 · '+ds+'</h2><div class="report-time">生成时间: '+ds+' '+ts+'</div><div class="report-subtitle">基于 Claw 1 · 5城市综合</div></div>'+
     '<div style="display:flex;justify-content:center;gap:12px;margin-bottom:18px;flex-wrap:wrap">'+
-    '<a href="./reports/index.html" style="color:#4fc3f7;padding:6px 14px;border:1px solid #00d4ff44;border-radius:8px;text-decoration:none;background:rgba(0,212,255,0.08)">📂 全部历史报告</div></div>'+
+    '<a href="./reports/index.html" style="color:#4fc3f7;padding:6px 14px;border:1px solid #00d4ff44;border-radius:8px;text-decoration:none;background:rgba(0,212,255,0.08)">📂 全部历史报告</a></div>'+
     '<div class="report-highlights">'+
     '<div class="highlight-card" style="border-color:#f44336"><div class="hl-icon">🔥</div><div class="hl-text">最热</div><div class="hl-val" style="color:#f44336">'+names[maxT]+' '+temps[maxT]+'°C</div></div>'+
     '<div class="highlight-card" style="border-color:#4fc3f7"><div class="hl-icon">❄️</div><div class="hl-text">最凉</div><div class="hl-val" style="color:#4fc3f7">'+names[minT]+' '+temps[minT]+'°C</div></div>'+
@@ -312,7 +268,7 @@ function renderWeather(){
   document.getElementById("cityGrid").innerHTML=C.map(function(c){
     var aqC=c.aqi<=50?"aqi-good":c.aqi<=100?"aqi-moderate":c.aqi<=150?"aqi-unhealthy":"aqi-bad";
     var uvC=c.uv<=2?"#00e676":c.uv<=5?"#ffeb3b":c.uv<=7?"#ff9800":"#f44336";
-    return '<div class="city-card" onclick="showCityChart('+c.name+','+c.color+')" style="border-left:4px solid '+c.color+'"><div class="city-name">'+c.name+'</div><div class="city-metrics">'+
+    return '<a class="city-card" href="./'+c.city_file+'" style="border-left:4px solid '+c.color+'"><div class="city-name">'+c.name+'</div><div class="city-metrics">'+
       '<div class="metric"><span class="m-icon">🌡️</span><span class="m-val">'+c.temp+'°C</span><span class="m-desc">'+c.desc+'</span></div>'+
       '<div class="metric"><span class="m-icon">🤗</span><span class="m-val">'+c.feels+'°C</span><span class="m-desc">体感</span></div>'+
       '<div class="metric"><span class="m-icon">💧</span><span class="m-val">'+c.hum+'%</span><span class="m-desc">湿度</span></div>'+
@@ -322,7 +278,7 @@ function renderWeather(){
       '<div class="metric"><span class="m-icon">🏭</span><span class="m-val '+aqC+'">'+c.aqi+'</span><span class="m-desc">'+c.aqi_level+'</span></div>'+
       '<div class="metric"><span class="m-icon">☀️</span><span class="m-val" style="color:'+uvC+'">'+c.uv+'</span><span class="m-desc">'+c.uv_level+'</span></div>'+
       '<div class="metric" style="grid-column:span 3"><span class="m-icon">⚠️</span><span class="m-desc">'+c.alert+'</span></div>'+
-    '</div><div class="hint-link">📈 查看24h温度变化 →</div></div>';
+    '</div><div class="hint-link">📈 查看24h温度变化 →</div></a>';
   }).join("");
   var cg=document.getElementById("chartGrid");
   var cl=[
@@ -344,16 +300,6 @@ function renderWeather(){
 initClawSwitcher();
 renderDailyReport();
 renderWeather();
-// Event delegation for city card clicks
-document.getElementById('cityGrid').addEventListener('click', function(e){
-  var card = e.target.closest('.city-card');
-  if(card){ console.log('City card clicked:', card.getAttribute('data-city'));
-    var name = card.getAttribute('data-city');
-    var color = card.getAttribute('data-color');
-    if(name && window.showCityChart){ showCityChart(name, color); }
-    else if(name){ alert('折线图功能加载中，请稍后...\n数据: ' + name); console.log('showCityChart not available, TEMP_HIST:', typeof TEMP_HIST); }
-  }
-});
 </script>
 </body>
 </html>
