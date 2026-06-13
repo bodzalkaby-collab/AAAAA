@@ -98,11 +98,9 @@ function initClawSwitcher(){
       document.querySelectorAll(".claw-panel").forEach(function(p){p.classList.remove("active")});
       btn.classList.add("active");
       document.getElementById("panel-"+id).classList.add("active");
-      // Load claw data on demand (always fresh from API)
       if(id !== "claw1") loadClawContent(id, true);
     };
   });
-  // Check live status every 15s
   setInterval(checkClawStatus, 15000);
 }
 
@@ -127,7 +125,6 @@ function loadClawContent(id, forceRefresh){
   
   container.innerHTML = '<div class="placeholder-box"><div class="p-icon">⏳</div><h3>加载中...</h3></div>';
   
-  // Try live API server first
   fetch(API_SERVER+'/api/claw-data', {mode: 'cors'})
     .then(function(r){ return r.json(); })
     .then(function(data){
@@ -139,7 +136,6 @@ function loadClawContent(id, forceRefresh){
       }
     })
     .catch(function(){
-      // Fallback to static claw_data.json
       fetch('./claw_data.json', {mode: 'cors'})
         .then(function(r){ return r.json(); })
         .then(function(data){
@@ -157,14 +153,11 @@ function loadClawContent(id, forceRefresh){
 function renderClawData(id, container, clawData){
   container.innerHTML = clawData.html;
   container.dataset.loaded = "1";
-  // Update dot to online
   var btn = document.querySelector('[data-claw="'+id+'"] .dot');
   if(btn) btn.className = "dot online";
   
-  // Auto-poll this tab every 30s for live updates
   if(CLAW_INTERVALS[id]) clearInterval(CLAW_INTERVALS[id]);
   CLAW_INTERVALS[id] = setInterval(function(){
-    // Is this tab currently visible?
     var panel = document.getElementById('panel-'+id);
     if(!panel || !panel.classList.contains('active')) return;
     
