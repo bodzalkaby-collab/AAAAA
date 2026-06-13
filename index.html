@@ -344,6 +344,15 @@ function renderWeather(){
 initClawSwitcher();
 renderDailyReport();
 renderWeather();
+// Event delegation for city card clicks
+document.getElementById('cityGrid').addEventListener('click', function(e){
+  var card = e.target.closest('.city-card');
+  if(card){
+    var name = card.getAttribute('data-city');
+    var color = card.getAttribute('data-color');
+    if(name && window.showCityChart) showCityChart(name, color);
+  }
+});
 </script>
 </body>
 </html>
