@@ -347,10 +347,11 @@ renderWeather();
 // Event delegation for city card clicks
 document.getElementById('cityGrid').addEventListener('click', function(e){
   var card = e.target.closest('.city-card');
-  if(card){
+  if(card){ console.log('City card clicked:', card.getAttribute('data-city'));
     var name = card.getAttribute('data-city');
     var color = card.getAttribute('data-color');
-    if(name && window.showCityChart) showCityChart(name, color);
+    if(name && window.showCityChart){ showCityChart(name, color); }
+    else if(name){ alert('折线图功能加载中，请稍后...\n数据: ' + name); console.log('showCityChart not available, TEMP_HIST:', typeof TEMP_HIST); }
   }
 });
 </script>
