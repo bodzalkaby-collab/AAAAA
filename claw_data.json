@@ -1,5 +1,9 @@
 {
-  "claw2": {},
+  "claw2": {
+    "html": "<div>占位测试</div>",
+    "title": "🔍 Claw2",
+    "updated": "2026/6/13 19:25:50"
+  },
   "claw3": {
     "html": "<div style=\"padding:20px;color:#4fc3f7;text-align:center\"><h2>🌍 Claw3实时更新</h2><p>✅ 推送测试 19:25:42</p></div>",
     "title": "🌍 场景应用分析员",
