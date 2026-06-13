@@ -35,7 +35,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 .city-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .metric{display:flex;flex-direction:column;align-items:center;padding:5px;background:#1a1a3e;border-radius:8px}
 .m-icon{font-size:0.9em}.m-val{font-size:0.95em;font-weight:700;color:#fff}.m-desc{font-size:0.7em;color:#888}
-.aqi-good{color:#00e676}.aqi-moderate{color:#ffeb3b}.aqi-unhealthy{color:#ff9800}.aqi-bad{color:#f44336}
+.aqi-good{color:#4fc3f7}.aqi-moderate{color:#ffeb3b}.aqi-unhealthy{color:#ff9800}.aqi-bad{color:#f44336}
 .card{background:#12122a;border-radius:16px;padding:18px;border:1px solid #1a1a3e;margin-bottom:20px}
 .card-title{font-size:1.1em;font-weight:600;margin-bottom:14px;color:#fff;display:flex;align-items:center;gap:10px}
 .chart-img{width:100%;height:auto;border-radius:8px;cursor:pointer;transition:transform 0.3s}
@@ -57,6 +57,32 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 .placeholder-box p{font-size:0.9em;color:#444;line-height:1.8;max-width:500px;margin:0 auto}
 .placeholder-box code{background:rgba(0,212,255,0.1);color:#4fc3f7;padding:3px 8px;border-radius:4px;font-size:0.85em}
 .claw-dynamic{padding:10px 0}
+.report-header{text-align:center;padding:20px;background:#12122a;border-radius:12px;border:1px solid #1a1a3e;margin-bottom:18px}
+.report-header h2{font-size:1.5em;color:#4fc3f7;margin-bottom:6px}
+.report-time{color:#888;font-size:0.85em}
+.report-subtitle{color:#666;font-size:0.8em;margin-top:4px}
+.report-highlights{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:18px}
+.highlight-card{background:#12122a;border-radius:12px;padding:14px;text-align:center;border:1px solid #1a1a3e;border-bottom:3px solid}
+.hl-icon{font-size:1.8em}
+.hl-text{font-size:0.8em;color:#888;margin:4px 0}
+.hl-val{font-size:1.1em;font-weight:700}
+.report-section-title{font-size:1.1em;font-weight:600;color:#fff;margin:16px 0 10px;padding-left:10px;border-left:3px solid #4fc3f7}
+.report-city-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-bottom:10px}
+.report-city-card{background:#12122a;border-radius:12px;padding:14px;border:1px solid #1a1a3e}
+.report-city-name{font-size:1.1em;font-weight:700;margin-bottom:8px}
+.report-metrics{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.report-metric{display:flex;justify-content:space-between;font-size:0.8em;padding:2px 0;border-bottom:1px solid #ffffff0d}
+.report-metric span{color:#ccc}
+.report-metric .r-desc{color:#666;font-size:0.85em}
+.report-charts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:10px}
+.report-chart-item .chart-img{width:100%;border-radius:8px}
+.report-claws{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:10px}
+.report-claw-card{background:#12122a;border-radius:12px;padding:14px;border:1px solid #1a1a3e;border-left:4px solid}
+.rc-label{font-size:0.9em;font-weight:600;color:#fff;margin-bottom:4px}
+.rc-status{font-size:0.8em;color:#888}
+.report-footer-text{text-align:center;padding:16px;color:#444;font-size:0.75em;border-top:1px solid #1a1a3e;margin-top:20px}
+
+
 .footer{text-align:center;padding:20px;color:#444;font-size:0.8em;border-top:1px solid #1a1a3e;margin-top:30px}
 .report-header{text-align:center;padding:20px;background:#12122a;border-radius:12px;border:1px solid #1a1a3e;margin-bottom:18px}
 .report-header h2{font-size:1.5em;color:#4fc3f7;margin-bottom:6px}
@@ -115,6 +141,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
   </div>
   <div class="claw-panel" id="panel-claw2"><div class="claw-dynamic" id="claw2Content"></div></div>
   <div class="claw-panel" id="panel-claw3"><div class="claw-dynamic" id="claw3Content"></div></div>
+  <div class="claw-panel" id="panel-daily"><div class="claw-dynamic" id="dailyContent"></div></div>
   <div class="claw-panel" id="panel-daily"><div class="claw-dynamic" id="dailyContent"></div></div>
 <div class="modal-overlay" id="chartModal" onclick="closeChart()">
   <div class="modal-content" onclick="event.stopPropagation()">
@@ -248,7 +275,7 @@ function renderDailyReport(){
     '<div class="report-highlights">'+
     '<div class="highlight-card" style="border-color:#f44336"><div class="hl-icon">🔥</div><div class="hl-text">最热</div><div class="hl-val" style="color:#f44336">'+names[maxT]+' '+temps[maxT]+'°C</div></div>'+
     '<div class="highlight-card" style="border-color:#4fc3f7"><div class="hl-icon">❄️</div><div class="hl-text">最凉</div><div class="hl-val" style="color:#4fc3f7">'+names[minT]+' '+temps[minT]+'°C</div></div>'+
-    '<div class="highlight-card" style="border-color:#00e676"><div class="hl-icon">🌿</div><div class="hl-text">最佳AQI</div><div class="hl-val" style="color:#00e676">'+names[bAQI]+' '+aqis[bAQI]+'</div></div>'+
+    '<div class="highlight-card" style="border-color:#4fc3f7"><div class="hl-icon">🌿</div><div class="hl-text">最佳AQI</div><div class="hl-val" style="color:#4fc3f7">'+names[bAQI]+' '+aqis[bAQI]+'</div></div>'+
     '<div class="highlight-card" style="border-color:#ff9800"><div class="hl-icon">⚠️</div><div class="hl-text">最差AQI</div><div class="hl-val" style="color:#ff9800">'+names[wAQI]+' '+aqis[wAQI]+'</div></div>'+
     '<div class="highlight-card" style="border-color:#ffeb3b"><div class="hl-icon">☀️</div><div class="hl-text">UV最强</div><div class="hl-val" style="color:#ffeb3b">'+names[mUV]+' UV '+uvs[mUV]+'</div></div></div>'+
     '<div class="report-section-title">各城市详情</div><div class="report-city-grid">'+cards+'</div>'+

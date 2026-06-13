@@ -29,7 +29,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 .claw-card .ct{font-size:0.8em;font-weight:600;color:#fff}
 .claw-card .cs{font-size:0.75em;margin-top:2px}
 .claw-card .cd{font-size:0.68em;color:#666;margin-top:2px}
-.aqi-good{color:#00e676}.aqi-moderate{color:#ffeb3b}.aqi-unhealthy{color:#ff9800}.aqi-bad{color:#f44336}
+.aqi-good{color:#4fc3f7}.aqi-moderate{color:#ffeb3b}.aqi-unhealthy{color:#ff9800}.aqi-bad{color:#f44336}
 .chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:10px 0}.chart-item{background:#1a1a3e;border-radius:8px;padding:8px;text-align:center}.chart-img{width:100%;border-radius:6px;cursor:pointer;transition:0.2s}.chart-img:hover{transform:scale(1.02)}.city-legend{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:6px;margin-bottom:4px}.city-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:10px;font-size:0.72em;font-weight:600;border:1px solid}.city-dot{display:inline-block;width:7px;height:7px;border-radius:50%}.chart-label{font-size:0.75em;color:#888;margin-top:4px}.ft{text-align:center;padding:14px;color:#444;font-size:0.7em;border-top:1px solid #1a1a3e;margin-top:14px}
 @media(max-width:600px){.cct-row{grid-template-columns:55px 40px 40px 40px 55px 35px 35px 1fr;font-size:0.68em}}
 </style></head>
@@ -42,7 +42,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 <div class="dash">
   <div class="dash-item" style="border-color:#f44336"><div class="dash-icon">&#x1F525;</div><div class="dash-label">最热城市</div><div class="dash-value" style="color:#f44336">杭州 20.7C</div></div>
   <div class="dash-item" style="border-color:#4fc3f7"><div class="dash-icon">&#x2744;&#xFE0F;</div><div class="dash-label">最凉城市</div><div class="dash-value" style="color:#4fc3f7">杭州 20.7C</div></div>
-  <div class="dash-item" style="border-color:#00e676"><div class="dash-icon">&#x1F33F;</div><div class="dash-label">最佳AQI</div><div class="dash-value" style="color:#00e676">杭州 84</div></div>
+  <div class="dash-item" style="border-color:#4fc3f7"><div class="dash-icon">&#x1F33F;</div><div class="dash-label">最佳AQI</div><div class="dash-value" style="color:#4fc3f7">杭州 84</div></div>
   <div class="dash-item" style="border-color:#ff9800"><div class="dash-icon">&#x26A0;&#xFE0F;</div><div class="dash-label">最差AQI</div><div class="dash-value" style="color:#ff9800">杭州 84</div></div>
   <div class="dash-item" style="border-color:#ffeb3b"><div class="dash-icon">&#x2600;&#xFE0F;</div><div class="dash-label">UV最强</div><div class="dash-value" style="color:#ffeb3b">杭州 1.9</div></div>
 </div>
@@ -140,8 +140,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 <div class="sec-title">&#x1F517; Claw 协作状态</div>
 <div class="claw-grid">
 <div class="claw-card" style="border-color:#4fc3f7"><div class="ct">Claw 1 实时气象</div><div class="cs" style="color:#4fc3f7">已接入</div><div class="cd">5城数据采集、图表、报告。2026-06-13 22:45:19</div></div>
-<div class="claw-card" style="border-color:#ffb74d"><div class="ct">Claw 2 趋势预测</div><div class="cs" style="color:#00e676">已接入</div><div class="cd">POST :3000/api/claw/claw2</div></div>
-<div class="claw-card" style="border-color:#81c784"><div class="ct">Claw 3 场景应用</div><div class="cs" style="color:#00e676">已接入</div><div class="cd">POST :3000/api/claw/claw3</div></div>
+<div class="claw-card" style="border-color:#ffb74d"><div class="ct">Claw 2 趋势预测</div><div class="cs" style="color:#4fc3f7">已接入</div><div class="cd">POST :3000/api/claw/claw2</div></div>
+<div class="claw-card" style="border-color:#81c784"><div class="ct">Claw 3 场景应用</div><div class="cs" style="color:#4fc3f7">已接入</div><div class="cd">POST :3000/api/claw/claw3</div></div>
 </div>
 </div>
 
