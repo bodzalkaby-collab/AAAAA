@@ -76,6 +76,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 .rc-label{font-size:0.9em;font-weight:600;color:#fff;margin-bottom:4px}
 .rc-status{font-size:0.8em;color:#888}
 .report-footer-text{text-align:center;padding:16px;color:#444;font-size:0.75em;border-top:1px solid #1a1a3e;margin-top:20px}
+.exec-summary{background:#12122a;border-radius:12px;padding:20px;border:1px solid #1a1a3e;margin-bottom:18px}
+.summary-title{font-size:1.15em;font-weight:700;color:#fff;margin-bottom:12px;padding-left:10px;border-left:3px solid #4fc3f7}
+.summary-text{font-size:0.9em;color:#ccc;line-height:1.7;margin-bottom:8px;text-indent:2em}
+.report-weather-main{font-size:0.85em;color:#aaa;margin-bottom:8px;padding:6px 10px;background:#1a1a3e;border-radius:6px}
+.report-advice-grid{display:grid;grid-template-columns:1fr;gap:4px}
+.advice-item{display:flex;align-items:flex-start;gap:8px;background:#1a1a3e;border-radius:6px;padding:6px 8px}
+.adv-icon{font-size:1em;min-width:20px}
+.adv-label{font-size:0.78em;color:#888}
+.adv-text{font-size:0.8em;color:#bbb}
+.chart-caption{text-align:center;font-size:0.78em;color:#666;margin-top:6px}
+.hl-desc{font-size:0.75em;color:#666;margin-top:4px}
 </style>
 </head>
 <body>
@@ -199,14 +210,17 @@ function renderDailyReport(){
   var cards='';
   for(var i=0;i<C.length;i++){
     var aqC=aqis[i]<=50?'aqi-good':aqis[i]<=100?'aqi-moderate':aqis[i]<=150?'aqi-unhealthy':'aqi-bad';
-    cards+='<div class="report-city-card" style="border-left:4px solid '+cityColors[i]+'"><div class="report-city-name" style="color:'+cityColors[i]+'">'+names[i]+'</div><div class="report-metrics">'+
-      '<div class="report-metric"><span>'+temps[i]+'°C</span><span class="r-desc">'+descs[i]+'</span></div>'+
-      '<div class="report-metric"><span>体感 '+feels[i]+'°C</span><span class="r-desc">湿度 '+hums[i]+'%</span></div>'+
-      '<div class="report-metric"><span>风 '+winds[i]+' '+wds[i]+'</span><span class="r-desc">降水 '+pcs[i]+'mm</span></div>'+
-      '<div class="report-metric"><span>AQI <span class="'+aqC+'">'+aqis[i]+'</span></span><span class="r-desc">'+alvs[i]+'</span></div>'+
-      '<div class="report-metric"><span>UV '+uvs[i]+'</span><span class="r-desc">'+ulvs[i]+'</span></div></div></div>';
+    var advDesc = descs[i].indexOf('雨')>=0?'建议携带雨具':descs[i].indexOf('晴')>=0?'天气晴好':descs[i].indexOf('云')>=0?'天气适宜':'天气温和';
+    var uvAdv = uvs[i]<=2?'无需防晒':uvs[i]<=5?'涂抹防晒霜':uvs[i]<=7?'SPF30+防晒':'SPF50+防晒+遮阳伞';
+    cards+='<div class="report-city-card" style="border-left:4px solid '+cityColors[i]+'"><div class="report-city-name" style="color:'+cityColors[i]+'">'+names[i]+'</div>'+
+      '<div class="report-weather-main">'+descs[i]+' · '+temps[i]+'°C · 体感'+feels[i]+'°C</div>'+
+      '<div class="report-advice-grid"><div class="advice-item"><span class="adv-icon">👔</span><div><div class="adv-label">穿衣</div><div class="adv-text">'+advDesc+'</div></div></div>'+
+      '<div class="advice-item"><span class="adv-icon">🏭</span><div><div class="adv-label">空气</div><div class="adv-text">AQI '+aqis[i]+' · '+alvs[i]+'</div></div></div>'+
+      '<div class="advice-item"><span class="adv-icon">☀️</span><div><div class="adv-label">防晒</div><div class="adv-text">UV '+uvs[i]+' · '+uvAdv+'</div></div></div></div></div>';
   }
   var now=new Date();
+  var dayNames = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
+  var dayName = dayNames[now.getDay()];
   var ds=now.getFullYear()+'-'+(now.getMonth()+1).toString().padStart(2,'0')+'-'+now.getDate().toString().padStart(2,'0');
   var ts=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
   container.innerHTML='<div class="report-header"><h2>每日天气报告 · '+ds+'</h2><div class="report-time">生成时间: '+ds+' '+ts+'</div><div class="report-subtitle">基于 Claw 1 · 5城市综合</div></div>'+
