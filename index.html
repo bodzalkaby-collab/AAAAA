@@ -62,7 +62,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 <div class="container">
   <div class="claw-panel active" id="panel-claw1">
     <div class="update-bar">
-      <div class="time">🕐 采集时间: 2026-06-13 21:30:27</div>
+      <div class="time">🕐 采集时间: 2026-06-13 21:45:21</div>
       <div class="hint">⏱ 每30分钟自动采集 · 点击城市卡片查看24h温度变化</div>
     </div>
     <div class="city-grid" id="cityGrid"></div>
@@ -76,7 +76,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 </div>
 <div class="footer">🦞 Claw 作业系统 · 成员1 - 气象数据采集与可视化 · 数据来源: Open-Meteo API · 每30分钟自动更新</div>
 <script>
-var C = [{"name": "杭州", "temp": 21.1, "feels": 24.4, "hum": 97.0, "pres": 1004.9, "wind_spd": 5.4, "wind_dir": "ENE", "precip": 0.0, "desc": "阴天", "aqi": 84, "aqi_level": "良", "uv": 1.9, "uv_level": "很低", "alert": "无预警", "color": "#4fc3f7", "city_file": "city_杭州.html"}, {"name": "成都", "temp": 25.9, "feels": 27.6, "hum": 65.0, "pres": 951.5, "wind_spd": 10.9, "wind_dir": "SSE", "precip": 0.0, "desc": "晴天", "aqi": 52, "aqi_level": "良", "uv": 8.7, "uv_level": "很高", "alert": "无预警", "color": "#81c784", "city_file": "city_成都.html"}, {"name": "北京", "temp": 22.1, "feels": 24.5, "hum": 84.0, "pres": 997.8, "wind_spd": 6.9, "wind_dir": "NE", "precip": 0.0, "desc": "阴天", "aqi": 86, "aqi_level": "良", "uv": 7.0, "uv_level": "中等", "alert": "无预警", "color": "#ffb74d", "city_file": "city_北京.html"}, {"name": "哈尔滨", "temp": 19.2, "feels": 17.4, "hum": 51.0, "pres": 996.4, "wind_spd": 10.8, "wind_dir": "NE", "precip": 0.0, "desc": "阴天", "aqi": 26, "aqi_level": "优", "uv": 7.2, "uv_level": "很高", "alert": "无预警", "color": "#4dd0e1", "city_file": "city_哈尔滨.html"}, {"name": "广州", "temp": 27.6, "feels": 32.5, "hum": 84.0, "pres": 1004.2, "wind_spd": 10.9, "wind_dir": "S", "precip": 0.0, "desc": "阴天", "aqi": 67, "aqi_level": "良", "uv": 7.3, "uv_level": "很高", "alert": "无预警", "color": "#e57373", "city_file": "city_广州.html"}];
+var C = [{"name": "杭州", "temp": 21.1, "feels": 24.1, "hum": 94.0, "pres": 1005.3, "wind_spd": 5.9, "wind_dir": "ENE", "precip": 0.1, "desc": "小毛毛雨", "aqi": 84, "aqi_level": "良", "uv": 1.9, "uv_level": "很低", "alert": "无预警", "color": "#4fc3f7", "city_file": "city_杭州.html"}, {"name": "成都", "temp": 25.6, "feels": 26.8, "hum": 61.0, "pres": 951.8, "wind_spd": 10.7, "wind_dir": "SSE", "precip": 0.0, "desc": "晴天", "aqi": 52, "aqi_level": "良", "uv": 8.7, "uv_level": "很高", "alert": "无预警", "color": "#81c784", "city_file": "city_成都.html"}, {"name": "北京", "temp": 21.9, "feels": 24.2, "hum": 84.0, "pres": 998.5, "wind_spd": 7.8, "wind_dir": "NE", "precip": 0.0, "desc": "阴天", "aqi": 86, "aqi_level": "良", "uv": 7.0, "uv_level": "中等", "alert": "无预警", "color": "#ffb74d", "city_file": "city_北京.html"}, {"name": "哈尔滨", "temp": 19.0, "feels": 17.6, "hum": 57.0, "pres": 996.4, "wind_spd": 10.1, "wind_dir": "ENE", "precip": 0.0, "desc": "阴天", "aqi": 26, "aqi_level": "优", "uv": 7.2, "uv_level": "很高", "alert": "无预警", "color": "#4dd0e1", "city_file": "city_哈尔滨.html"}, {"name": "广州", "temp": 27.6, "feels": 32.4, "hum": 84.0, "pres": 1004.4, "wind_spd": 11.1, "wind_dir": "S", "precip": 0.0, "desc": "阴天", "aqi": 67, "aqi_level": "良", "uv": 7.3, "uv_level": "很高", "alert": "无预警", "color": "#e57373", "city_file": "city_广州.html"}];
 var CHARTS = {"temp_comparison_latest": "./img/temp_comparison_latest.png", "air_comparison_latest": "./img/air_comparison_latest.png", "uv_comparison_latest": "./img/uv_comparison_latest.png", "dashboard_latest": "./img/dashboard_latest.png"};
 
 var API_SERVER = 'http://116.62.189.222:3000';
