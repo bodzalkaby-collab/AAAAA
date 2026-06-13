@@ -30,7 +30,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 .claw-card .cs{font-size:0.75em;margin-top:2px}
 .claw-card .cd{font-size:0.68em;color:#666;margin-top:2px}
 .aqi-good{color:#00e676}.aqi-moderate{color:#ffeb3b}.aqi-unhealthy{color:#ff9800}.aqi-bad{color:#f44336}
-.ft{text-align:center;padding:14px;color:#444;font-size:0.7em;border-top:1px solid #1a1a3e;margin-top:14px}
+.chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:10px 0}.chart-item{background:#1a1a3e;border-radius:8px;padding:8px;text-align:center}.chart-img{width:100%;border-radius:6px;cursor:pointer;transition:0.2s}.chart-img:hover{transform:scale(1.02)}.city-legend{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:6px;margin-bottom:4px}.city-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:10px;font-size:0.72em;font-weight:600;border:1px solid}.city-dot{display:inline-block;width:7px;height:7px;border-radius:50%}.chart-label{font-size:0.75em;color:#888;margin-top:4px}.ft{text-align:center;padding:14px;color:#444;font-size:0.7em;border-top:1px solid #1a1a3e;margin-top:14px}
 @media(max-width:600px){.cct-row{grid-template-columns:55px 40px 40px 40px 55px 35px 35px 1fr;font-size:0.68em}}
 </style></head>
 <body>
@@ -71,6 +71,57 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 </div>
 
 <div class="sec">
+<div class="sec">
+<div class="sec-title">&#x1F4C8; 可视化图表</div>
+<div class="text-line" style="color:#888;font-size:0.82em;margin-bottom:8px">以下图表展示各城市气象数据对比，均可点击放大查看</div>
+<div class="chart-grid">
+  <div class="chart-item">
+    <img class="chart-img" src="../img/temp_comparison_latest.png" alt="温度湿度对比">
+    <div class="city-legend">
+      <span class="city-tag" style="border-color:#4fc3f788"><span class="city-dot" style="background:#4fc3f7"></span>杭州</span>
+      <span class="city-tag" style="border-color:#81c78488"><span class="city-dot" style="background:#81c784"></span>成都</span>
+      <span class="city-tag" style="border-color:#ffb74d88"><span class="city-dot" style="background:#ffb74d"></span>北京</span>
+      <span class="city-tag" style="border-color:#4dd0e188"><span class="city-dot" style="background:#4dd0e1"></span>哈尔滨</span>
+      <span class="city-tag" style="border-color:#e5737388"><span class="city-dot" style="background:#e57373"></span>广州</span>
+    </div>
+    <div class="chart-label">&#x1F321;&#xFE0F; 五城温度与湿度对比</div>
+  </div>
+  <div class="chart-item">
+    <img class="chart-img" src="../img/air_comparison_latest.png" alt="空气质量对比">
+    <div class="city-legend">
+      <span class="city-tag" style="border-color:#4fc3f788"><span class="city-dot" style="background:#4fc3f7"></span>杭州</span>
+      <span class="city-tag" style="border-color:#81c78488"><span class="city-dot" style="background:#81c784"></span>成都</span>
+      <span class="city-tag" style="border-color:#ffb74d88"><span class="city-dot" style="background:#ffb74d"></span>北京</span>
+      <span class="city-tag" style="border-color:#4dd0e188"><span class="city-dot" style="background:#4dd0e1"></span>哈尔滨</span>
+      <span class="city-tag" style="border-color:#e5737388"><span class="city-dot" style="background:#e57373"></span>广州</span>
+    </div>
+    <div class="chart-label">&#x1F3ED; 五城空气质量(AQI)对比</div>
+  </div>
+  <div class="chart-item">
+    <img class="chart-img" src="../img/uv_comparison_latest.png" alt="紫外线对比">
+    <div class="city-legend">
+      <span class="city-tag" style="border-color:#4fc3f788"><span class="city-dot" style="background:#4fc3f7"></span>杭州</span>
+      <span class="city-tag" style="border-color:#81c78488"><span class="city-dot" style="background:#81c784"></span>成都</span>
+      <span class="city-tag" style="border-color:#ffb74d88"><span class="city-dot" style="background:#ffb74d"></span>北京</span>
+      <span class="city-tag" style="border-color:#4dd0e188"><span class="city-dot" style="background:#4dd0e1"></span>哈尔滨</span>
+      <span class="city-tag" style="border-color:#e5737388"><span class="city-dot" style="background:#e57373"></span>广州</span>
+    </div>
+    <div class="chart-label">&#x2600;&#xFE0F; 五城紫外线(UV)指数对比</div>
+  </div>
+  <div class="chart-item">
+    <img class="chart-img" src="../img/dashboard_latest.png" alt="综合仪表盘">
+    <div class="city-legend">
+      <span class="city-tag" style="border-color:#4fc3f788"><span class="city-dot" style="background:#4fc3f7"></span>杭州</span>
+      <span class="city-tag" style="border-color:#81c78488"><span class="city-dot" style="background:#81c784"></span>成都</span>
+      <span class="city-tag" style="border-color:#ffb74d88"><span class="city-dot" style="background:#ffb74d"></span>北京</span>
+      <span class="city-tag" style="border-color:#4dd0e188"><span class="city-dot" style="background:#4dd0e1"></span>哈尔滨</span>
+      <span class="city-tag" style="border-color:#e5737388"><span class="city-dot" style="background:#e57373"></span>广州</span>
+    </div>
+    <div class="chart-label">&#x1F4CA; 五城综合数据仪表盘</div>
+  </div>
+</div>
+</div>
+
 <div class="sec-title">&#x1F30D; 五、Claw 3 场景应用分析</div>
 <div class="city-name" style="color:#81c784">杭州场景分析</div><div class="text-line">- 杭州 🏙️ 成都 🏙️ 北京 🏙️ 哈尔滨 🏙️ 广州 🌡️ 生活指数 · 杭州 👔 🌧️ 外套+雨具 建议穿防水外套或雨衣，携带雨伞 🚗 ❌ 不宜洗车 有降水，洗了白洗 🏃 🏋️ 适宜运动 ⭐⭐⭐☆☆ 3/5 ☀️ 🟢 低 (UV 1.7) 无需特别防护 🤧 🟢 低风险 感冒风险较低 <。</div><div class="city-name" style="color:#81c784">成都场景分析</div><div class="text-line">- 成都 🏙️ 北京 🏙️ 哈尔滨 🏙️ 广州 🌡️ 生活指数 · 杭州 👔 🌧️ 外套+雨具 建议穿防水外套或雨衣，携带雨伞 🚗 ❌ 不宜洗车 有降水，洗了白洗 🏃 🏋️ 适宜运动 ⭐⭐⭐☆☆ 3/5 ☀️ 🟢 低 (UV 1.7) 无需特别防护 🤧 🟢 低风险 感冒风险较低 🚦 通勤出行建议 · 杭州 <div style="background:#1a1a3e;border-radius:8px;padding:10px;margin-bottom:10px;border-left:3px solid #ff9800;f。</div><div class="city-name" style="color:#81c784">北京场景分析</div><div class="text-line">- 北京 🏙️ 哈尔滨 🏙️ 广州 🌡️ 生活指数 · 杭州 👔 🌧️ 外套+雨具 建议穿防水外套或雨衣，携带雨伞 🚗 ❌ 不宜洗车 有降水，洗了白洗 🏃 🏋️ 适宜运动 ⭐⭐⭐☆☆ 3/5 ☀️ 🟢 低 (UV 1.7) 无需特别防护 🤧 🟢 低风险 感冒风险较低 🚦 通勤出行建议 · 杭州 ⚠️ 当前非高峰时段，出行较顺畅 出行方式推荐（5=最佳, 0=不推荐） <div style="display:flex;align-items:center;gap:10px;margin-bot。</div><div class="city-name" style="color:#81c784">哈尔滨场景分析</div><div class="text-line">- 哈尔滨 🏙️ 广州 🌡️ 生活指数 · 杭州 👔 🌧️ 外套+雨具 建议穿防水外套或雨衣，携带雨伞 🚗 ❌ 不宜洗车 有降水，洗了白洗 🏃 🏋️ 适宜运动 ⭐⭐⭐☆☆ 3/5 ☀️ 🟢 低 (UV 1.7) 无需特别防护 🤧 🟢 低风险 感冒风险较低 🚦 通勤出行建议 · 杭州 ⚠️ 当前非高峰时段，出行较顺畅 出行方式推荐（5=最佳, 0=不推荐） 🚌 公交/地铁 <div style="width:100%;height:100%;background:#43e97b;border-radius:6px"。</div><div class="city-name" style="color:#81c784">广州场景分析</div><div class="text-line">- 广州 🌡️ 生活指数 · 杭州 👔 🌧️ 外套+雨具 建议穿防水外套或雨衣，携带雨伞 🚗 ❌ 不宜洗车 有降水，洗了白洗 🏃 🏋️ 适宜运动 ⭐⭐⭐☆☆ 3/5 ☀️ 🟢 低 (UV 1.7) 无需特别防护 🤧 🟢 低风险 感冒风险较低 🚦 通勤出行建议 · 杭州 ⚠️ 当前非高峰时段，出行较顺畅 出行方式推荐（5=最佳, 0=不推荐） 🚌 公交/地铁 5 🚗 自驾</sp。</div>
 </div>
