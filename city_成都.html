@@ -22,7 +22,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 .metric-card .value{font-size:1.3em;font-weight:700;color:#fff}
 .aqi-good{color:#4fc3f7}.aqi-moderate{color:#ffeb3b}.aqi-unhealthy{color:#ff9800}.aqi-bad{color:#f44336}
 .footer{text-align:center;padding:20px;color:#444;font-size:0.8em}
-@media(max-width:600px){.current-weather{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.current-weather{grid-template-columns:repeat(2,1fr)}
 </style>
 </head>
 <body>
@@ -51,23 +51,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 <div class="footer">&#x1F99E; Claw 作业系统 &middot; 成都</div>
 <script>
 const histData = [{"time": "2026-06-13 14:35", "temp": 32.1, "feels": 34.4, "humid": 35.0, "desc": "晴天"}, {"time": "2026-06-13 15:05", "temp": 32.5, "feels": 34.6, "humid": 34.0, "desc": "晴天"}, {"time": "2026-06-13 15:35", "temp": 32.8, "feels": 34.4, "humid": 33.0, "desc": "晴天"}, {"time": "2026-06-13 16:05", "temp": 32.9, "feels": 34.0, "humid": 34.0, "desc": "阴天"}, {"time": "2026-06-13 16:35", "temp": 32.8, "feels": 33.6, "humid": 34.0, "desc": "阴天"}, {"time": "2026-06-13 18:05", "temp": 31.6, "feels": 32.2, "humid": 38.0, "desc": "少云"}, {"time": "2026-06-13 19:05", "temp": 30.6, "feels": 31.1, "humid": 42.0, "desc": "少云"}, {"time": "2026-06-13 19:26", "temp": 30.1, "feels": 30.7, "humid": 44.0, "desc": "少云"}, {"time": "2026-06-13 19:30", "temp": 29.5, "feels": 30.2, "humid": 47.0, "desc": "少云"}, {"time": "2026-06-13 19:45", "temp": 28.9, "feels": 29.6, "humid": 50.0, "desc": "少云"}, {"time": "2026-06-13 20:00", "temp": 28.3, "feels": 29.2, "humid": 52.0, "desc": "少云"}, {"time": "2026-06-13 20:15", "temp": 27.8, "feels": 28.8, "humid": 55.0, "desc": "少云"}, {"time": "2026-06-13 20:30", "temp": 27.4, "feels": 28.5, "humid": 57.0, "desc": "少云"}, {"time": "2026-06-13 20:45", "temp": 26.9, "feels": 28.2, "humid": 59.0, "desc": "少云"}, {"time": "2026-06-13 21:00", "temp": 26.5, "feels": 28.0, "humid": 62.0, "desc": "少云"}, {"time": "2026-06-13 21:15", "temp": 26.2, "feels": 27.7, "humid": 63.0, "desc": "晴天"}, {"time": "2026-06-13 21:30", "temp": 25.9, "feels": 27.6, "humid": 65.0, "desc": "晴天"}, {"time": "2026-06-13 21:45", "temp": 25.6, "feels": 26.8, "humid": 61.0, "desc": "晴天"}, {"time": "2026-06-13 22:00", "temp": 24.9, "feels": 26.2, "humid": 66.0, "desc": "晴天"}, {"time": "2026-06-13 22:03", "temp": 24.9, "feels": 26.2, "humid": 66.0, "desc": "晴天"}, {"time": "2026-06-13 22:06", "temp": 24.9, "feels": 26.2, "humid": 66.0, "desc": "晴天"}, {"time": "2026-06-13 22:15", "temp": 24.6, "feels": 26.3, "humid": 68.0, "desc": "晴天"}, {"time": "2026-06-13 22:30", "temp": 24.3, "feels": 26.1, "humid": 70.0, "desc": "晴天"}, {"time": "2026-06-13 22:45", "temp": 24.1, "feels": 26.0, "humid": 72.0, "desc": "晴天"}];
-function initChart() {{
-  new Chart(document.getElementById('tempChart').getContext('2d'), {{
+function initChart() {
+  new Chart(document.getElementById('tempChart').getContext('2d'), {
     type: 'line',
-    data: {{
-      labels: histData.map(function(d){{ return d.time.slice(5, 16); }}),
+    data: {
+      labels: histData.map(function(d){ return d.time.slice(5, 16); }),
       datasets: [
-        {{ label: '温度 (°C)', data: histData.map(function(d){{ return d.temp; }}), borderColor: '#81c784', backgroundColor: '#81c78422', fill: true, tension: 0.3, pointRadius: 4, borderWidth: 3 }},
-        {{ label: '体感 (°C)', data: histData.map(function(d){{ return d.feels; }}), borderColor: '#ffb74d', backgroundColor: '#ffb74d22', fill: true, tension: 0.3, pointRadius: 3, borderWidth: 2, borderDash: [5, 5] }}
+        { label: '温度 (°C)', data: histData.map(function(d){ return d.temp; }), borderColor: '#81c784', backgroundColor: '#81c78422', fill: true, tension: 0.3, pointRadius: 4, borderWidth: 3 },
+        { label: '体感 (°C)', data: histData.map(function(d){ return d.feels; }), borderColor: '#ffb74d', backgroundColor: '#ffb74d22', fill: true, tension: 0.3, pointRadius: 3, borderWidth: 2, borderDash: [5, 5] }
       ]
-    }},
-    options: {{
+    },
+    options: {
       responsive: true, maintainAspectRatio: false,
-      plugins: {{ legend: {{ labels: {{ color: '#aaa', font: {{ size: 13 }} }} }} }},
-      scales: {{ x: {{ ticks: {{ color: '#666' }}, grid: {{ color: '#ffffff0d' }} }}, y: {{ ticks: {{ color: '#666' }}, grid: {{ color: '#ffffff0d' }} }} }}
-    }}
-  }});
-}}
+      plugins: { legend: { labels: { color: '#aaa', font: { size: 13 } } } },
+      scales: { x: { ticks: { color: '#666' }, grid: { color: '#ffffff0d' } }, y: { ticks: { color: '#666' }, grid: { color: '#ffffff0d' } } }
+    }
+  });
+}
 initChart();
 </script>
 </body>
