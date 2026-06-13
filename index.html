@@ -57,6 +57,32 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 .placeholder-box p{font-size:0.9em;color:#444;line-height:1.8;max-width:500px;margin:0 auto}
 .placeholder-box code{background:rgba(0,212,255,0.1);color:#4fc3f7;padding:3px 8px;border-radius:4px;font-size:0.85em}
 .claw-dynamic{padding:10px 0}
+.report-header{text-align:center;padding:20px;background:#12122a;border-radius:12px;border:1px solid #1a1a3e;margin-bottom:18px}
+.report-header h2{font-size:1.5em;color:#4fc3f7;margin-bottom:6px}
+.report-time{color:#888;font-size:0.85em}
+.report-subtitle{color:#666;font-size:0.8em;margin-top:4px}
+.report-highlights{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:18px}
+.highlight-card{background:#12122a;border-radius:12px;padding:14px;text-align:center;border:1px solid #1a1a3e;border-bottom:3px solid}
+.hl-icon{font-size:1.8em}
+.hl-text{font-size:0.8em;color:#888;margin:4px 0}
+.hl-val{font-size:1.1em;font-weight:700}
+.report-section-title{font-size:1.1em;font-weight:600;color:#fff;margin:16px 0 10px;padding-left:10px;border-left:3px solid #4fc3f7}
+.report-city-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-bottom:10px}
+.report-city-card{background:#12122a;border-radius:12px;padding:14px;border:1px solid #1a1a3e}
+.report-city-name{font-size:1.1em;font-weight:700;margin-bottom:8px}
+.report-metrics{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.report-metric{display:flex;justify-content:space-between;font-size:0.8em;padding:2px 0;border-bottom:1px solid #ffffff0d}
+.report-metric span{color:#ccc}
+.report-metric .r-desc{color:#666;font-size:0.85em}
+.report-charts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:10px}
+.report-chart-item .chart-img{width:100%;border-radius:8px}
+.report-claws{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:10px}
+.report-claw-card{background:#12122a;border-radius:12px;padding:14px;border:1px solid #1a1a3e;border-left:4px solid}
+.rc-label{font-size:0.9em;font-weight:600;color:#fff;margin-bottom:4px}
+.rc-status{font-size:0.8em;color:#888}
+.report-footer-text{text-align:center;padding:16px;color:#444;font-size:0.75em;border-top:1px solid #1a1a3e;margin-top:20px}
+
+
 .footer{text-align:center;padding:20px;color:#444;font-size:0.8em;border-top:1px solid #1a1a3e;margin-top:30px}
 .report-header{text-align:center;padding:20px;background:#12122a;border-radius:12px;border:1px solid #1a1a3e;margin-bottom:18px}
 .report-header h2{font-size:1.5em;color:#4fc3f7;margin-bottom:6px}
@@ -115,6 +141,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
   </div>
   <div class="claw-panel" id="panel-claw2"><div class="claw-dynamic" id="claw2Content"></div></div>
   <div class="claw-panel" id="panel-claw3"><div class="claw-dynamic" id="claw3Content"></div></div>
+  <div class="claw-panel" id="panel-daily"><div class="claw-dynamic" id="dailyContent"></div></div>
   <div class="claw-panel" id="panel-daily"><div class="claw-dynamic" id="dailyContent"></div></div>
 <div class="modal-overlay" id="chartModal" onclick="closeChart()">
   <div class="modal-content" onclick="event.stopPropagation()">
@@ -292,11 +319,25 @@ function renderWeather(){
     return '<span class="city-tag" style="border-color:'+cityColors[i%5]+'88"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+cityColors[i%5]+'"></span>'+c.name+' '+c.temp+'°C</span>';
   }).join('')+'</div>';
   cg.innerHTML=cl.map(function(ch){
-    return ch.src?'<div class="chart-item"><img class="chart-img" src="'+ch.src+'" alt="'+ch.title+'" onclick="openChart('"+ch.title+"')"">'+legend+'</div>':
+    return ch.src?'<div class="chart-item"><img class="chart-img" src="'+ch.src+'" alt="'+ch.title+'"'+legend+'</div>':
       '<div class="chart-item"><div style="background:#1a1a3e;border-radius:8px;padding:40px;text-align:center;color:#555">'+ch.title+' - 等待数据</div></div>';
   }).join("");
 }
 
+function bindChartClick(){
+  setTimeout(function(){
+    var imgs = document.querySelectorAll(".chart-img");
+    var titles = ["温度对比","AQI对比","UV对比","综合仪表盘"];
+    for(var j=0;j<imgs.length;j++){
+      (function(el,k){
+        el.onclick = function(){
+          var name = el.getAttribute("alt") || titles[Math.min(k,3)];
+          openChart(name);
+        };
+      })(imgs[j],j);
+    }
+  }, 200);
+}
 var modalChartInstance = null;
 function openChart(title) {
   document.getElementById('chartModal').style.display = 'flex';
@@ -357,9 +398,83 @@ function closeChart(){
   }
 }
 
+
+
+function renderDailyReport(){
+  var container = document.getElementById("dailyContent");
+  if(!container) return;
+  var c = C;
+  var cityColors = ['#4fc3f7','#81c784','#ffb74d','#4dd0e1','#e57373'];
+  var names = c.map(function(x){return x.name;});
+  var temps = c.map(function(x){return x.temp;});
+  var feels = c.map(function(x){return x.feels;});
+  var hums = c.map(function(x){return x.hum;});
+  var aqis = c.map(function(x){return x.aqi;});
+  var uvs = c.map(function(x){return x.uv;});
+  var descs = c.map(function(x){return x.desc;});
+  var winds = c.map(function(x){return x.wind_spd;});
+  var wind_dirs = c.map(function(x){return x.wind_dir;});
+  var precips = c.map(function(x){return x.precip;});
+  var aqi_levels = c.map(function(x){return x.aqi_level;});
+  var uv_levels = c.map(function(x){return x.uv_level;});
+  var maxTemp = temps.indexOf(Math.max.apply(null, temps));
+  var minTemp = temps.indexOf(Math.min.apply(null, temps));
+  var bestAQI = aqis.indexOf(Math.min.apply(null, aqis));
+  var worstAQI = aqis.indexOf(Math.max.apply(null, aqis));
+  var maxUV = uvs.indexOf(Math.max.apply(null, uvs));
+  var cityCards = '';
+  for(var i=0;i<c.length;i++){
+    var aqC = aqis[i]<=50 ? 'aqi-good' : aqis[i]<=100 ? 'aqi-moderate' : aqis[i]<=150 ? 'aqi-unhealthy' : 'aqi-bad';
+    cityCards += '<div class="report-city-card" style="border-left:4px solid '+cityColors[i]+'"><div class="report-city-name" style="color:'+cityColors[i]+'">'+names[i]+'</div><div class="report-metrics">'+
+      '<div class="report-metric"><span>🌡️ '+temps[i]+'°C</span><span class="r-desc">'+descs[i]+'</span></div>'+
+      '<div class="report-metric"><span>🤗 体感 '+feels[i]+'°C</span><span class="r-desc">湿度 '+hums[i]+'%</span></div>'+
+      '<div class="report-metric"><span>💨 '+winds[i]+' '+wind_dirs[i]+'</span><span class="r-desc">🌧 '+precips[i]+'mm</span></div>'+
+      '<div class="report-metric"><span>🏭 <span class="'+aqC+'">AQI '+aqis[i]+'</span></span><span class="r-desc">'+aqi_levels[i]+'</span></div>'+
+      '<div class="report-metric"><span>☀️ UV '+uvs[i]+'</span><span class="r-desc">'+uv_levels[i]+'</span></div>'+
+    '</div></div>';
+  }
+  var now = new Date();
+  var dateStr = now.getFullYear()+'-'+(now.getMonth()+1).toString().padStart(2,'0')+'-'+now.getDate().toString().padStart(2,'0');
+  var timeStr = now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+  container.innerHTML =
+    '<div class="report-header">'+
+    '<h2>📋 每日天气报告 · '+dateStr+'</h2>'+
+    '<div class="report-time">🕐 生成时间: '+dateStr+' '+timeStr+'</div>'+
+    '<div class="report-subtitle">基于 Claw 1 · 气象数据采集 · 5城市综合</div></div>'+
+    '<div style="display:flex;justify-content:center;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap">'+
+    '<span style="color:#888;font-size:0.9em">📅 查看历史:</span>'+
+    '<a href="./reports/index.html" style="color:#4fc3f7;font-size:0.85em;text-decoration:none;padding:6px 14px;border:1px solid #00d4ff44;border-radius:8px;background:rgba(0,212,255,0.08)">📂 全部历史报告</a>'+
+    '</div>'+
+    '<div class="report-highlights">'+
+    '<div class="highlight-card" style="border-color:#f44336"><div class="hl-icon">🔥</div><div class="hl-text">最热城市</div><div class="hl-val" style="color:#f44336">'+names[maxTemp]+' '+temps[maxTemp]+'°C</div></div>'+
+    '<div class="highlight-card" style="border-color:#4fc3f7"><div class="hl-icon">❄️</div><div class="hl-text">最凉城市</div><div class="hl-val" style="color:#4fc3f7">'+names[minTemp]+' '+temps[minTemp]+'°C</div></div>'+
+    '<div class="highlight-card" style="border-color:#4fc3f7"><div class="hl-icon">🌿</div><div class="hl-text">空气质量最佳</div><div class="hl-val" style="color:#4fc3f7">'+names[bestAQI]+' AQI '+aqis[bestAQI]+'</div></div>'+
+    '<div class="highlight-card" style="border-color:#ff9800"><div class="hl-icon">⚠️</div><div class="hl-text">空气质量最差</div><div class="hl-val" style="color:#ff9800">'+names[worstAQI]+' AQI '+aqis[worstAQI]+'</div></div>'+
+    '<div class="highlight-card" style="border-color:#ffeb3b"><div class="hl-icon">☀️</div><div class="hl-text">UV最强</div><div class="hl-val" style="color:#ffeb3b">'+names[maxUV]+' UV '+uvs[maxUV]+'</div></div>'+
+    '</div>'+
+    '<div class="report-section-title">🏙️ 各城市详情</div>'+
+    '<div class="report-city-grid">'+cityCards+'</div>'+
+    '<div class="report-section-title">🖥️ 可视化图表</div>'+
+    '<div class="report-charts">'+
+    '<div class="report-chart-item"><img class="chart-img" src="./img/temp_comparison_latest.png" alt="温度对比" onclick="openChart('温度对比')"></div>'+
+    '<div class="report-chart-item"><img class="chart-img" src="./img/air_comparison_latest.png" alt="AQI对比" onclick="openChart('AQI对比')"></div>'+
+    '<div class="report-chart-item"><img class="chart-img" src="./img/uv_comparison_latest.png" alt="UV对比" onclick="openChart('UV对比')"></div>'+
+    '<div class="report-chart-item"><img class="chart-img" src="./img/dashboard_latest.png" alt="综合仪表盘" onclick="openChart('综合仪表盘')"></div>'+
+    '</div>'+
+    '<div class="report-section-title">🤖 各Claw工作接入</div>'+
+    '<div class="report-claws">'+
+    '<div class="report-claw-card" style="border-color:#4fc3f7"><div class="rc-label">🦞 Claw 1 · 实时气象分析员</div><div class="rc-status">✅ 已接入</div></div>'+
+    '<div class="report-claw-card" style="border-color:#ffb74d"><div class="rc-label">🔍 Claw 2 · 趋势预测分析员</div><div class="rc-status">⏳ 等待接入</div></div>'+
+    '<div class="report-claw-card" style="border-color:#81c784"><div class="rc-label">🌍 Claw 3 · 场景应用分析员</div><div class="rc-status">✅ 已接入</div></div>'+
+    '</div>'+
+    '<div class="report-footer-text">🦞 Claw 作业系统 · 每日天气报告</div>';
+}
+
+// Call functions
 initClawSwitcher();
 renderDailyReport();
 renderWeather();
+
 </script>
 </body>
 </html>
