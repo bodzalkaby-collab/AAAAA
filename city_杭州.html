@@ -97,28 +97,12 @@ function initChart() {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: {
-          labels: { color: '#aaa', font: { size: 13 } },
-          position: 'top'
-        },
-        tooltip: {
-          backgroundColor: '#1a1a3e',
-          titleColor: '#fff',
-          bodyColor: '#ddd',
-          borderColor: '#4fc3f744',
-          borderWidth: 1,
-          padding: 12
-        }
+        legend: { labels: { color: '#aaa', font: { size: 13 } }, position: 'top' },
+        tooltip: { backgroundColor: '#1a1a3e', titleColor: '#fff', bodyColor: '#ddd', borderColor: '#4fc3f744', borderWidth: 1, padding: 12 }
       },
       scales: {
-        x: {
-          ticks: { color: '#666', maxRotation: 45, font: { size: 11 } },
-          grid: { color: '#ffffff0d' }
-        },
-        y: {
-          ticks: { color: '#666', font: { size: 11 } },
-          grid: { color: '#ffffff0d' }
-        }
+        x: { ticks: { color: '#666', maxRotation: 45, font: { size: 11 } }, grid: { color: '#ffffff0d' } },
+        y: { ticks: { color: '#666', font: { size: 11 } }, grid: { color: '#ffffff0d' } }
       }
     }
   });
