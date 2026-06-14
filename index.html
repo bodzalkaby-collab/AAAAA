@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,30 +43,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 .chart-item{margin-bottom:10px}
 .chart-city-legend{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:8px}
 .chart-city-legend .city-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:12px;font-size:0.75em;font-weight:600;border:1px solid #333}
-
-.agent-panel{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;padding:6px 0}
-.agent-card{background:#1a1a3e;border:1px solid #333;border-radius:14px;padding:14px 18px;text-align:center;cursor:pointer;transition:all 0.3s;flex:1;min-width:120px;max-width:180px}
-.agent-card:hover{border-color:#00d4ff66;background:#1a1a45}
-.agent-card.running{border-color:#00d4ff;box-shadow:0 0 16px rgba(0,212,255,0.15)}
-.agent-card.done{border-color:#00e676;background:#0f2a1a}
-.agent-card.error{border-color:#f44336;background:#2a0f0f}
-.agent-icon{font-size:1.6em;margin-bottom:4px}
-.agent-name{font-size:1em;font-weight:700;color:#fff;margin-bottom:2px}
-.agent-desc{font-size:0.75em;color:#888;margin-bottom:6px}
-.agent-status{font-size:0.75em;display:flex;align-items:center;justify-content:center;gap:5px}
-.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%}
-.status-dot.idle{background:#555}
-.status-dot.running{background:#00d4ff;animation:pulse 0.8s ease-in-out infinite}
-.status-dot.done{background:#00e676}
-.status-dot.error{background:#f44336}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-.agent-arrow{font-size:1.3em;color:#444;font-weight:700}
-.run-btn{padding:8px 28px;border-radius:20px;border:none;background:linear-gradient(135deg,#00d4ff,#7c4dff);color:#fff;font-size:0.9em;font-weight:600;cursor:pointer;transition:all 0.3s}
-.run-btn:hover{transform:scale(1.05);box-shadow:0 4px 16px rgba(0,212,255,0.25)}
-.run-btn:disabled{opacity:0.4;cursor:not-allowed}
-.agent-log{background:#0d0d20;border:1px solid #1a1a3e;border-radius:10px;padding:10px 14px;margin-top:12px;min-height:30px;max-height:120px;overflow-y:auto;font-size:0.8em;font-family:monospace}
-.log-entry{padding:2px 0;color:#ccc}
-.log-entry.muted{color:#555}
 .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:1000;justify-content:center;align-items:center}
 .modal-content{background:#1a1a3e;border-radius:16px;padding:24px;width:90%;max-width:800px;max-height:85vh;border:1px solid #00d4ff33}
 .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
@@ -127,44 +104,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 <div class="container">
   <div class="claw-panel active" id="panel-claw1">
     <div class="update-bar">
-      <div class="time">COLLECT_TIME_PLACEHOLDER</div>
+      <div class="time">🕐 采集时间: 2026-06-14 18:15:16</div>
       <div class="hint">每30分钟自动采集 · 点击城市卡片查看24h温度变化</div>
     </div>
     <div class="city-grid" id="cityGrid"></div>
-      <!-- Agent 控制台 (Claw1) -->
-  <div class="card">
-    <div class="card-title">🤖 Claw 1 Agent 控制台</div>
-    <div class="agent-panel">
-      <div class="agent-card" onclick="runPipeline()">
-        <div class="agent-icon">🤖</div>
-        <div class="agent-name">Agent A</div>
-        <div class="agent-desc">数据采集</div>
-        <div class="agent-status" id="status-a"><span class="status-dot idle"></span> 空闲</div>
-      </div>
-      <div class="agent-arrow">→</div>
-      <div class="agent-card" onclick="runPipeline()">
-        <div class="agent-icon">🧠</div>
-        <div class="agent-name">Agent B</div>
-        <div class="agent-desc">整理总结</div>
-        <div class="agent-status" id="status-b"><span class="status-dot idle"></span> 空闲</div>
-      </div>
-      <div class="agent-arrow">→</div>
-      <div class="agent-card" onclick="runPipeline()">
-        <div class="agent-icon">📊</div>
-        <div class="agent-name">Agent C</div>
-        <div class="agent-desc">可视化</div>
-        <div class="agent-status" id="status-c"><span class="status-dot idle"></span> 空闲</div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:12px">
-      <button class="run-btn" onclick="runPipeline()" id="runBtn">▶ 运行整条流水线</button>
-    </div>
-    <div class="agent-log" id="agentLog">
-      <div class="log-entry muted">系统就绪，点击按钮或任意Agent区块启动</div>
-    </div>
-  </div>
-
-<div class="card">
+    <div class="card">
       <div class="card-title">可视化图表 (matplotlib)</div>
       <div class="chart-grid" id="chartGrid"></div>
     </div>
@@ -188,8 +132,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 <script>
 var API_SERVER = 'http://116.62.189.222:3000';
 var CLAW_INTERVALS = {};
-var C = CITIES_JSON_PLACEHOLDER;
-var CHARTS = CHARTS_JSON_PLACEHOLDER;
+var C = [{"name": "杭州", "temp": 27.0, "feels": 29.8, "hum": 67.0, "pres": 1003.0, "wind_spd": 8.2, "wind_dir": "NNE", "precip": 0.0, "desc": "阴天", "aqi": 68, "aqi_level": "良", "uv": 7.0, "uv_level": "中等", "alert": "无预警", "color": "#4fc3f7", "city_file": "city_杭州.html"}, {"name": "成都", "temp": 32.0, "feels": 32.4, "hum": 37.0, "pres": 949.2, "wind_spd": 10.3, "wind_dir": "ESE", "precip": 0.0, "desc": "阴天", "aqi": 70, "aqi_level": "良", "uv": 8.8, "uv_level": "很高", "alert": "无预警", "color": "#81c784", "city_file": "city_成都.html"}, {"name": "北京", "temp": 28.5, "feels": 29.3, "hum": 45.0, "pres": 999.9, "wind_spd": 6.8, "wind_dir": "ESE", "precip": 0.0, "desc": "少云", "aqi": 77, "aqi_level": "良", "uv": 7.7, "uv_level": "很高", "alert": "无预警", "color": "#ffb74d", "city_file": "city_北京.html"}, {"name": "哈尔滨", "temp": 20.3, "feels": 20.5, "hum": 71.0, "pres": 998.4, "wind_spd": 9.2, "wind_dir": "E", "precip": 0.0, "desc": "阴天", "aqi": 32, "aqi_level": "优", "uv": 1.8, "uv_level": "很低", "alert": "无预警", "color": "#4dd0e1", "city_file": "city_哈尔滨.html"}, {"name": "广州", "temp": 27.7, "feels": 33.2, "hum": 87.0, "pres": 1001.9, "wind_spd": 9.9, "wind_dir": "S", "precip": 0.1, "desc": "小毛毛雨", "aqi": 63, "aqi_level": "良", "uv": 8.4, "uv_level": "很高", "alert": "无预警", "color": "#e57373", "city_file": "city_广州.html"}];
+var CHARTS = {"temp_comparison_latest": "./img/temp_comparison_latest.png", "air_comparison_latest": "./img/air_comparison_latest.png", "uv_comparison_latest": "./img/uv_comparison_latest.png", "dashboard_latest": "./img/dashboard_latest.png"};
 var TEMP_HIST = {"杭州": [{"time": "2026-06-13 13:05", "temp": 24.3, "feels": 26.3, "humid": 65.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 13:35", "temp": 24.2, "feels": 26.3, "humid": 66.0, "desc": "毛毛雨"}, {"time": "2026-06-13 14:05", "temp": 24.0, "feels": 26.2, "humid": 67.0, "desc": "毛毛雨"}, {"time": "2026-06-13 14:35", "temp": 23.4, "feels": 25.7, "humid": 73.0, "desc": "大毛毛雨"}, {"time": "2026-06-13 15:05", "temp": 22.7, "feels": 25.1, "humid": 80.0, "desc": "大毛毛雨"}, {"time": "2026-06-13 15:35", "temp": 22.1, "feels": 24.7, "humid": 87.0, "desc": "小雨"}, {"time": "2026-06-13 16:05", "temp": 21.6, "feels": 24.4, "humid": 92.0, "desc": "小雨"}, {"time": "2026-06-13 16:35", "temp": 21.2, "feels": 24.0, "humid": 93.0, "desc": "小雨"}, {"time": "2026-06-13 18:05", "temp": 21.1, "feels": 24.0, "humid": 95.0, "desc": "毛毛雨"}, {"time": "2026-06-13 19:05", "temp": 20.9, "feels": 23.7, "humid": 95.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 19:26", "temp": 20.9, "feels": 23.7, "humid": 96.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 19:30", "temp": 20.9, "feels": 23.8, "humid": 96.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 19:45", "temp": 20.9, "feels": 24.0, "humid": 96.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 20:00", "temp": 20.9, "feels": 24.1, "humid": 96.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 20:15", "temp": 21.0, "feels": 24.3, "humid": 96.0, "desc": "阴天"}, {"time": "2026-06-13 20:30", "temp": 21.0, "feels": 24.3, "humid": 97.0, "desc": "阴天"}, {"time": "2026-06-13 20:45", "temp": 21.0, "feels": 24.4, "humid": 97.0, "desc": "阴天"}, {"time": "2026-06-13 21:00", "temp": 21.1, "feels": 24.5, "humid": 97.0, "desc": "阴天"}, {"time": "2026-06-13 21:15", "temp": 21.1, "feels": 24.5, "humid": 97.0, "desc": "阴天"}, {"time": "2026-06-13 21:30", "temp": 21.1, "feels": 24.4, "humid": 97.0, "desc": "阴天"}, {"time": "2026-06-13 21:45", "temp": 21.1, "feels": 24.1, "humid": 94.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 22:00", "temp": 20.7, "feels": 23.7, "humid": 96.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 22:03", "temp": 20.7, "feels": 23.7, "humid": 96.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 22:06", "temp": 20.7, "feels": 23.7, "humid": 96.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 22:15", "temp": 20.7, "feels": 23.7, "humid": 96.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 22:30", "temp": 20.7, "feels": 23.8, "humid": 96.0, "desc": "小毛毛雨"}], "成都": [{"time": "2026-06-13 13:05", "temp": 30.7, "feels": 33.4, "humid": 38.0, "desc": "晴天"}, {"time": "2026-06-13 13:35", "temp": 31.2, "feels": 33.9, "humid": 37.0, "desc": "晴天"}, {"time": "2026-06-13 14:05", "temp": 31.7, "feels": 34.1, "humid": 36.0, "desc": "晴天"}, {"time": "2026-06-13 14:35", "temp": 32.1, "feels": 34.4, "humid": 35.0, "desc": "晴天"}, {"time": "2026-06-13 15:05", "temp": 32.5, "feels": 34.6, "humid": 34.0, "desc": "晴天"}, {"time": "2026-06-13 15:35", "temp": 32.8, "feels": 34.4, "humid": 33.0, "desc": "晴天"}, {"time": "2026-06-13 16:05", "temp": 32.9, "feels": 34.0, "humid": 34.0, "desc": "阴天"}, {"time": "2026-06-13 16:35", "temp": 32.8, "feels": 33.6, "humid": 34.0, "desc": "阴天"}, {"time": "2026-06-13 18:05", "temp": 31.6, "feels": 32.2, "humid": 38.0, "desc": "少云"}, {"time": "2026-06-13 19:05", "temp": 30.6, "feels": 31.1, "humid": 42.0, "desc": "少云"}, {"time": "2026-06-13 19:26", "temp": 30.1, "feels": 30.7, "humid": 44.0, "desc": "少云"}, {"time": "2026-06-13 19:30", "temp": 29.5, "feels": 30.2, "humid": 47.0, "desc": "少云"}, {"time": "2026-06-13 19:45", "temp": 28.9, "feels": 29.6, "humid": 50.0, "desc": "少云"}, {"time": "2026-06-13 20:00", "temp": 28.3, "feels": 29.2, "humid": 52.0, "desc": "少云"}, {"time": "2026-06-13 20:15", "temp": 27.8, "feels": 28.8, "humid": 55.0, "desc": "少云"}, {"time": "2026-06-13 20:30", "temp": 27.4, "feels": 28.5, "humid": 57.0, "desc": "少云"}, {"time": "2026-06-13 20:45", "temp": 26.9, "feels": 28.2, "humid": 59.0, "desc": "少云"}, {"time": "2026-06-13 21:00", "temp": 26.5, "feels": 28.0, "humid": 62.0, "desc": "少云"}, {"time": "2026-06-13 21:15", "temp": 26.2, "feels": 27.7, "humid": 63.0, "desc": "晴天"}, {"time": "2026-06-13 21:30", "temp": 25.9, "feels": 27.6, "humid": 65.0, "desc": "晴天"}, {"time": "2026-06-13 21:45", "temp": 25.6, "feels": 26.8, "humid": 61.0, "desc": "晴天"}, {"time": "2026-06-13 22:00", "temp": 24.9, "feels": 26.2, "humid": 66.0, "desc": "晴天"}, {"time": "2026-06-13 22:03", "temp": 24.9, "feels": 26.2, "humid": 66.0, "desc": "晴天"}, {"time": "2026-06-13 22:06", "temp": 24.9, "feels": 26.2, "humid": 66.0, "desc": "晴天"}, {"time": "2026-06-13 22:15", "temp": 24.6, "feels": 26.3, "humid": 68.0, "desc": "晴天"}, {"time": "2026-06-13 22:30", "temp": 24.3, "feels": 26.1, "humid": 70.0, "desc": "晴天"}], "北京": [{"time": "2026-06-13 13:05", "temp": 28.7, "feels": 29.6, "humid": 45.0, "desc": "阴天"}, {"time": "2026-06-13 13:35", "temp": 29.2, "feels": 30.3, "humid": 43.0, "desc": "阴天"}, {"time": "2026-06-13 14:05", "temp": 29.7, "feels": 30.7, "humid": 41.0, "desc": "阴天"}, {"time": "2026-06-13 14:35", "temp": 30.4, "feels": 31.1, "humid": 39.0, "desc": "多云"}, {"time": "2026-06-13 15:05", "temp": 30.8, "feels": 31.0, "humid": 38.0, "desc": "多云"}, {"time": "2026-06-13 15:35", "temp": 29.9, "feels": 30.1, "humid": 40.0, "desc": "阴天"}, {"time": "2026-06-13 16:05", "temp": 28.9, "feels": 29.3, "humid": 43.0, "desc": "阴天"}, {"time": "2026-06-13 16:35", "temp": 29.3, "feels": 31.9, "humid": 51.0, "desc": "阴天"}, {"time": "2026-06-13 18:05", "temp": 24.0, "feels": 25.9, "humid": 70.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 19:05", "temp": 23.7, "feels": 25.6, "humid": 73.0, "desc": "阴天"}, {"time": "2026-06-13 19:26", "temp": 23.5, "feels": 25.6, "humid": 74.0, "desc": "阴天"}, {"time": "2026-06-13 19:30", "temp": 23.3, "feels": 25.5, "humid": 76.0, "desc": "阴天"}, {"time": "2026-06-13 19:45", "temp": 23.0, "feels": 25.5, "humid": 78.0, "desc": "阴天"}, {"time": "2026-06-13 20:00", "temp": 22.8, "feels": 25.4, "humid": 79.0, "desc": "阴天"}, {"time": "2026-06-13 20:15", "temp": 22.7, "feels": 25.3, "humid": 80.0, "desc": "多云"}, {"time": "2026-06-13 20:30", "temp": 22.6, "feels": 25.3, "humid": 81.0, "desc": "多云"}, {"time": "2026-06-13 20:45", "temp": 22.5, "feels": 25.1, "humid": 82.0, "desc": "多云"}, {"time": "2026-06-13 21:00", "temp": 22.4, "feels": 25.0, "humid": 82.0, "desc": "多云"}, {"time": "2026-06-13 21:15", "temp": 22.2, "feels": 24.8, "humid": 83.0, "desc": "阴天"}, {"time": "2026-06-13 21:30", "temp": 22.1, "feels": 24.5, "humid": 84.0, "desc": "阴天"}, {"time": "2026-06-13 21:45", "temp": 21.9, "feels": 24.2, "humid": 84.0, "desc": "阴天"}, {"time": "2026-06-13 22:00", "temp": 21.3, "feels": 23.4, "humid": 87.0, "desc": "阴天"}, {"time": "2026-06-13 22:03", "temp": 21.3, "feels": 23.4, "humid": 87.0, "desc": "阴天"}, {"time": "2026-06-13 22:06", "temp": 21.3, "feels": 23.4, "humid": 87.0, "desc": "阴天"}, {"time": "2026-06-13 22:15", "temp": 21.2, "feels": 23.5, "humid": 86.0, "desc": "阴天"}, {"time": "2026-06-13 22:30", "temp": 21.1, "feels": 23.5, "humid": 86.0, "desc": "阴天"}], "哈尔滨": [{"time": "2026-06-13 13:05", "temp": 24.2, "feels": 24.0, "humid": 40.0, "desc": "少云"}, {"time": "2026-06-13 13:35", "temp": 24.3, "feels": 23.7, "humid": 39.0, "desc": "晴天"}, {"time": "2026-06-13 14:05", "temp": 24.5, "feels": 23.5, "humid": 37.0, "desc": "晴天"}, {"time": "2026-06-13 14:35", "temp": 24.6, "feels": 23.5, "humid": 35.0, "desc": "少云"}, {"time": "2026-06-13 15:05", "temp": 24.7, "feels": 23.2, "humid": 33.0, "desc": "阴天"}, {"time": "2026-06-13 15:35", "temp": 24.6, "feels": 22.4, "humid": 32.0, "desc": "阴天"}, {"time": "2026-06-13 16:05", "temp": 24.3, "feels": 22.1, "humid": 31.0, "desc": "阴天"}, {"time": "2026-06-13 16:35", "temp": 24.2, "feels": 23.1, "humid": 43.0, "desc": "阴天"}, {"time": "2026-06-13 18:05", "temp": 22.6, "feels": 22.1, "humid": 48.0, "desc": "阴天"}, {"time": "2026-06-13 19:05", "temp": 21.3, "feels": 20.5, "humid": 52.0, "desc": "阴天"}, {"time": "2026-06-13 19:26", "temp": 21.0, "feels": 20.0, "humid": 52.0, "desc": "阴天"}, {"time": "2026-06-13 19:30", "temp": 20.8, "feels": 19.5, "humid": 52.0, "desc": "阴天"}, {"time": "2026-06-13 19:45", "temp": 20.5, "feels": 19.0, "humid": 51.0, "desc": "阴天"}, {"time": "2026-06-13 20:00", "temp": 20.3, "feels": 18.6, "humid": 51.0, "desc": "阴天"}, {"time": "2026-06-13 20:15", "temp": 20.1, "feels": 18.3, "humid": 50.0, "desc": "阴天"}, {"time": "2026-06-13 20:30", "temp": 20.0, "feels": 18.1, "humid": 50.0, "desc": "阴天"}, {"time": "2026-06-13 20:45", "temp": 19.8, "feels": 17.9, "humid": 50.0, "desc": "阴天"}, {"time": "2026-06-13 21:00", "temp": 19.6, "feels": 17.6, "humid": 50.0, "desc": "阴天"}, {"time": "2026-06-13 21:15", "temp": 19.4, "feels": 17.5, "humid": 51.0, "desc": "阴天"}, {"time": "2026-06-13 21:30", "temp": 19.2, "feels": 17.4, "humid": 51.0, "desc": "阴天"}, {"time": "2026-06-13 21:45", "temp": 19.0, "feels": 17.6, "humid": 57.0, "desc": "阴天"}, {"time": "2026-06-13 22:00", "temp": 18.4, "feels": 16.8, "humid": 56.0, "desc": "阴天"}, {"time": "2026-06-13 22:03", "temp": 18.4, "feels": 17.2, "humid": 56.0, "desc": "阴天"}, {"time": "2026-06-13 22:06", "temp": 18.4, "feels": 17.2, "humid": 56.0, "desc": "阴天"}, {"time": "2026-06-13 22:15", "temp": 18.3, "feels": 16.7, "humid": 55.0, "desc": "阴天"}, {"time": "2026-06-13 22:30", "temp": 18.2, "feels": 16.5, "humid": 55.0, "desc": "阴天"}], "广州": [{"time": "2026-06-13 13:05", "temp": 28.4, "feels": 32.3, "humid": 80.0, "desc": "毛毛雨"}, {"time": "2026-06-13 13:35", "temp": 29.1, "feels": 33.7, "humid": 78.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 14:05", "temp": 29.8, "feels": 34.9, "humid": 75.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 14:35", "temp": 28.6, "feels": 33.1, "humid": 80.0, "desc": "中阵雨"}, {"time": "2026-06-13 15:05", "temp": 27.2, "feels": 31.2, "humid": 86.0, "desc": "中阵雨"}, {"time": "2026-06-13 15:35", "temp": 27.2, "feels": 32.0, "humid": 88.0, "desc": "大毛毛雨"}, {"time": "2026-06-13 16:05", "temp": 27.6, "feels": 33.3, "humid": 87.0, "desc": "大毛毛雨"}, {"time": "2026-06-13 16:35", "temp": 28.0, "feels": 33.4, "humid": 84.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 18:05", "temp": 28.4, "feels": 33.8, "humid": 82.0, "desc": "阴天"}, {"time": "2026-06-13 19:05", "temp": 28.3, "feels": 33.5, "humid": 82.0, "desc": "阴天"}, {"time": "2026-06-13 19:26", "temp": 28.2, "feels": 33.4, "humid": 82.0, "desc": "阴天"}, {"time": "2026-06-13 19:30", "temp": 28.1, "feels": 33.3, "humid": 82.0, "desc": "阴天"}, {"time": "2026-06-13 19:45", "temp": 28.0, "feels": 33.1, "humid": 83.0, "desc": "阴天"}, {"time": "2026-06-13 20:00", "temp": 27.9, "feels": 32.9, "humid": 83.0, "desc": "阴天"}, {"time": "2026-06-13 20:15", "temp": 27.9, "feels": 32.8, "humid": 83.0, "desc": "阴天"}, {"time": "2026-06-13 20:30", "temp": 27.8, "feels": 32.8, "humid": 83.0, "desc": "阴天"}, {"time": "2026-06-13 20:45", "temp": 27.8, "feels": 32.7, "humid": 83.0, "desc": "阴天"}, {"time": "2026-06-13 21:00", "temp": 27.7, "feels": 32.6, "humid": 83.0, "desc": "阴天"}, {"time": "2026-06-13 21:15", "temp": 27.7, "feels": 32.5, "humid": 83.0, "desc": "阴天"}, {"time": "2026-06-13 21:30", "temp": 27.6, "feels": 32.5, "humid": 84.0, "desc": "阴天"}, {"time": "2026-06-13 21:45", "temp": 27.6, "feels": 32.4, "humid": 84.0, "desc": "阴天"}, {"time": "2026-06-13 22:00", "temp": 27.3, "feels": 32.1, "humid": 86.0, "desc": "阴天"}, {"time": "2026-06-13 22:03", "temp": 27.3, "feels": 32.1, "humid": 86.0, "desc": "阴天"}, {"time": "2026-06-13 22:06", "temp": 27.3, "feels": 32.1, "humid": 86.0, "desc": "阴天"}, {"time": "2026-06-13 22:15", "temp": 27.2, "feels": 32.1, "humid": 86.0, "desc": "阴天"}, {"time": "2026-06-13 22:30", "temp": 27.1, "feels": 32.1, "humid": 87.0, "desc": "阴天"}]};
 var CLAWS = [
   {id:"claw1", label:"Claw 1", badge:"实时气象分析员", online:true},
@@ -356,7 +300,7 @@ function renderWeather(){
 function bindChartClick(){
   setTimeout(function(){
     var imgs = document.querySelectorAll(".chart-img");
-    var titles = ["\u6e29\u5ea6\u5bf9\u6bd4","AQI\u5bf9\u6bd4","UV\u5bf9\u6bd4","\u7efc\u5408\u4eea\u8868\u76d8"];
+    var titles = ["温度对比","AQI对比","UV对比","综合仪表盘"];
     for(var j=0;j<imgs.length;j++){
       (function(el,k){
         el.onclick = function(){
@@ -426,67 +370,6 @@ function closeChart(){
     modalChartInstance = null;
   }
 }
-
-
-// Agent control
-function setStatus(agent, state, text){
-  var el = document.getElementById('status-'+agent);
-  if(!el) return;
-  el.innerHTML = '<span class="status-dot '+state+'"></span> '+text;
-}
-function addLog(msg, cls){
-  var log = document.getElementById('agentLog');
-  var entry = document.createElement('div');
-  entry.className = 'log-entry' + (cls ? ' '+cls : '');
-  entry.textContent = msg;
-  log.appendChild(entry);
-  log.scrollTop = log.scrollHeight;
-}
-function pollStatus(){
-  fetch(API_SERVER+'/api/agent/status')
-    .then(function(r){return r.json()})
-    .then(function(data){
-      setStatus('a', data.agents.a.status, data.agents.a.status==='idle'?'空闲':data.agents.a.status==='running'?'运行中':data.agents.a.status==='done'?'已完成':'失败');
-      setStatus('b', data.agents.b.status, data.agents.b.status==='idle'?'空闲':data.agents.b.status==='running'?'运行中':data.agents.b.status==='done'?'已完成':'失败');
-      setStatus('c', data.agents.c.status, data.agents.c.status==='idle'?'空闲':data.agents.c.status==='running'?'运行中':data.agents.c.status==='done'?'已完成':'失败');
-      var log = document.getElementById('agentLog');
-      if(data.log && data.log.length > 0){
-        log.innerHTML = '';
-        data.log.forEach(function(l){addLog(l)});
-      }
-      var btn = document.getElementById('runBtn');
-      if(data.pipeline === 'running'){
-        btn.disabled = true;
-        btn.textContent = '⏳ 流水线运行中...';
-      } else {
-        btn.disabled = false;
-        btn.textContent = data.pipeline === 'done' ? '🔄 重新运行流水线' : '▶ 运行整条流水线';
-      }
-      if(data.pipeline === 'running' && !window._pollTimer){
-        window._pollTimer = setTimeout(function(){window._pollTimer=null;pollStatus()}, 2000);
-      }
-    }).catch(function(err){});
-}
-function runPipeline(){
-  var btn = document.getElementById('runBtn');
-  if(btn.disabled) return;
-  btn.disabled = true;
-  btn.textContent = '⏳ 启动中...';
-  fetch(API_SERVER+'/api/agent/run', {method:'POST'})
-    .then(function(r){return r.json()})
-    .then(function(data){
-      addLog('🚀 流水线已启动');
-      setStatus('a', 'running', '运行中');
-      setStatus('b', 'pending', '等待');
-      setStatus('c', 'pending', '等待');
-      if(!window._pollTimer) window._pollTimer = setTimeout(function(){window._pollTimer=null;pollStatus()}, 2000);
-    }).catch(function(err){
-      btn.disabled = false;
-      btn.textContent = '▶ 运行整条流水线';
-      addLog('❌ 启动失败: '+err.message);
-    });
-}
-setTimeout(pollStatus, 2000);
 
 initClawSwitcher();
 renderDailyReport();
