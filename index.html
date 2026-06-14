@@ -117,8 +117,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
       <div class="chart-grid" id="chartGrid"></div>
     </div>
   </div>
-  <div class="claw-panel" id="panel-claw2"><div class="placeholder-box" style="margin:20px"><div class="p-icon">⏳</div><h3>预留接口</h3><p>Claw 2 · 趋势预测分析员<br>API: <code>POST /api/claw/claw2</code></p></div></div>
-  <div class="claw-panel" id="panel-claw3"><div class="placeholder-box" style="margin:20px"><div class="p-icon">⏳</div><h3>预留接口</h3><p>Claw 3 · 场景应用分析员<br>API: <code>POST /api/claw/claw3</code></p></div></div>
+  <div class="claw-panel" id="panel-claw2"><div class="claw-dynamic" id="claw2Content"></div></div>
+  <div class="claw-panel" id="panel-claw3"><div class="claw-dynamic" id="claw3Content"></div></div>
 </div>
 <div class="footer">🦞 Claw 作业系统 · 成员1 - 气象数据采集与可视化 · 数据来源: Open-Meteo API · 每小时自动更新</div>
 
@@ -252,6 +252,21 @@ function runPipeline(){
       addLog('❌ 启动失败: '+err.message);
     });
 }
+// Load claw2/claw3 data from API
+function loadClawData(){
+  fetch(API_HOST+'/api/claw-data')
+    .then(function(r){return r.json()})
+    .then(function(data){
+      if(data.claw2 && data.claw2.html){
+        document.getElementById('claw2Content').innerHTML = '<div class="claw-header" style="text-align:center;padding:16px;margin-bottom:18px;background:#12122a;border-radius:12px;border:1px solid #1a1a3e"><h2 style="color:#ff9800;margin-bottom:4px">'+data.claw2.title+'</h2><div class="claw-time" style="color:#666;font-size:0.85em">更新于 '+data.claw2.updated+'</div></div>' + data.claw2.html;
+      }
+      if(data.claw3 && data.claw3.html){
+        document.getElementById('claw3Content').innerHTML = '<div class="claw-header" style="text-align:center;padding:16px;margin-bottom:18px;background:#12122a;border-radius:12px;border:1px solid #1a1a3e"><h2 style="color:#ce93d8;margin-bottom:4px">'+data.claw3.title+'</h2><div class="claw-time" style="color:#666;font-size:0.85em">更新于 '+data.claw3.updated+'</div></div>' + data.claw3.html;
+      }
+    }).catch(function(err){});
+}
+loadClawData();
+
 setTimeout(pollStatus, 1000);
 </script>
 </body>
