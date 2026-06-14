@@ -3,377 +3,149 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Claw 团队作业 - 数据平台</title>
+<title>全国5城气象数据作业 - Claw 🦞</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:#0a0a1a;color:#e0e0e0;min-height:100vh}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
+  background:#0a0a1a;color:#e0e0e0;min-height:100vh}
 .container{max-width:1400px;margin:0 auto;padding:20px}
-.header{text-align:center;padding:20px 20px;background:linear-gradient(135deg,#0f0f23 0%,#1a1a3e 50%,#0f0f23 100%);border-bottom:2px solid #00d4ff33;margin-bottom:20px}
-.header h1{font-size:2em;background:linear-gradient(135deg,#00d4ff,#7c4dff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.header .subtitle{color:#888;margin-top:6px;font-size:0.9em}
-.claw-bar{display:flex;justify-content:center;gap:12px;margin-top:14px;flex-wrap:wrap}
-.claw-btn{padding:10px 24px;border-radius:20px;font-size:0.95em;font-weight:600;cursor:pointer;transition:all 0.3s;border:none;background:rgba(255,255,255,0.05);color:#666}
-.claw-btn:hover{background:rgba(255,255,255,0.1);color:#aaa}
-.claw-btn.active{background:rgba(0,212,255,0.15);border:1px solid #00d4ff;color:#00d4ff}
-.claw-btn .badge{display:block;font-size:0.7em;font-weight:400;margin-top:2px;opacity:0.6}
-.claw-btn.active .badge{opacity:1;color:#4fc3f7}
-.claw-btn .dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:6px;vertical-align:middle}
-.dot.online{background:#43e97b;box-shadow:0 0 6px #43e97b}
-.dot.offline{background:#666}
-.claw-panel{display:none}
-.claw-panel.active{display:block;animation:fadeIn 0.3s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.update-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#12122a;border-radius:12px;margin-bottom:20px;border:1px solid #1a1a3e;flex-wrap:wrap;gap:10px}
-.update-bar .time{color:#4fc3f7;font-size:0.9em}
-.update-bar .hint{color:#666;font-size:0.85em}
-.city-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:20px}
-.city-card{background:#12122a;border-radius:16px;padding:16px;border:1px solid #1a1a3e;transition:all 0.3s;cursor:pointer;text-decoration:none;display:block;color:inherit}
-.city-card:hover{border-color:#00d4ff66;box-shadow:0 4px 20px rgba(0,212,255,0.1);transform:translateY(-2px)}
-.city-card .hint-link{font-size:0.7em;color:#4fc3f7;text-align:right;margin-top:4px;opacity:0;transition:opacity 0.3s}
-.city-card:hover .hint-link{opacity:1}
-.city-name{font-size:1.2em;font-weight:700;margin-bottom:10px;color:#fff}
-.city-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.metric{display:flex;flex-direction:column;align-items:center;padding:5px;background:#1a1a3e;border-radius:8px}
-.m-icon{font-size:0.9em}.m-val{font-size:0.95em;font-weight:700;color:#fff}.m-desc{font-size:0.7em;color:#888}
-.aqi-good{color:#4fc3f7}.aqi-moderate{color:#ffeb3b}.aqi-unhealthy{color:#ff9800}.aqi-bad{color:#f44336}
-.card{background:#12122a;border-radius:16px;padding:18px;border:1px solid #1a1a3e;margin-bottom:20px}
-.card-title{font-size:1.1em;font-weight:600;margin-bottom:14px;color:#fff;display:flex;align-items:center;gap:10px}
+.header{text-align:center;padding:30px 20px;background:linear-gradient(135deg,#0f0f23 0%,#1a1a3e 50%,#0f0f23 100%);
+  border-bottom:2px solid #00d4ff33;margin-bottom:24px}
+.header h1{font-size:2.2em;background:linear-gradient(135deg,#00d4ff,#7c4dff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header .subtitle{color:#888;margin-top:8px}
+.header .claws{display:flex;justify-content:center;gap:20px;margin-top:16px;flex-wrap:wrap}
+.claw-badge{padding:8px 18px;border-radius:20px;font-size:0.9em;font-weight:600}
+.claw-badge.active{background:rgba(0,212,255,0.15);border:1px solid #00d4ff;color:#00d4ff}
+.claw-badge.other{background:rgba(255,255,255,0.05);border:1px solid #333;color:#666}
+.claw-badge.multi-agent{background:rgba(124,77,255,0.15);border:1px solid #7c4dff;color:#b388ff}
+.update-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;
+  background:#12122a;border-radius:12px;margin-bottom:24px;border:1px solid #1a1a3e;flex-wrap:wrap;gap:10px}
+.update-bar .time{color:#4fc3f7}
+.city-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:24px}
+.city-card{background:#12122a;border-radius:16px;padding:16px;border:1px solid #1a1a3e;transition:all 0.3s}
+.city-card:hover{border-color:#00d4ff66;box-shadow:0 4px 20px rgba(0,212,255,0.1)}
+.city-name{font-size:1.3em;font-weight:700;margin-bottom:12px;color:#fff}
+.city-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.metric{display:flex;flex-direction:column;align-items:center;padding:6px;background:#1a1a3e;border-radius:8px}
+.m-icon{font-size:1em}
+.m-val{font-size:1em;font-weight:700;color:#fff}
+.m-desc{font-size:0.75em;color:#888}
+.aqi-good{color:#00e676}.aqi-moderate{color:#ffeb3b}.aqi-unhealthy{color:#ff9800}.aqi-bad{color:#f44336}
+.card{background:#12122a;border-radius:16px;padding:20px;border:1px solid #1a1a3e;margin-bottom:24px}
+.card-title{font-size:1.15em;font-weight:600;margin-bottom:16px;color:#fff;display:flex;align-items:center;gap:10px}
 .chart-img{width:100%;height:auto;border-radius:8px;cursor:pointer;transition:transform 0.3s}
 .chart-img:hover{transform:scale(1.02)}
-.chart-item{margin-bottom:10px}
-.chart-city-legend{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:8px}
-.chart-city-legend .city-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:12px;font-size:0.75em;font-weight:600;border:1px solid #333}
-.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:1000;justify-content:center;align-items:center}
-.modal-content{background:#1a1a3e;border-radius:16px;padding:24px;width:90%;max-width:800px;max-height:85vh;border:1px solid #00d4ff33}
-.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.modal-title{font-size:1.2em;font-weight:700;color:#fff}
-.modal-close{font-size:1.8em;color:#888;cursor:pointer;padding:0 8px}.modal-close:hover{color:#fff}
-.modal-body{position:relative;width:100%;min-height:380px}
-.chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-@media(max-width:900px){.chart-grid{grid-template-columns:1fr}.city-grid{grid-template-columns:1fr}}
-.placeholder-box{text-align:center;padding:80px 20px;background:#12122a;border:2px dashed #1a1a3e;border-radius:16px;margin:40px 20px}
-.placeholder-box .p-icon{font-size:56px;margin-bottom:12px}
-.placeholder-box h3{font-size:1.3em;color:#555;margin-bottom:10px}
-.placeholder-box p{font-size:0.9em;color:#444;line-height:1.8;max-width:500px;margin:0 auto}
-.placeholder-box code{background:rgba(0,212,255,0.1);color:#4fc3f7;padding:3px 8px;border-radius:4px;font-size:0.85em}
-.claw-dynamic{padding:10px 0}
+.chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.modal{display:none;position:fixed;z-index:10000;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.9);justify-content:center;align-items:center}
+.modal.active{display:flex}.modal img{max-width:90vw;max-height:90vh;border-radius:8px}
+.modal .close{position:absolute;top:20px;right:30px;color:white;font-size:30px;cursor:pointer}
 .footer{text-align:center;padding:20px;color:#444;font-size:0.8em;border-top:1px solid #1a1a3e;margin-top:30px}
-.report-header{text-align:center;padding:20px;background:#12122a;border-radius:12px;border:1px solid #1a1a3e;margin-bottom:18px}
-.report-header h2{font-size:1.5em;color:#4fc3f7;margin-bottom:6px}
-.report-time{color:#888;font-size:0.85em}
-.report-subtitle{color:#666;font-size:0.8em;margin-top:4px}
-.report-highlights{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:18px}
-.highlight-card{background:#12122a;border-radius:12px;padding:14px;text-align:center;border:1px solid #1a1a3e;border-bottom:3px solid}
-.hl-icon{font-size:1.8em}
-.hl-text{font-size:0.8em;color:#888;margin:4px 0}
-.hl-val{font-size:1.1em;font-weight:700}
-.report-section-title{font-size:1.1em;font-weight:600;color:#fff;margin:16px 0 10px;padding-left:10px;border-left:3px solid #4fc3f7}
-.report-city-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-bottom:10px}
-.report-city-card{background:#12122a;border-radius:12px;padding:14px;border:1px solid #1a1a3e}
-.report-city-name{font-size:1.1em;font-weight:700;margin-bottom:8px}
-.report-metrics{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-.report-metric{display:flex;justify-content:space-between;font-size:0.8em;padding:2px 0;border-bottom:1px solid #ffffff0d}
-.report-metric span{color:#ccc}
-.report-metric .r-desc{color:#666;font-size:0.85em}
-.report-charts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:10px}
-.report-chart-item .chart-img{width:100%;border-radius:8px}
-.report-claws{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:10px}
-.report-claw-card{background:#12122a;border-radius:12px;padding:14px;border:1px solid #1a1a3e;border-left:4px solid}
-.rc-label{font-size:0.9em;font-weight:600;color:#fff;margin-bottom:4px}
-.rc-status{font-size:0.8em;color:#888}
-.report-footer-text{text-align:center;padding:16px;color:#444;font-size:0.75em;border-top:1px solid #1a1a3e;margin-top:20px}
-.exec-summary{background:#12122a;border-radius:12px;padding:20px;border:1px solid #1a1a3e;margin-bottom:18px}
-.summary-title{font-size:1.15em;font-weight:700;color:#fff;margin-bottom:12px;padding-left:10px;border-left:3px solid #4fc3f7}
-.summary-text{font-size:0.9em;color:#ccc;line-height:1.7;margin-bottom:8px;text-indent:2em}
-.report-weather-main{font-size:0.85em;color:#aaa;margin-bottom:8px;padding:6px 10px;background:#1a1a3e;border-radius:6px}
-.report-advice-grid{display:grid;grid-template-columns:1fr;gap:4px}
-.advice-item{display:flex;align-items:flex-start;gap:8px;background:#1a1a3e;border-radius:6px;padding:6px 8px}
-.adv-icon{font-size:1em;min-width:20px}
-.adv-label{font-size:0.78em;color:#888}
-.adv-text{font-size:0.8em;color:#bbb}
-.chart-caption{text-align:center;font-size:0.78em;color:#666;margin-top:6px}
-.hl-desc{font-size:0.75em;color:#666;margin-top:4px}
+@media(max-width:900px){.chart-grid{grid-template-columns:1fr}.city-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+<div class="modal" id="chartModal" onclick="this.classList.remove('active')">
+  <span class="close">&times;</span>
+  <img id="modalImg" src="" alt="Chart">
+</div>
+
 <div class="header">
-  <h1>每日天气分析</h1>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <div class="claw-bar" id="clawBar"></div>
+  <h1>🌤️ 全国5城气象数据作业展示</h1>
+  <div class="subtitle">多Agent并行采集 · 5城对比 · 可视化仪表 · 每1小时自动更新</div>
+  <div class="claws">
+    <span class="claw-badge active">🦞 Claw 1 · 实时气象分析员</span>
+    <span class="claw-badge multi-agent">🤖 x5 子Agent并行</span>
+    <span class="claw-badge other">🦞 Claw 2 · 待接入</span>
+    <span class="claw-badge other">🦞 Claw 3 · 待接入</span>
+  </div>
 </div>
+
 <div class="container">
-  <div class="claw-panel active" id="panel-claw1">
-    <div class="update-bar">
-      <div class="time">🕐 采集时间: 2026-06-14 17:15:23</div>
-      <div class="hint">每30分钟自动采集 · 点击城市卡片查看24h温度变化</div>
-    </div>
-    <div class="city-grid" id="cityGrid"></div>
-    <div class="card">
-      <div class="card-title">可视化图表 (matplotlib)</div>
-      <div class="chart-grid" id="chartGrid"></div>
-    </div>
+  <div class="update-bar">
+    <div class="time"><i class="far fa-clock"></i> 采集时间: 2026-06-14 17:16:09</div>
+    <div style="color:#666;font-size:0.85em"><i class="fas fa-sync-alt"></i> 每1小时自动采集 · 5个子Agent并行 · 涵盖5个城市</div>
   </div>
-  <div class="claw-panel" id="panel-claw2"><div class="claw-dynamic" id="claw2Content"></div></div>
-  <div class="claw-panel" id="panel-claw3"><div class="claw-dynamic" id="claw3Content"></div></div>
-  <div class="claw-panel" id="panel-daily"><div class="claw-dynamic" id="dailyContent"></div></div>
-<div class="modal-overlay" id="chartModal" onclick="closeChart()">
-  <div class="modal-content" onclick="event.stopPropagation()">
-    <div class="modal-header">
-      <span class="modal-title" id="modalTitle">温度变化</span>
-      <span class="modal-close" onclick="closeChart()">&times;</span>
-    </div>
-    <div class="modal-body">
-      <canvas id="modalChart"></canvas>
-    </div>
+
+  <div class="city-grid">
+    <div class="city-card" style="border-left:4px solid #4fc3f7">
+  <div class="city-name">杭州</div>
+  <div class="city-metrics">
+    <div class="metric"><span class="m-icon">🌡️</span><span class="m-val">--°C</span><span class="m-desc"></span></div>
+    <div class="metric"><span class="m-icon">🤗</span><span class="m-val">--°C</span><span class="m-desc">体感</span></div>
+    <div class="metric"><span class="m-icon">💧</span><span class="m-val">--%</span><span class="m-desc">湿度</span></div>
+    <div class="metric"><span class="m-icon">🌀</span><span class="m-val">--</span><span class="m-desc">hPa</span></div>
+    <div class="metric"><span class="m-icon">💨</span><span class="m-val">--</span><span class="m-desc">风速/风向</span></div>
+    <div class="metric"><span class="m-icon">🌧️</span><span class="m-val">--mm</span><span class="m-desc">降水</span></div>
+    <div class="metric"><span class="m-icon">🏭</span><span class="m-val aqi-moderate">--</span><span class="m-desc"></span></div>
+    <div class="metric"><span class="m-icon">☀️</span><span class="m-val" style="color:#9c27b0">--</span><span class="m-desc"></span></div>
+    <div class="metric" style="grid-column:span 3"><span class="m-icon">⚠️</span><span class="m-desc">无预警</span></div>
+  </div>
+</div><div class="city-card" style="border-left:4px solid #81c784">
+  <div class="city-name">成都</div>
+  <div class="city-metrics">
+    <div class="metric"><span class="m-icon">🌡️</span><span class="m-val">32.9°C</span><span class="m-desc">阴天</span></div>
+    <div class="metric"><span class="m-icon">🤗</span><span class="m-val">33.2°C</span><span class="m-desc">体感</span></div>
+    <div class="metric"><span class="m-icon">💧</span><span class="m-val">34%</span><span class="m-desc">湿度</span></div>
+    <div class="metric"><span class="m-icon">🌀</span><span class="m-val">949.1</span><span class="m-desc">hPa</span></div>
+    <div class="metric"><span class="m-icon">💨</span><span class="m-val">8.8 E</span><span class="m-desc">风速/风向</span></div>
+    <div class="metric"><span class="m-icon">🌧️</span><span class="m-val">0.0mm</span><span class="m-desc">降水</span></div>
+    <div class="metric"><span class="m-icon">🏭</span><span class="m-val aqi-moderate">74</span><span class="m-desc">良</span></div>
+    <div class="metric"><span class="m-icon">☀️</span><span class="m-val" style="color:#f44336">8.8</span><span class="m-desc">很高</span></div>
+    <div class="metric" style="grid-column:span 3"><span class="m-icon">⚠️</span><span class="m-desc">无预警</span></div>
+  </div>
+</div><div class="city-card" style="border-left:4px solid #ffb74d">
+  <div class="city-name">北京</div>
+  <div class="city-metrics">
+    <div class="metric"><span class="m-icon">🌡️</span><span class="m-val">--°C</span><span class="m-desc"></span></div>
+    <div class="metric"><span class="m-icon">🤗</span><span class="m-val">--°C</span><span class="m-desc">体感</span></div>
+    <div class="metric"><span class="m-icon">💧</span><span class="m-val">--%</span><span class="m-desc">湿度</span></div>
+    <div class="metric"><span class="m-icon">🌀</span><span class="m-val">--</span><span class="m-desc">hPa</span></div>
+    <div class="metric"><span class="m-icon">💨</span><span class="m-val">--</span><span class="m-desc">风速/风向</span></div>
+    <div class="metric"><span class="m-icon">🌧️</span><span class="m-val">--mm</span><span class="m-desc">降水</span></div>
+    <div class="metric"><span class="m-icon">🏭</span><span class="m-val aqi-moderate">--</span><span class="m-desc"></span></div>
+    <div class="metric"><span class="m-icon">☀️</span><span class="m-val" style="color:#9c27b0">--</span><span class="m-desc"></span></div>
+    <div class="metric" style="grid-column:span 3"><span class="m-icon">⚠️</span><span class="m-desc">无预警</span></div>
+  </div>
+</div><div class="city-card" style="border-left:4px solid #e57373">
+  <div class="city-name">哈尔滨</div>
+  <div class="city-metrics">
+    <div class="metric"><span class="m-icon">🌡️</span><span class="m-val">20.5°C</span><span class="m-desc">阴天</span></div>
+    <div class="metric"><span class="m-icon">🤗</span><span class="m-val">20.7°C</span><span class="m-desc">体感</span></div>
+    <div class="metric"><span class="m-icon">💧</span><span class="m-val">71%</span><span class="m-desc">湿度</span></div>
+    <div class="metric"><span class="m-icon">🌀</span><span class="m-val">998.1</span><span class="m-desc">hPa</span></div>
+    <div class="metric"><span class="m-icon">💨</span><span class="m-val">10.1 ESE</span><span class="m-desc">风速/风向</span></div>
+    <div class="metric"><span class="m-icon">🌧️</span><span class="m-val">0.0mm</span><span class="m-desc">降水</span></div>
+    <div class="metric"><span class="m-icon">🏭</span><span class="m-val aqi-good">36</span><span class="m-desc">优</span></div>
+    <div class="metric"><span class="m-icon">☀️</span><span class="m-val" style="color:#00e676">1.8</span><span class="m-desc">低</span></div>
+    <div class="metric" style="grid-column:span 3"><span class="m-icon">⚠️</span><span class="m-desc">无预警</span></div>
+  </div>
+</div><div class="city-card" style="border-left:4px solid #ce93d8">
+  <div class="city-name">广州</div>
+  <div class="city-metrics">
+    <div class="metric"><span class="m-icon">🌡️</span><span class="m-val">--°C</span><span class="m-desc"></span></div>
+    <div class="metric"><span class="m-icon">🤗</span><span class="m-val">--°C</span><span class="m-desc">体感</span></div>
+    <div class="metric"><span class="m-icon">💧</span><span class="m-val">--%</span><span class="m-desc">湿度</span></div>
+    <div class="metric"><span class="m-icon">🌀</span><span class="m-val">--</span><span class="m-desc">hPa</span></div>
+    <div class="metric"><span class="m-icon">💨</span><span class="m-val">--</span><span class="m-desc">风速/风向</span></div>
+    <div class="metric"><span class="m-icon">🌧️</span><span class="m-val">--mm</span><span class="m-desc">降水</span></div>
+    <div class="metric"><span class="m-icon">🏭</span><span class="m-val aqi-moderate">--</span><span class="m-desc"></span></div>
+    <div class="metric"><span class="m-icon">☀️</span><span class="m-val" style="color:#9c27b0">--</span><span class="m-desc"></span></div>
+    <div class="metric" style="grid-column:span 3"><span class="m-icon">⚠️</span><span class="m-desc">无预警</span></div>
   </div>
 </div>
+  </div>
+
+  <div class="footer">
+    🦞 Claw 作业系统 · 成员1 - 多Agent并行气象数据采集与可视化<br>
+    数据来源: Open-Meteo API · 5城市 (杭州/成都/北京/哈尔滨/广州) · 每1小时5个子Agent并行采集
+  </div>
 </div>
-<div class="footer">Claw 作业系统 · 成员1 - 气象数据采集与可视化 · 数据来源: Open-Meteo API · 每15分钟自动更新</div>
+
 <script>
-var API_SERVER = 'http://116.62.189.222:3000';
-var CLAW_INTERVALS = {};
-var C = [{"name": "杭州", "temp": 27.7, "feels": 30.2, "hum": 62.0, "pres": 1002.5, "wind_spd": 8.8, "wind_dir": "N", "precip": 0.0, "desc": "阴天", "aqi": 66, "aqi_level": "良", "uv": 7.0, "uv_level": "中等", "alert": "无预警", "color": "#4fc3f7", "city_file": "city_杭州.html"}, {"name": "成都", "temp": 32.9, "feels": 33.2, "hum": 34.0, "pres": 949.1, "wind_spd": 8.8, "wind_dir": "E", "precip": 0.0, "desc": "阴天", "aqi": 74, "aqi_level": "良", "uv": 8.8, "uv_level": "很高", "alert": "无预警", "color": "#81c784", "city_file": "city_成都.html"}, {"name": "北京", "temp": 28.8, "feels": 30.0, "hum": 44.0, "pres": 999.7, "wind_spd": 4.6, "wind_dir": "NE", "precip": 0.0, "desc": "晴天", "aqi": 81, "aqi_level": "良", "uv": 7.7, "uv_level": "很高", "alert": "无预警", "color": "#ffb74d", "city_file": "city_北京.html"}, {"name": "哈尔滨", "temp": 20.5, "feels": 20.7, "hum": 71.0, "pres": 998.1, "wind_spd": 10.1, "wind_dir": "ESE", "precip": 0.0, "desc": "阴天", "aqi": 36, "aqi_level": "优", "uv": 1.8, "uv_level": "很低", "alert": "无预警", "color": "#4dd0e1", "city_file": "city_哈尔滨.html"}, {"name": "广州", "temp": 28.6, "feels": 34.4, "hum": 85.0, "pres": 1001.4, "wind_spd": 9.1, "wind_dir": "SSW", "precip": 0.1, "desc": "小毛毛雨", "aqi": 63, "aqi_level": "良", "uv": 8.4, "uv_level": "很高", "alert": "无预警", "color": "#e57373", "city_file": "city_广州.html"}];
-var CHARTS = {"temp_comparison_latest": "./img/temp_comparison_latest.png", "air_comparison_latest": "./img/air_comparison_latest.png", "uv_comparison_latest": "./img/uv_comparison_latest.png", "dashboard_latest": "./img/dashboard_latest.png"};
-var TEMP_HIST = {"杭州": [{"time": "2026-06-13 13:05", "temp": 24.3, "feels": 26.3, "humid": 65.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 13:35", "temp": 24.2, "feels": 26.3, "humid": 66.0, "desc": "毛毛雨"}, {"time": "2026-06-13 14:05", "temp": 24.0, "feels": 26.2, "humid": 67.0, "desc": "毛毛雨"}, {"time": "2026-06-13 14:35", "temp": 23.4, "feels": 25.7, "humid": 73.0, "desc": "大毛毛雨"}, {"time": "2026-06-13 15:05", "temp": 22.7, "feels": 25.1, "humid": 80.0, "desc": "大毛毛雨"}, {"time": "2026-06-13 15:35", "temp": 22.1, "feels": 24.7, "humid": 87.0, "desc": "小雨"}, {"time": "2026-06-13 16:05", "temp": 21.6, "feels": 24.4, "humid": 92.0, "desc": "小雨"}, {"time": "2026-06-13 16:35", "temp": 21.2, "feels": 24.0, "humid": 93.0, "desc": "小雨"}, {"time": "2026-06-13 18:05", "temp": 21.1, "feels": 24.0, "humid": 95.0, "desc": "毛毛雨"}, {"time": "2026-06-13 19:05", "temp": 20.9, "feels": 23.7, "humid": 95.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 19:26", "temp": 20.9, "feels": 23.7, "humid": 96.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 19:30", "temp": 20.9, "feels": 23.8, "humid": 96.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 19:45", "temp": 20.9, "feels": 24.0, "humid": 96.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 20:00", "temp": 20.9, "feels": 24.1, "humid": 96.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 20:15", "temp": 21.0, "feels": 24.3, "humid": 96.0, "desc": "阴天"}, {"time": "2026-06-13 20:30", "temp": 21.0, "feels": 24.3, "humid": 97.0, "desc": "阴天"}, {"time": "2026-06-13 20:45", "temp": 21.0, "feels": 24.4, "humid": 97.0, "desc": "阴天"}, {"time": "2026-06-13 21:00", "temp": 21.1, "feels": 24.5, "humid": 97.0, "desc": "阴天"}, {"time": "2026-06-13 21:15", "temp": 21.1, "feels": 24.5, "humid": 97.0, "desc": "阴天"}, {"time": "2026-06-13 21:30", "temp": 21.1, "feels": 24.4, "humid": 97.0, "desc": "阴天"}, {"time": "2026-06-13 21:45", "temp": 21.1, "feels": 24.1, "humid": 94.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 22:00", "temp": 20.7, "feels": 23.7, "humid": 96.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 22:03", "temp": 20.7, "feels": 23.7, "humid": 96.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 22:06", "temp": 20.7, "feels": 23.7, "humid": 96.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 22:15", "temp": 20.7, "feels": 23.7, "humid": 96.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 22:30", "temp": 20.7, "feels": 23.8, "humid": 96.0, "desc": "小毛毛雨"}], "成都": [{"time": "2026-06-13 13:05", "temp": 30.7, "feels": 33.4, "humid": 38.0, "desc": "晴天"}, {"time": "2026-06-13 13:35", "temp": 31.2, "feels": 33.9, "humid": 37.0, "desc": "晴天"}, {"time": "2026-06-13 14:05", "temp": 31.7, "feels": 34.1, "humid": 36.0, "desc": "晴天"}, {"time": "2026-06-13 14:35", "temp": 32.1, "feels": 34.4, "humid": 35.0, "desc": "晴天"}, {"time": "2026-06-13 15:05", "temp": 32.5, "feels": 34.6, "humid": 34.0, "desc": "晴天"}, {"time": "2026-06-13 15:35", "temp": 32.8, "feels": 34.4, "humid": 33.0, "desc": "晴天"}, {"time": "2026-06-13 16:05", "temp": 32.9, "feels": 34.0, "humid": 34.0, "desc": "阴天"}, {"time": "2026-06-13 16:35", "temp": 32.8, "feels": 33.6, "humid": 34.0, "desc": "阴天"}, {"time": "2026-06-13 18:05", "temp": 31.6, "feels": 32.2, "humid": 38.0, "desc": "少云"}, {"time": "2026-06-13 19:05", "temp": 30.6, "feels": 31.1, "humid": 42.0, "desc": "少云"}, {"time": "2026-06-13 19:26", "temp": 30.1, "feels": 30.7, "humid": 44.0, "desc": "少云"}, {"time": "2026-06-13 19:30", "temp": 29.5, "feels": 30.2, "humid": 47.0, "desc": "少云"}, {"time": "2026-06-13 19:45", "temp": 28.9, "feels": 29.6, "humid": 50.0, "desc": "少云"}, {"time": "2026-06-13 20:00", "temp": 28.3, "feels": 29.2, "humid": 52.0, "desc": "少云"}, {"time": "2026-06-13 20:15", "temp": 27.8, "feels": 28.8, "humid": 55.0, "desc": "少云"}, {"time": "2026-06-13 20:30", "temp": 27.4, "feels": 28.5, "humid": 57.0, "desc": "少云"}, {"time": "2026-06-13 20:45", "temp": 26.9, "feels": 28.2, "humid": 59.0, "desc": "少云"}, {"time": "2026-06-13 21:00", "temp": 26.5, "feels": 28.0, "humid": 62.0, "desc": "少云"}, {"time": "2026-06-13 21:15", "temp": 26.2, "feels": 27.7, "humid": 63.0, "desc": "晴天"}, {"time": "2026-06-13 21:30", "temp": 25.9, "feels": 27.6, "humid": 65.0, "desc": "晴天"}, {"time": "2026-06-13 21:45", "temp": 25.6, "feels": 26.8, "humid": 61.0, "desc": "晴天"}, {"time": "2026-06-13 22:00", "temp": 24.9, "feels": 26.2, "humid": 66.0, "desc": "晴天"}, {"time": "2026-06-13 22:03", "temp": 24.9, "feels": 26.2, "humid": 66.0, "desc": "晴天"}, {"time": "2026-06-13 22:06", "temp": 24.9, "feels": 26.2, "humid": 66.0, "desc": "晴天"}, {"time": "2026-06-13 22:15", "temp": 24.6, "feels": 26.3, "humid": 68.0, "desc": "晴天"}, {"time": "2026-06-13 22:30", "temp": 24.3, "feels": 26.1, "humid": 70.0, "desc": "晴天"}], "北京": [{"time": "2026-06-13 13:05", "temp": 28.7, "feels": 29.6, "humid": 45.0, "desc": "阴天"}, {"time": "2026-06-13 13:35", "temp": 29.2, "feels": 30.3, "humid": 43.0, "desc": "阴天"}, {"time": "2026-06-13 14:05", "temp": 29.7, "feels": 30.7, "humid": 41.0, "desc": "阴天"}, {"time": "2026-06-13 14:35", "temp": 30.4, "feels": 31.1, "humid": 39.0, "desc": "多云"}, {"time": "2026-06-13 15:05", "temp": 30.8, "feels": 31.0, "humid": 38.0, "desc": "多云"}, {"time": "2026-06-13 15:35", "temp": 29.9, "feels": 30.1, "humid": 40.0, "desc": "阴天"}, {"time": "2026-06-13 16:05", "temp": 28.9, "feels": 29.3, "humid": 43.0, "desc": "阴天"}, {"time": "2026-06-13 16:35", "temp": 29.3, "feels": 31.9, "humid": 51.0, "desc": "阴天"}, {"time": "2026-06-13 18:05", "temp": 24.0, "feels": 25.9, "humid": 70.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 19:05", "temp": 23.7, "feels": 25.6, "humid": 73.0, "desc": "阴天"}, {"time": "2026-06-13 19:26", "temp": 23.5, "feels": 25.6, "humid": 74.0, "desc": "阴天"}, {"time": "2026-06-13 19:30", "temp": 23.3, "feels": 25.5, "humid": 76.0, "desc": "阴天"}, {"time": "2026-06-13 19:45", "temp": 23.0, "feels": 25.5, "humid": 78.0, "desc": "阴天"}, {"time": "2026-06-13 20:00", "temp": 22.8, "feels": 25.4, "humid": 79.0, "desc": "阴天"}, {"time": "2026-06-13 20:15", "temp": 22.7, "feels": 25.3, "humid": 80.0, "desc": "多云"}, {"time": "2026-06-13 20:30", "temp": 22.6, "feels": 25.3, "humid": 81.0, "desc": "多云"}, {"time": "2026-06-13 20:45", "temp": 22.5, "feels": 25.1, "humid": 82.0, "desc": "多云"}, {"time": "2026-06-13 21:00", "temp": 22.4, "feels": 25.0, "humid": 82.0, "desc": "多云"}, {"time": "2026-06-13 21:15", "temp": 22.2, "feels": 24.8, "humid": 83.0, "desc": "阴天"}, {"time": "2026-06-13 21:30", "temp": 22.1, "feels": 24.5, "humid": 84.0, "desc": "阴天"}, {"time": "2026-06-13 21:45", "temp": 21.9, "feels": 24.2, "humid": 84.0, "desc": "阴天"}, {"time": "2026-06-13 22:00", "temp": 21.3, "feels": 23.4, "humid": 87.0, "desc": "阴天"}, {"time": "2026-06-13 22:03", "temp": 21.3, "feels": 23.4, "humid": 87.0, "desc": "阴天"}, {"time": "2026-06-13 22:06", "temp": 21.3, "feels": 23.4, "humid": 87.0, "desc": "阴天"}, {"time": "2026-06-13 22:15", "temp": 21.2, "feels": 23.5, "humid": 86.0, "desc": "阴天"}, {"time": "2026-06-13 22:30", "temp": 21.1, "feels": 23.5, "humid": 86.0, "desc": "阴天"}], "哈尔滨": [{"time": "2026-06-13 13:05", "temp": 24.2, "feels": 24.0, "humid": 40.0, "desc": "少云"}, {"time": "2026-06-13 13:35", "temp": 24.3, "feels": 23.7, "humid": 39.0, "desc": "晴天"}, {"time": "2026-06-13 14:05", "temp": 24.5, "feels": 23.5, "humid": 37.0, "desc": "晴天"}, {"time": "2026-06-13 14:35", "temp": 24.6, "feels": 23.5, "humid": 35.0, "desc": "少云"}, {"time": "2026-06-13 15:05", "temp": 24.7, "feels": 23.2, "humid": 33.0, "desc": "阴天"}, {"time": "2026-06-13 15:35", "temp": 24.6, "feels": 22.4, "humid": 32.0, "desc": "阴天"}, {"time": "2026-06-13 16:05", "temp": 24.3, "feels": 22.1, "humid": 31.0, "desc": "阴天"}, {"time": "2026-06-13 16:35", "temp": 24.2, "feels": 23.1, "humid": 43.0, "desc": "阴天"}, {"time": "2026-06-13 18:05", "temp": 22.6, "feels": 22.1, "humid": 48.0, "desc": "阴天"}, {"time": "2026-06-13 19:05", "temp": 21.3, "feels": 20.5, "humid": 52.0, "desc": "阴天"}, {"time": "2026-06-13 19:26", "temp": 21.0, "feels": 20.0, "humid": 52.0, "desc": "阴天"}, {"time": "2026-06-13 19:30", "temp": 20.8, "feels": 19.5, "humid": 52.0, "desc": "阴天"}, {"time": "2026-06-13 19:45", "temp": 20.5, "feels": 19.0, "humid": 51.0, "desc": "阴天"}, {"time": "2026-06-13 20:00", "temp": 20.3, "feels": 18.6, "humid": 51.0, "desc": "阴天"}, {"time": "2026-06-13 20:15", "temp": 20.1, "feels": 18.3, "humid": 50.0, "desc": "阴天"}, {"time": "2026-06-13 20:30", "temp": 20.0, "feels": 18.1, "humid": 50.0, "desc": "阴天"}, {"time": "2026-06-13 20:45", "temp": 19.8, "feels": 17.9, "humid": 50.0, "desc": "阴天"}, {"time": "2026-06-13 21:00", "temp": 19.6, "feels": 17.6, "humid": 50.0, "desc": "阴天"}, {"time": "2026-06-13 21:15", "temp": 19.4, "feels": 17.5, "humid": 51.0, "desc": "阴天"}, {"time": "2026-06-13 21:30", "temp": 19.2, "feels": 17.4, "humid": 51.0, "desc": "阴天"}, {"time": "2026-06-13 21:45", "temp": 19.0, "feels": 17.6, "humid": 57.0, "desc": "阴天"}, {"time": "2026-06-13 22:00", "temp": 18.4, "feels": 16.8, "humid": 56.0, "desc": "阴天"}, {"time": "2026-06-13 22:03", "temp": 18.4, "feels": 17.2, "humid": 56.0, "desc": "阴天"}, {"time": "2026-06-13 22:06", "temp": 18.4, "feels": 17.2, "humid": 56.0, "desc": "阴天"}, {"time": "2026-06-13 22:15", "temp": 18.3, "feels": 16.7, "humid": 55.0, "desc": "阴天"}, {"time": "2026-06-13 22:30", "temp": 18.2, "feels": 16.5, "humid": 55.0, "desc": "阴天"}], "广州": [{"time": "2026-06-13 13:05", "temp": 28.4, "feels": 32.3, "humid": 80.0, "desc": "毛毛雨"}, {"time": "2026-06-13 13:35", "temp": 29.1, "feels": 33.7, "humid": 78.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 14:05", "temp": 29.8, "feels": 34.9, "humid": 75.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 14:35", "temp": 28.6, "feels": 33.1, "humid": 80.0, "desc": "中阵雨"}, {"time": "2026-06-13 15:05", "temp": 27.2, "feels": 31.2, "humid": 86.0, "desc": "中阵雨"}, {"time": "2026-06-13 15:35", "temp": 27.2, "feels": 32.0, "humid": 88.0, "desc": "大毛毛雨"}, {"time": "2026-06-13 16:05", "temp": 27.6, "feels": 33.3, "humid": 87.0, "desc": "大毛毛雨"}, {"time": "2026-06-13 16:35", "temp": 28.0, "feels": 33.4, "humid": 84.0, "desc": "小毛毛雨"}, {"time": "2026-06-13 18:05", "temp": 28.4, "feels": 33.8, "humid": 82.0, "desc": "阴天"}, {"time": "2026-06-13 19:05", "temp": 28.3, "feels": 33.5, "humid": 82.0, "desc": "阴天"}, {"time": "2026-06-13 19:26", "temp": 28.2, "feels": 33.4, "humid": 82.0, "desc": "阴天"}, {"time": "2026-06-13 19:30", "temp": 28.1, "feels": 33.3, "humid": 82.0, "desc": "阴天"}, {"time": "2026-06-13 19:45", "temp": 28.0, "feels": 33.1, "humid": 83.0, "desc": "阴天"}, {"time": "2026-06-13 20:00", "temp": 27.9, "feels": 32.9, "humid": 83.0, "desc": "阴天"}, {"time": "2026-06-13 20:15", "temp": 27.9, "feels": 32.8, "humid": 83.0, "desc": "阴天"}, {"time": "2026-06-13 20:30", "temp": 27.8, "feels": 32.8, "humid": 83.0, "desc": "阴天"}, {"time": "2026-06-13 20:45", "temp": 27.8, "feels": 32.7, "humid": 83.0, "desc": "阴天"}, {"time": "2026-06-13 21:00", "temp": 27.7, "feels": 32.6, "humid": 83.0, "desc": "阴天"}, {"time": "2026-06-13 21:15", "temp": 27.7, "feels": 32.5, "humid": 83.0, "desc": "阴天"}, {"time": "2026-06-13 21:30", "temp": 27.6, "feels": 32.5, "humid": 84.0, "desc": "阴天"}, {"time": "2026-06-13 21:45", "temp": 27.6, "feels": 32.4, "humid": 84.0, "desc": "阴天"}, {"time": "2026-06-13 22:00", "temp": 27.3, "feels": 32.1, "humid": 86.0, "desc": "阴天"}, {"time": "2026-06-13 22:03", "temp": 27.3, "feels": 32.1, "humid": 86.0, "desc": "阴天"}, {"time": "2026-06-13 22:06", "temp": 27.3, "feels": 32.1, "humid": 86.0, "desc": "阴天"}, {"time": "2026-06-13 22:15", "temp": 27.2, "feels": 32.1, "humid": 86.0, "desc": "阴天"}, {"time": "2026-06-13 22:30", "temp": 27.1, "feels": 32.1, "humid": 87.0, "desc": "阴天"}]};
-var CLAWS = [
-  {id:"claw1", label:"Claw 1", badge:"实时气象分析员", online:true},
-  {id:"claw2", label:"Claw 2", badge:"趋势预测分析员", online:false},
-  {id:"claw3", label:"Claw 3", badge:"场景应用分析员", online:false},
-  {id:"daily", label:"每日报告", badge:"5城天气汇总", online:true}
-];
-
-function initClawSwitcher(){
-  var bar=document.getElementById("clawBar");
-  bar.innerHTML=CLAWS.map(function(c,i){
-    var dot='<span class="dot '+(c.online?"online":"offline")+'"></span>';
-    return '<button class="claw-btn'+(i===0?" active":"")+'" data-claw="'+c.id+'">'+dot+c.label+'<span class="badge">'+c.badge+'</span></button>';
-  }).join("");
-  document.querySelectorAll(".claw-btn").forEach(function(btn){
-    btn.onclick=function(){
-      var id=btn.dataset.claw;
-      document.querySelectorAll(".claw-btn").forEach(function(b){b.classList.remove("active")});
-      document.querySelectorAll(".claw-panel").forEach(function(p){p.classList.remove("active")});
-      btn.classList.add("active");
-      document.getElementById("panel-"+id).classList.add("active");
-      if(id!=="claw1"&&id!=="daily") loadClawContent(id, true);
-    };
-  });
-  setInterval(checkClawStatus, 15000);
-}
-
-function checkClawStatus(){
-  fetch(API_SERVER+'/api/health', {mode:'cors'}).then(function(r){return r.json();}).then(function(d){
-    ['claw2','claw3'].forEach(function(id){
-      var btn = document.querySelector('[data-claw="'+id+'"] .dot');
-      if(!btn) return;
-      btn.className = 'dot ' + (d[id] === true ? 'online' : 'offline');
-    });
-  }).catch(function(){});
-}
-
-function loadClawContent(id, forceRefresh){
-  var container = document.getElementById(id+"Content");
-  if(!container) return;
-  if(forceRefresh) container.dataset.loaded = "";
-  if(container.dataset.loaded) return;
-  container.innerHTML = '<div class="placeholder-box"><div class="p-icon">⏳</div><h3>加载中...</h3></div>';
-  fetch(API_SERVER+'/api/claw-data', {mode:'cors'})
-    .then(function(r){return r.json();})
-    .then(function(data){
-      var cd = data[id];
-      if(cd&&cd.html) return renderClawData(id, container, cd);
-      showPlaceholder(id, container);
-    })
-    .catch(function(){
-      fetch('./claw_data.json', {mode:'cors'}).then(function(r){return r.json();}).then(function(data){
-        var cd = data[id];
-        cd&&cd.html ? renderClawData(id, container, cd) : showPlaceholder(id, container);
-      }).catch(function(){showPlaceholder(id, container);});
-    });
-}
-
-function renderClawData(id, container, cd){
-  container.innerHTML = cd.html; container.dataset.loaded = "1";
-  var btn = document.querySelector('[data-claw="'+id+'"] .dot');
-  if(btn) btn.className = "dot online";
-  if(CLAW_INTERVALS[id]) clearInterval(CLAW_INTERVALS[id]);
-  CLAW_INTERVALS[id] = setInterval(function(){
-    var panel = document.getElementById('panel-'+id);
-    if(!panel||!panel.classList.contains('active')) return;
-    fetch(API_SERVER+'/api/claw-data', {mode:'cors'}).then(function(r){return r.json();}).then(function(data){
-      var cd = data[id];
-      if(cd&&cd.html&&cd.html!==container.innerHTML) container.innerHTML = cd.html;
-    }).catch(function(){});
-  }, 30000);
-}
-
-function showPlaceholder(id, container){
-  var n = id.replace("claw","");
-  var role = id==='claw2'?'趋势预测分析员':'场景应用分析员';
-  container.innerHTML = '<div class="placeholder-box"><div class="p-icon">🤖</div><h3>Claw '+n+' · '+role+'</h3><p>请将以下 API 地址提供给 Claw '+n+' 成员</p><p><code>POST '+API_SERVER+'/api/claw/'+id+'</code></p></div>';
-}
-
-function renderDailyReport(){
-  var container = document.getElementById("dailyContent");
-  if(!container) return;
-  var cityColors = ['#4fc3f7','#81c784','#ffb74d','#4dd0e1','#e57373'];
-  var names=C.map(function(x){return x.name;}), temps=C.map(function(x){return x.temp;});
-  var feels=C.map(function(x){return x.feels;}), hums=C.map(function(x){return x.hum;});
-  var aqis=C.map(function(x){return x.aqi;}), uvs=C.map(function(x){return x.uv;});
-  var descs=C.map(function(x){return x.desc;}), winds=C.map(function(x){return x.wind_spd;});
-  var wds=C.map(function(x){return x.wind_dir;}), pcs=C.map(function(x){return x.precip;});
-  var alvs=C.map(function(x){return x.aqi_level;}), ulvs=C.map(function(x){return x.uv_level;});
-  var maxT=temps.indexOf(Math.max.apply(null,temps)), minT=temps.indexOf(Math.min.apply(null,temps));
-  var bAQI=aqis.indexOf(Math.min.apply(null,aqis)), wAQI=aqis.indexOf(Math.max.apply(null,aqis));
-  var mUV=uvs.indexOf(Math.max.apply(null,uvs));
-  var cards='';
-  for(var i=0;i<C.length;i++){
-    var aqC=aqis[i]<=50?'aqi-good':aqis[i]<=100?'aqi-moderate':aqis[i]<=150?'aqi-unhealthy':'aqi-bad';
-    var advDesc = descs[i].indexOf('雨')>=0?'建议携带雨具':descs[i].indexOf('晴')>=0?'天气晴好':descs[i].indexOf('云')>=0?'天气适宜':'天气温和';
-    var uvAdv = uvs[i]<=2?'无需防晒':uvs[i]<=5?'涂抹防晒霜':uvs[i]<=7?'SPF30+防晒':'SPF50+防晒+遮阳伞';
-    cards+='<div class="report-city-card" style="border-left:4px solid '+cityColors[i]+'"><div class="report-city-name" style="color:'+cityColors[i]+'">'+names[i]+'</div>'+
-      '<div class="report-weather-main">'+descs[i]+' · '+temps[i]+'°C · 体感'+feels[i]+'°C</div>'+
-      '<div class="report-advice-grid"><div class="advice-item"><span class="adv-icon">👔</span><div><div class="adv-label">穿衣</div><div class="adv-text">'+advDesc+'</div></div></div>'+
-      '<div class="advice-item"><span class="adv-icon">🏭</span><div><div class="adv-label">空气</div><div class="adv-text">AQI '+aqis[i]+' · '+alvs[i]+'</div></div></div>'+
-      '<div class="advice-item"><span class="adv-icon">☀️</span><div><div class="adv-label">防晒</div><div class="adv-text">UV '+uvs[i]+' · '+uvAdv+'</div></div></div></div></div>';
-  }
-  var now=new Date();
-  var dayNames = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
-  var dayName = dayNames[now.getDay()];
-  var ds=now.getFullYear()+'-'+(now.getMonth()+1).toString().padStart(2,'0')+'-'+now.getDate().toString().padStart(2,'0');
-  var ts=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
-  container.innerHTML='<div class="report-header"><h2>每日天气报告 · '+ds+'</h2><div class="report-time">生成时间: '+ds+' '+ts+'</div><div class="report-subtitle">基于 Claw 1 · 5城市综合</div></div>'+
-    '<div style="display:flex;justify-content:center;gap:12px;margin-bottom:18px;flex-wrap:wrap">'+
-    '<a href="./reports/index.html" style="color:#4fc3f7;padding:6px 14px;border:1px solid #00d4ff44;border-radius:8px;text-decoration:none;background:rgba(0,212,255,0.08)">📂 全部历史报告</a></div>'+
-    '<div class="report-highlights">'+
-    '<div class="highlight-card" style="border-color:#f44336"><div class="hl-icon">🔥</div><div class="hl-text">最热</div><div class="hl-val" style="color:#f44336">'+names[maxT]+' '+temps[maxT]+'°C</div></div>'+
-    '<div class="highlight-card" style="border-color:#4fc3f7"><div class="hl-icon">❄️</div><div class="hl-text">最凉</div><div class="hl-val" style="color:#4fc3f7">'+names[minT]+' '+temps[minT]+'°C</div></div>'+
-    '<div class="highlight-card" style="border-color:#4fc3f7"><div class="hl-icon">🌿</div><div class="hl-text">最佳AQI</div><div class="hl-val" style="color:#4fc3f7">'+names[bAQI]+' '+aqis[bAQI]+'</div></div>'+
-    '<div class="highlight-card" style="border-color:#ff9800"><div class="hl-icon">⚠️</div><div class="hl-text">最差AQI</div><div class="hl-val" style="color:#ff9800">'+names[wAQI]+' '+aqis[wAQI]+'</div></div>'+
-    '<div class="highlight-card" style="border-color:#ffeb3b"><div class="hl-icon">☀️</div><div class="hl-text">UV最强</div><div class="hl-val" style="color:#ffeb3b">'+names[mUV]+' UV '+uvs[mUV]+'</div></div></div>'+
-    '<div class="report-section-title">各城市详情</div><div class="report-city-grid">'+cards+'</div>'+
-    '<div class="report-section-title">可视化图表</div><div class="report-charts">'+
-    '<div class="report-chart-item"><img class="chart-img" src="./img/temp_comparison_latest.png"></div>'+
-    '<div class="report-chart-item"><img class="chart-img" src="./img/air_comparison_latest.png"></div>'+
-    '<div class="report-chart-item"><img class="chart-img" src="./img/uv_comparison_latest.png"></div>'+
-    '<div class="report-chart-item"><img class="chart-img" src="./img/dashboard_latest.png"></div></div>'+
-    '<div class="report-section-title">各Claw工作接入</div><div class="report-claws">'+
-    '<div class="report-claw-card" style="border-color:#4fc3f7"><div class="rc-label">Claw 1 · 实时气象分析员</div><div class="rc-status">✅ 已接入</div></div>'+
-    '<div class="report-claw-card" style="border-color:#ffb74d"><div class="rc-label">Claw 2 · 趋势预测分析员</div><div class="rc-status">⏳ 等待接入</div></div>'+
-    '<div class="report-claw-card" style="border-color:#81c784"><div class="rc-label">Claw 3 · 场景应用分析员</div><div class="rc-status">✅ 已接入</div></div></div>'+
-    '<div class="report-footer-text">Claw 作业系统 · 每日天气报告</div>';
-}
-
-function renderWeather(){
-  document.getElementById("cityGrid").innerHTML=C.map(function(c){
-    var aqC=c.aqi<=50?"aqi-good":c.aqi<=100?"aqi-moderate":c.aqi<=150?"aqi-unhealthy":"aqi-bad";
-    var uvC=c.uv<=2?"#00e676":c.uv<=5?"#ffeb3b":c.uv<=7?"#ff9800":"#f44336";
-    return '<a class="city-card" href="./'+c.city_file+'" style="border-left:4px solid '+c.color+'"><div class="city-name">'+c.name+'</div><div class="city-metrics">'+
-      '<div class="metric"><span class="m-icon">🌡️</span><span class="m-val">'+c.temp+'°C</span><span class="m-desc">'+c.desc+'</span></div>'+
-      '<div class="metric"><span class="m-icon">🤗</span><span class="m-val">'+c.feels+'°C</span><span class="m-desc">体感</span></div>'+
-      '<div class="metric"><span class="m-icon">💧</span><span class="m-val">'+c.hum+'%</span><span class="m-desc">湿度</span></div>'+
-      '<div class="metric"><span class="m-icon">🌀</span><span class="m-val">'+c.pres+'</span><span class="m-desc">hPa</span></div>'+
-      '<div class="metric"><span class="m-icon">💨</span><span class="m-val">'+c.wind_spd+' '+c.wind_dir+'</span><span class="m-desc">风速/风向</span></div>'+
-      '<div class="metric"><span class="m-icon">🌧️</span><span class="m-val">'+c.precip+'mm</span><span class="m-desc">降水</span></div>'+
-      '<div class="metric"><span class="m-icon">🏭</span><span class="m-val '+aqC+'">'+c.aqi+'</span><span class="m-desc">'+c.aqi_level+'</span></div>'+
-      '<div class="metric"><span class="m-icon">☀️</span><span class="m-val" style="color:'+uvC+'">'+c.uv+'</span><span class="m-desc">'+c.uv_level+'</span></div>'+
-      '<div class="metric" style="grid-column:span 3"><span class="m-icon">⚠️</span><span class="m-desc">'+c.alert+'</span></div>'+
-    '</div><div class="hint-link">📈 查看24h温度变化 →</div></a>';
-  }).join("");
-  var cg=document.getElementById("chartGrid");
-  var cl=[
-    {src:CHARTS.temp_comparison_latest, title:"温度对比"},
-    {src:CHARTS.air_comparison_latest, title:"AQI对比"},
-    {src:CHARTS.uv_comparison_latest, title:"UV对比"},
-    {src:CHARTS.dashboard_latest, title:"综合仪表盘"}
-  ];
-  var cityColors = ['#4fc3f7','#81c784','#ffb74d','#4dd0e1','#e57373'];
-  var legend='<div class="chart-city-legend">'+C.map(function(c,i){
-    return '<span class="city-tag" style="border-color:'+cityColors[i%5]+'88"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+cityColors[i%5]+'"></span>'+c.name+' '+c.temp+'°C</span>';
-  }).join('')+'</div>';
-  cg.innerHTML=cl.map(function(ch){
-    return ch.src?'<div class="chart-item"><img class="chart-img" src="'+ch.src+'" alt="'+ch.title+'"'+legend+'</div>':
-      '<div class="chart-item"><div style="background:#1a1a3e;border-radius:8px;padding:40px;text-align:center;color:#555">'+ch.title+' - 等待数据</div></div>';
-  }).join("");
-}
-
-function bindChartClick(){
-  setTimeout(function(){
-    var imgs = document.querySelectorAll(".chart-img");
-    var titles = ["温度对比","AQI对比","UV对比","综合仪表盘"];
-    for(var j=0;j<imgs.length;j++){
-      (function(el,k){
-        el.onclick = function(){
-          var name = el.getAttribute("alt") || titles[Math.min(k,3)];
-          openChart(name);
-        };
-      })(imgs[j],j);
-    }
-  }, 200);
-}
-var modalChartInstance = null;
-function openChart(title) {
-  document.getElementById('chartModal').style.display = 'flex';
-  document.getElementById('modalTitle').textContent = title + ' - 24小时温度变化';
-  var ctx = document.getElementById('modalChart').getContext('2d');
-  if(modalChartInstance) modalChartInstance.destroy();
-  var cityColors = ['#4fc3f7','#81c784','#ffb74d','#4dd0e1','#e57373'];
-  var names = C.map(function(c){return c.name;});
-  var datasets = [];
-  names.forEach(function(name,i){
-    var data = (TEMP_HIST[name]||[]).slice(-24);
-    if(data.length){
-      datasets.push({
-        label: name+' °C',
-        data: data.map(function(d){return d.temp;}),
-        borderColor: cityColors[i],
-        backgroundColor: cityColors[i]+'22',
-        fill: false,
-        tension: 0.3,
-        pointRadius: 3,
-        borderWidth: 2
-      });
-      datasets.push({
-        label: name+' 体感',
-        data: data.map(function(d){return d.feels;}),
-        borderColor: cityColors[i],
-        borderDash: [4, 4],
-        fill: false,
-        tension: 0.3,
-        pointRadius: 2,
-        borderWidth: 1,
-        pointStyle: 'cross'
-      });
-    }
-  });
-  var labels = (TEMP_HIST[names[0]]||[]).slice(-24).map(function(d){return d.time.slice(5,16);});
-  modalChartInstance = new Chart(ctx, {
-    type: 'line',
-    data: {labels: labels, datasets: datasets},
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      interaction: {mode: 'index', intersect: false},
-      plugins: {
-        legend: {labels: {color: '#aaa', font: {size: 11}}}
-      },
-      scales: {
-        x: {ticks: {color: '#666', maxTicksLimit: 12}, grid: {color: '#ffffff0d'}},
-        y: {ticks: {color: '#666'}, grid: {color: '#ffffff0d'}}
-      }
-    }
-  });
-}
-function closeChart(){
-  document.getElementById('chartModal').style.display = 'none';
-  if(modalChartInstance){
-    modalChartInstance.destroy();
-    modalChartInstance = null;
-  }
-}
-
-initClawSwitcher();
-renderDailyReport();
-renderWeather();
+function openImg(img){document.getElementById('modalImg').src=img.src;document.getElementById('chartModal').classList.add('active')}
 </script>
 </body>
 </html>
